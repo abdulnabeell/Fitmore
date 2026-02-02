@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Returns | FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .account-section {
+            padding: 120px 0 6rem;
+            min-height: 80vh;
+        }
+
+        .breadcrumb {
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-white);
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4rem;
+        }
+
+        /* Sidebar (Styles shared) */
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        /* Returns Content */
+        .content-header {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .content-card {
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 3rem;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .empty-icon {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .empty-text {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-shop {
+            background: var(--accent);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .btn-shop:hover {
+            opacity: 0.9;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .account-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">HOME</a></li>
+                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="about.html" class="nav-item">ABOUT</a></li>
+                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <button class="icon-btn auth-required active-user">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="account-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Returns</span>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
+                        style="color:var(--accent)">John Doe</span></h1>
+            </div>
+
+            <div class="account-grid">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Manage My Account</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="account.html">My Profile</a></li>
+                            <li><a href="address-book.html">Address Book</a></li>
+                            <li><a href="payment-options.html">Payment Options</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">My Orders</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="orders.html">My Orders</a></li>
+                            <li><a href="returns.html" class="active">My Returns</a></li>
+                            <li><a href="cancellations.html">My Cancellations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Logout</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="#" id="sideLogout" style="color: #ff4444;">Log Out</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Returns Content -->
+                <main class="profile-content">
+                    <h2 class="content-header">My Returns</h2>
+
+                    <div class="content-card">
+                        <div class="empty-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 14 20 9 15 4"></polyline>
+                                <path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>
+                            </svg>
+                        </div>
+                        <p class="empty-text">You have no returned items.</p>
+                        <a href="shop.html" class="btn-shop">Continue Shopping</a>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 FITMORE. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // Check Auth immediately
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        } else {
+            // Hide Signup Link
+            const signupLink = document.getElementById('signupLink');
+            if (signupLink) signupLink.style.display = 'none';
+        }
+
+        // Navbar Logic
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileNavLinks.classList.toggle('active');
+            });
+        }
+
+        // Side Logout
+        document.getElementById('sideLogout').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+
+</html>

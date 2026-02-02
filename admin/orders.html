@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitmore - Order Management</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #4e73df;
+            --primary-bg: #f5f7fb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --sidebar-width: 260px;
+            --success-green: #1cc88a;
+            --danger-red: #e74a3b;
+            --warning-yellow: #f6c23e;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles (Reused) */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            position: fixed;
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                transform: none;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.25);
+        }
+
+        /* Specific fix for this page: Dashboard is not active, Order Management is */
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-avatar-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Navbar (Reused) */
+        .top-navbar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 50px;
+            border: 1px solid transparent;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #fff;
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-icon {
+            color: var(--text-gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .avatar-top {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* Order Management Specifics */
+        .content-wrapper {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .orders-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 2px 4px rgba(78, 115, 223, 0.2);
+        }
+
+        .btn-outline {
+            background-color: white;
+            border-color: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .stat-main {
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-right: 0.5rem;
+        }
+
+        .stat-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .text-green {
+            color: var(--success-green);
+        }
+
+        .text-red {
+            color: var(--danger-red);
+        }
+
+        .stat-footer {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* Table Section */
+        .orders-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+
+        /* Filters Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tab-group {
+            display: flex;
+            background: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+
+        .tab-item {
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .tab-item.active {
+            background: white;
+            color: var(--text-dark);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .search-small {
+            position: relative;
+        }
+
+        .search-small input {
+            padding: 0.5rem 1rem 0.5rem 2.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            width: 250px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-gray);
+            background: white;
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background-color: #eff6ff;
+            /* Light blue header */
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            color: #4b5563;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            color: #1f2937;
+            vertical-align: middle;
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .product-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid #e5e7eb;
+            padding: 2px;
+            background: white;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-paid,
+        .status-delivered {
+            color: var(--success-green);
+        }
+
+        .status-unpaid,
+        .status-pending {
+            color: var(--warning-yellow);
+            /* Design tweak: Pending text is orange/yellowish */
+            color: #f59e0b;
+        }
+
+        .status-canceled {
+            color: var(--danger-red);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+
+        .checkbox-cell {
+            width: 40px;
+        }
+
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-num {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .page-num.active {
+            background-color: #dbeafe;
+            /* Light blue bg */
+            color: var(--primary-blue);
+            border-color: #dbeafe;
+            font-weight: 600;
+        }
+
+        .page-num.dots {
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">FITMORE</div>
+
+        <div class="menu-category">Main menu</div>
+        <div class="nav-item" onclick="window.location.href='dashboard.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            Dashboard
+        </div>
+        <div class="nav-item active" onclick="window.location.href='orders.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </div>
+            Order Management
+        </div>
+        <div class="nav-item" onclick="window.location.href='customers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            Customers
+        </div>
+        <div class="nav-item" onclick="window.location.href='coupons.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            Coupon Code
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            Categories
+        </div>
+        <div class="nav-item" onclick="window.location.href='transactions.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </div>
+            Transaction
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+            </div>
+            Brand
+        </div>
+
+        <div class="menu-category">Product</div>
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            Add Products
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            Product Media
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            Product List
+        </div>
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                    </path>
+                </svg>
+            </div>
+            Product Reviews
+        </div>
+
+        <div class="menu-category">Admin</div>
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            Admin Role
+        </div>
+
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Dealport&background=333&color=fff" alt="User"
+                class="user-avatar-sm">
+            <div class="user-info">
+                <h4>Dealport</h4>
+                <p>Mark@thedesigner...</p>
+            </div>
+            <div class="logout-icon">
+                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
+                    viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #374151;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                </svg>
+                Your Shop
+            </div>
+            <svg class="icon" style="width: 16px; height: 16px; color: #9ca3af;" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+        <!-- Navbar -->
+        <header class="top-navbar">
+            <div class="page-title">Order Management</div>
+            <div class="search-container">
+                <svg class="icon search-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search data, users, or reports">
+            </div>
+            <div class="nav-actions">
+                <div class="action-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </div>
+                <div class="action-icon">
+                    <div
+                        style="background: #e0f2fe; padding: 4px 8px; border-radius: 20px; display: flex; align-items: center; gap: 4px;">
+                        <svg class="icon" style="width: 16px; height: 16px; color: #0ea5e9; fill: #0ea5e9;"
+                            viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <div style="width: 16px; height: 16px; background: white; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                    alt="Avatar" class="avatar-top">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+
+            <div class="orders-header">
+                <h2>Order List</h2>
+                <div class="action-buttons">
+                    <button class="btn btn-primary">
+                        <svg class="icon" style="width: 16px; height: 16px;" viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Order
+                    </button>
+                    <button class="btn btn-outline">
+                        More Action <span style="font-size: 1.25rem;">⋮</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <section class="stats-grid">
+                <!-- Card 1 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div>Total Orders</div>
+                        <div>⋮</div>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-val">1,240</span>
+                        <span class="stat-badge text-green">↑ 14.4%</span>
+                    </div>
+                    <div class="stat-footer">Last 7 days</div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div>New Orders</div>
+                        <div>⋮</div>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-val">240</span>
+                        <span class="stat-badge text-green">↑ 20%</span>
+                    </div>
+                    <div class="stat-footer">Last 7 days</div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div>Completed Orders</div>
+                        <div>⋮</div>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-val">960</span>
+                        <span class="stat-badge text-green">85%</span>
+                    </div>
+                    <div class="stat-footer">Last 7 days</div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div>Canceled Orders</div>
+                        <div>⋮</div>
+                    </div>
+                    <div class="stat-main">
+                        <span class="stat-val">87</span>
+                        <span class="stat-badge text-red">↓ 5%</span>
+                    </div>
+                    <div class="stat-footer">Last 7 days</div>
+                </article>
+            </section>
+
+            <!-- Table Container -->
+            <section class="orders-container">
+                <div class="toolbar">
+                    <div class="tab-group">
+                        <div class="tab-item active">All order (240)</div>
+                        <div class="tab-item">Completed</div>
+                        <div class="tab-item">Pending</div>
+                        <div class="tab-item">Canceled</div>
+                    </div>
+                    <div class="toolbar-actions">
+                        <div class="search-small">
+                            <input type="text" placeholder="Search order report">
+                            <svg class="icon"
+                                style="position: absolute; right: 10px; top: 10px; width: 16px; height: 16px; color: #9ca3af;"
+                                viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <div class="icon-btn">
+                            <svg class="icon" style="width: 16px;" viewBox="0 0 24 24">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div class="icon-btn">
+                            <svg class="icon" style="width: 16px;" viewBox="0 0 24 24">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <polyline points="19 12 12 19 5 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="icon-btn">
+                            <div style="font-size: 1.25rem; line-height: 0.5;">...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="checkbox-cell"><input type="checkbox"></th>
+                                <th>No.</th>
+                                <th>Order Id</th>
+                                <th>Product</th>
+                                <th>Date</th>
+                                <th>Price</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Row 1 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Band">
+                                        <span>Resistance Band</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
+                                </td>
+                                <td><span class="status-badge status-delivered"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <rect x="1" y="3" width="15" height="13"></rect>
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                        </svg>Delivered</span></td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Weight">
+                                        <span>Wrist Band</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-unpaid"><span
+                                            class="status-dot"></span>Unpaid</span></td>
+                                <td><span class="status-badge status-pending"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>Pending</span></td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1598289431512-b97b0917affc?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Mat">
+                                        <span>Yoga Mat</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
+                                </td>
+                                <td><span class="status-badge status-delivered"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <rect x="1" y="3" width="15" height="13"></rect>
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                        </svg>Delivered</span></td>
+                            </tr>
+                            <!-- Row 4 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1620188467120-5042ed1eb5da?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Knee">
+                                        <span>Knee Cap</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
+                                </td>
+                                <td><span class="status-badge" style="color:#1f2937;"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <rect x="1" y="3" width="15" height="13"></rect>
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                        </svg>Shipped</span></td>
+                            </tr>
+                            <!-- Row 5 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1579722820308-d74e571900a9?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Protein">
+                                        <span>Whey Protein</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-unpaid"><span
+                                            class="status-dot"></span>Unpaid</span></td>
+                                <td><span class="status-badge status-pending"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>Pending</span></td>
+                            </tr>
+                            <!-- Row 6 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Dumbell">
+                                        <span>Dumbell</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-unpaid"><span
+                                            class="status-dot"></span>Unpaid</span></td>
+                                <td><span class="status-badge status-canceled"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>Cancelled</span></td>
+                            </tr>
+                            <!-- Row 7 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Shoe">
+                                        <span>Shoe</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
+                                </td>
+                                <td><span class="status-badge status-delivered"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <rect x="1" y="3" width="15" height="13"></rect>
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                        </svg>Delivered</span></td>
+                            </tr>
+                            <!-- Row 8 -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td>#ORD0001</td>
+                                <td>
+                                    <div class="product-cell">
+                                        <img src="https://images.unsplash.com/photo-1515775538093-d2d95c5ee4f5?auto=format&fit=crop&w=50&q=80"
+                                            class="product-img" alt="Track">
+                                        <span>Compression Track</span>
+                                    </div>
+                                </td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
+                                </td>
+                                <td><span class="status-badge status-delivered"><svg class="icon"
+                                            style="width:14px; height:14px; margin-right:4px;" viewBox="0 0 24 24">
+                                            <rect x="1" y="3" width="15" height="13"></rect>
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                        </svg>Delivered</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="pagination">
+                        <button class="page-btn">← Previous</button>
+                        <div class="page-numbers">
+                            <div class="page-num active">1</div>
+                            <div class="page-num">2</div>
+                            <div class="page-num">3</div>
+                            <div class="page-num">4</div>
+                            <div class="page-num">5</div>
+                            <div class="page-num dots">...</div>
+                            <div class="page-num">24</div>
+                        </div>
+                        <button class="page-btn">Next →</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- RESET & VARS --- */
+        :root {
+            --bg-dark: #0B0B0B;
+            --bg-card: #151515;
+            --bg-card-hover: #1E1E1E;
+            --text-white: #FFFFFF;
+            --text-muted: #888888;
+            --accent: #E50914;
+            /* Red accent */
+            --accent-hover: #D40812;
+
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Oswald', sans-serif;
+
+            --container-width: 1280px;
+            --gutter: 20px;
+
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        /* --- UTILITIES --- */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 14px 32px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--accent-hover);
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 2px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 11, 11, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.2rem 0;
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-white);
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-white);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--accent);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: var(--accent);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            color: var(--text-white);
+            font-size: 1.2rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .icon-btn:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background: #050505;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .f-col h4 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .f-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .f-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .f-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .f-socials {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .soc-icon {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .soc-icon:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1200px) {
+            :root {
+                --container-width: 960px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --container-width: 95%;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .about-section {
+                padding-top: 100px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .trust-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .trust-item:last-child {
+                grid-column: span 2;
+                /* Center the last item */
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-item {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .story-img-container {
+                height: 350px;
+            }
+
+            .stats-grid {
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .trust-row {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .trust-item:last-child {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-header h2 {
+                font-size: 2rem;
+            }
+
+            .story-img-container {
+                height: 250px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                width: 85%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stat-card h3 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- UTILITY & ANIMATIONS --- */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-section {
+            padding: 120px 0 8rem;
+            /* Adjusted top padding since it's a separate page */
+            background: var(--bg-dark);
+            min-height: 100vh;
+        }
+
+        .about-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .about-header p {
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .story-img-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .story-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .stat-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .stat-card.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .stat-card h3 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .stat-card:not(.active) p {
+            color: var(--text-muted);
+        }
+
+        /* Trust Row */
+        .trust-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .trust-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .trust-item h4 {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .trust-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">HOME</a></li>
+                    <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
+                    <li><a href="about.html" class="nav-item active">ABOUT</a></li>
+                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons desktop-only">
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">2</span>
+                </button>
+            </div>
+
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-header">
+                <span class="section-subtitle">Since 2012</span>
+                <h2 class="section-title">Our <span style="color:var(--accent)">Story</span></h2>
+                <p>Founded with a passion for fitness and performance, Fitmore was created to make premium sports and
+                    fitness products accessible to everyone. We believe that an active lifestyle starts with the right
+                    support. From high-quality supplements and fitness gear to performance wear and accessories.</p>
+            </div>
+
+            <div class="story-img-container">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
+                    alt="Gym Atmosphere">
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div style="font-size:2rem; margin-bottom:1rem; color:var(--text-muted)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3>10.5k</h3>
+                    <p>Sellers Active</p>
+                </div>
+                <div class="stat-card active">
+                    <div style="font-size:2rem; margin-bottom:1rem; color:white">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>33k</h3>
+                    <p>Monthly Product Sale</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size:2rem; margin-bottom:1rem; color:var(--text-muted)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>45.5k</h3>
+                    <p>Customer Active</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size:2rem; margin-bottom:1rem; color:var(--text-muted)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                    </div>
+                    <h3>25k</h3>
+                    <p>Annual Gross Sale</p>
+                </div>
+            </div>
+
+            <div class="trust-row">
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <h4>Free and Fast Delivery</h4>
+                    <p>Free delivery for all orders over $140</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4>24/7 Customer Service</h4>
+                    <p>Friendly 24/7 customer support</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h4>Money Back Guarantee</h4>
+                    <p>We return money within 30 days</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Shop</h4>
+                    <ul class="f-links">
+                        <li><a href="#">Protein</a></li>
+                        <li><a href="#">Vitamins</a></li>
+                        <li><a href="#">Apparel</a></li>
+                        <li><a href="#">Accessories</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Affiliate Program</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- AUTH & NAVBAR LOGIC ---
+        function updateNavbarAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const signupLink = document.getElementById('signupLink');
+            // Select parent li because we want to hide the whole list item if needed, 
+            // or just the link. In index.html we hide the element with ID signupLink. 
+            // Here signupLink is the <a> tag. Hiding <a> works.
+
+            // In index.html, we also toggle icons.
+            const userIconBtn = document.querySelector('.icon-btn.auth-required');
+            // note: in about.html currently standard icon-btns don't have IDs like userIconBtn, 
+            // we might need to add IDs or select differently. 
+            // But wait, the about.html has a simplified header structure compared to index.html?
+            // Let's check line 525-548. They are just icon-btns. 
+            // The structure is: 
+            // 1. Search (?), 2. User, 3. Cart.
+            // Let's match index.html logic or at least hiding signup.
+
+            /* 
+               The user specific request was "replace it with contact". 
+               If we hide Signup, Contact is already there. 
+               Maybe they want "Contact" to be prominent? 
+               But strictly, fixing the "problem" (signup showing) is primary.
+            */
+
+            if (isLoggedIn) {
+                if (signupLink) signupLink.style.display = 'none';
+
+                // Also toggle other auth elements if we can identify them
+                // For now, hiding signup is the main request.
+            } else {
+                if (signupLink) signupLink.style.display = 'block';
+            }
+        }
+
+        // --- STICKY HEADER ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.padding = '0.8rem 0';
+                header.style.background = 'rgba(11, 11, 11, 0.95)';
+            } else {
+                header.style.padding = '1.2rem 0';
+                header.style.background = 'rgba(11, 11, 11, 0.85)';
+            }
+        });
+
+        // --- MOBILE MENU ---
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+
+        mobileToggleBtn.addEventListener('click', () => {
+            mobileNavLinks.classList.toggle('active');
+
+            // Hamburger animation
+            const bars = mobileToggleBtn.querySelectorAll('.bar');
+            if (mobileNavLinks.classList.contains('active')) {
+                bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                bars[1].style.opacity = '0';
+                bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else {
+                bars[0].style.transform = 'none';
+                bars[1].style.opacity = '1';
+                bars[2].style.transform = 'none';
+            }
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavbarAuth();
+        });
+    </script>
+</body>
+
+</html>

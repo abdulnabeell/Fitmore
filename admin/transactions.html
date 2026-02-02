@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitmore - Transaction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #4e73df;
+            --primary-bg: #f5f7fb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --sidebar-width: 260px;
+            --border-color: #e5e7eb;
+            --success-green: #10b981;
+            --success-bg: #ecfdf5;
+            --danger-red: #e74a3b;
+            --warning-yellow: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            position: fixed;
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                transform: none;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.25);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-avatar-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 50px;
+            border: 1px solid transparent;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #fff;
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-icon {
+            color: var(--text-gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .avatar-top {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* TRANSACTION PAGE SPECIFIC STYLES */
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .stat-menu {
+            color: #9ca3af;
+            cursor: pointer;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #111827;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .trend-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .trend-up {
+            color: var(--success-green);
+        }
+
+        .trend-down {
+            color: var(--danger-red);
+        }
+
+        .stat-desc {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+
+
+        /* Filter Toolbar */
+        .filter-toolbar {
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .tabs-container {
+            display: flex;
+            background-color: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--white);
+            color: var(--text-dark);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+        }
+
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .search-sm {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #f9fafb;
+            font-size: 0.85rem;
+            width: 240px;
+        }
+
+        .action-icon-box {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-gray);
+            cursor: pointer;
+            background: var(--white);
+        }
+
+        .action-icon-box:hover {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+
+        /* Table */
+        .table-container {
+            background: var(--white);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background-color: #e0f2fe;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            color: #1f2937;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-complete {
+            color: var(--success-green);
+        }
+
+        .dot-complete {
+            background-color: var(--success-green);
+        }
+
+        .status-canceled {
+            color: var(--danger-red);
+        }
+
+        .dot-canceled {
+            background-color: var(--danger-red);
+        }
+
+        .status-pending {
+            color: var(--warning-yellow);
+        }
+
+        .dot-pending {
+            background-color: var(--warning-yellow);
+        }
+
+        .view-details-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .view-details-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            border-radius: 0 0 12px 12px;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-num {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .page-num.active {
+            background-color: #dbeafe;
+            color: var(--primary-blue);
+            border-color: #dbeafe;
+            font-weight: 600;
+        }
+
+        .page-num.dots {
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">FITMORE</div>
+
+        <div class="menu-category">Main menu</div>
+        <div class="nav-item" onclick="window.location.href='dashboard.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            Dashboard
+        </div>
+        <div class="nav-item" onclick="window.location.href='orders.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </div>
+            Order Management
+        </div>
+        <div class="nav-item" onclick="window.location.href='customers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            Customers
+        </div>
+        <div class="nav-item" onclick="window.location.href='coupons.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            Coupon Code
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            Categories
+        </div>
+        <div class="nav-item active" onclick="window.location.href='transactions.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </div>
+            Transaction
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+            </div>
+            Brand
+        </div>
+
+        <div class="menu-category">Product</div>
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            Add Products
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            Product Media
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            Product List
+        </div>
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                    </path>
+                </svg>
+            </div>
+            Product Reviews
+        </div>
+
+        <div class="menu-category">Admin</div>
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            Admin Role
+        </div>
+
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Dealport&background=333&color=fff" alt="User"
+                class="user-avatar-sm">
+            <div class="user-info">
+                <h4>Dealport</h4>
+                <p>Mark@thedesigner...</p>
+            </div>
+            <div class="logout-icon">
+                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
+                    viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #374151;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                </svg>
+                Your Shop
+            </div>
+            <svg class="icon" style="width: 16px; height: 16px; color: #9ca3af;" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+        <!-- Navbar -->
+        <header class="top-navbar">
+            <div class="page-title">Transaction</div>
+            <div class="search-container">
+                <svg class="icon search-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search data, users, or reports">
+            </div>
+            <div class="nav-actions">
+                <div class="action-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </div>
+                <div class="action-icon">
+                    <div
+                        style="background: #e0f2fe; padding: 4px 8px; border-radius: 20px; display: flex; align-items: center; gap: 4px;">
+                        <svg class="icon" style="width: 16px; height: 16px; color: #0ea5e9; fill: #0ea5e9;"
+                            viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <div style="width: 16px; height: 16px; background: white; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                    alt="Avatar" class="avatar-top">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Revenue</span>
+                        <svg class="icon stat-menu" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="stat-value">
+                            $15,045
+                            <span class="trend-badge trend-up">↑ 14.4%</span>
+                        </div>
+                        <div class="stat-desc">Last 7 days</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Completed Transactions</span>
+                        <svg class="icon stat-menu" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="stat-value">
+                            3,150
+                            <span class="trend-badge trend-up">↑ 20%</span>
+                        </div>
+                        <div class="stat-desc">Last 7 days</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Failed Transactions</span>
+                        <svg class="icon stat-menu" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="stat-value">
+                            75
+                            <span class="trend-badge trend-down">15%</span>
+                        </div>
+                        <div class="stat-desc">Last 7 days</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Pending Transactions</span>
+                        <svg class="icon stat-menu" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="stat-value">
+                            150
+                            <span class="trend-badge trend-up" style="color:var(--success-green);">85%</span>
+                        </div>
+                        <div class="stat-desc">Last 7 days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <div class="filter-toolbar">
+                    <div class="tabs-container">
+                        <button class="tab-btn active">All order (240)</button>
+                        <button class="tab-btn">Completed</button>
+                        <button class="tab-btn">Pending</button>
+                        <button class="tab-btn">Canceled</button>
+                    </div>
+                    <div class="table-actions">
+                        <input type="text" class="search-sm" placeholder="Search payment history">
+                        <div class="action-icon-box">
+                            <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <div class="action-icon-box">
+                            <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                        </div>
+                        <div class="action-icon-box">
+                            <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="action-icon-box">
+                            <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Id</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>John Doe</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>CC</td>
+                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>John Doe</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>PayPal</td>
+                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>John Doe</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>CC</td>
+                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>John Doe</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>Bank</td>
+                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>Jane Smith</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>CC</td>
+                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>Emily Davis</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>PayPal</td>
+                                <td class="status-pending"><span class="status-dot dot-pending"></span>Pending</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>Jane Smith</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>Bank</td>
+                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>John Doe</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>CC</td>
+                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>Emily Davis</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>PayPal</td>
+                                <td class="status-pending"><span class="status-dot dot-pending"></span>Pending</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>#CUST001</td>
+                                <td>Jane Smith</td>
+                                <td>01-01-2025</td>
+                                <td>499</td>
+                                <td>Bank</td>
+                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
+                                <td><a href="#" class="view-details-link">View Details</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn">← Previous</button>
+                    <div class="page-numbers">
+                        <div class="page-num active">1</div>
+                        <div class="page-num">2</div>
+                        <div class="page-num">3</div>
+                        <div class="page-num">4</div>
+                        <div class="page-num">5</div>
+                        <div class="page-num dots">...</div>
+                        <div class="page-num">24</div>
+                    </div>
+                    <button class="page-btn">Next →</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+
+</html>

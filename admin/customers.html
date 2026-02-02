@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitmore - Customers</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #4e73df;
+            --primary-bg: #f5f7fb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --sidebar-width: 260px;
+            --success-green: #1cc88a;
+            --danger-red: #e74a3b;
+            --warning-yellow: #f6c23e;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles (Reused) */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            position: fixed;
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                transform: none;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.25);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-avatar-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 50px;
+            border: 1px solid transparent;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #fff;
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-icon {
+            color: var(--text-gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .avatar-top {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* CUSTOMERS PAGE SPECIFIC STYLES */
+        .content-wrapper {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .stats-chart-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .stats-chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stats-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .stat-val {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-growth {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--success-green);
+            margin-left: 0.5rem;
+        }
+
+        .stat-footer {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .chart-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title-group h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .chart-metrics {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .metric-item h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-item p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .metric-item.active {
+            position: relative;
+        }
+
+        .metric-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #38bdf8;
+        }
+
+        .chart-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tab-switch {
+            background: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 8px;
+            display: flex;
+        }
+
+        .tab-btn {
+            padding: 0.4rem 1rem;
+            border: none;
+            background: transparent;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--primary-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background-color: #eff6ff;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            color: #4b5563;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            color: #1f2937;
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        /* Selected row style */
+        tbody tr.selected td {
+            background-color: #e0f2fe;
+            /* very light blue */
+        }
+
+        tbody tr:hover:not(.selected) td {
+            background-color: #f9fafb;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-active {
+            color: var(--success-green);
+        }
+
+        .dot-active {
+            background-color: var(--success-green);
+        }
+
+        .status-inactive {
+            color: var(--danger-red);
+        }
+
+        .dot-inactive {
+            background-color: var(--danger-red);
+        }
+
+        .status-vip {
+            color: #eab308;
+        }
+
+        .dot-vip {
+            background-color: #eab308;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-gray);
+        }
+
+        .action-icon-btn {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .action-icon-btn:hover {
+            color: var(--primary-blue);
+        }
+
+        .action-icon-btn.delete:hover {
+            color: var(--danger-red);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-num {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .page-num.active {
+            background-color: #dbeafe;
+            color: var(--primary-blue);
+            border-color: #dbeafe;
+            font-weight: 600;
+        }
+
+        .page-num.dots {
+            border: none;
+        }
+
+        /* CUSTOMER DETAILS PANEL */
+        .details-panel {
+            position: fixed;
+            top: 2rem;
+            /* Margin from top */
+            bottom: 2rem;
+            /* Margin from bottom */
+            right: -420px;
+            /* Start off-screen */
+            width: 400px;
+            background: white;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            /* Rounded card style */
+            z-index: 100;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-right: 2rem;
+            /* Margin from right edge */
+        }
+
+        .details-panel.active {
+            right: 0;
+            margin-right: 2rem;
+        }
+
+        .panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: var(--text-dark);
+        }
+
+        .panel-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .panel-user-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .panel-user-info p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .bg-fb {
+            background: #1877f2;
+        }
+
+        .bg-tw {
+            background: #1da1f2;
+        }
+
+        .bg-li {
+            background: #0077b5;
+        }
+
+        .bg-in {
+            background: #e4405f;
+        }
+
+        .activity-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .activity-label {
+            color: var(--text-gray);
+        }
+
+        .activity-val {
+            font-weight: 500;
+        }
+
+        .order-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .mini-stat-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .mini-stat-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .mini-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-gray);
+        }
+
+        .text-blue {
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">FITMORE</div>
+
+        <div class="menu-category">Main menu</div>
+        <div class="nav-item" onclick="window.location.href='dashboard.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            Dashboard
+        </div>
+        <div class="nav-item" onclick="window.location.href='orders.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </div>
+            Order Management
+        </div>
+        <div class="nav-item active" onclick="window.location.href='customers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            Customers
+        </div>
+        <div class="nav-item" onclick="window.location.href='coupons.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            Coupon Code
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            Categories
+        </div>
+        <div class="nav-item" onclick="window.location.href='transactions.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </div>
+            Transaction
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+            </div>
+            Brand
+        </div>
+
+        <div class="menu-category">Product</div>
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            Add Products
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            Product Media
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            Product List
+        </div>
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                    </path>
+                </svg>
+            </div>
+            Product Reviews
+        </div>
+
+        <div class="menu-category">Admin</div>
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            Admin Role
+        </div>
+
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Dealport&background=333&color=fff" alt="User"
+                class="user-avatar-sm">
+            <div class="user-info">
+                <h4>Dealport</h4>
+                <p>Mark@thedesigner...</p>
+            </div>
+            <div class="logout-icon">
+                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
+                    viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #374151;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                </svg>
+                Your Shop
+            </div>
+            <svg class="icon" style="width: 16px; height: 16px; color: #9ca3af;" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+        <!-- Navbar -->
+        <header class="top-navbar">
+            <div class="page-title">Customers</div>
+            <div class="search-container">
+                <svg class="icon search-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search data, users, or reports">
+            </div>
+            <div class="nav-actions">
+                <div class="action-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </div>
+                <div class="action-icon">
+                    <div
+                        style="background: #e0f2fe; padding: 4px 8px; border-radius: 20px; display: flex; align-items: center; gap: 4px;">
+                        <svg class="icon" style="width: 16px; height: 16px; color: #0ea5e9; fill: #0ea5e9;"
+                            viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <div style="width: 16px; height: 16px; background: white; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                    alt="Avatar" class="avatar-top">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+
+            <!-- Split Section -->
+            <div class="stats-chart-grid">
+                <!-- Left: 3 Stats Cards Stacked -->
+                <div class="stats-column">
+                    <!-- Card 1 -->
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div>Total Customers</div>
+                            <div>⋮</div>
+                        </div>
+                        <div class="stat-val">11,040 <span class="stat-growth">↑ 14.4%</span></div>
+                        <div class="stat-footer">Last 7 days</div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div>New Customers</div>
+                            <div>⋮</div>
+                        </div>
+                        <div class="stat-val">2,370 <span class="stat-growth">↑ 20%</span></div>
+                        <div class="stat-footer">Last 7 days</div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div>Visitor</div>
+                            <div>⋮</div>
+                        </div>
+                        <div class="stat-val">250k <span class="stat-growth">↑ 20%</span></div>
+                        <div class="stat-footer">Last 7 days</div>
+                    </article>
+                </div>
+
+                <!-- Right: Chart -->
+                <article class="chart-card">
+                    <div class="chart-header-row">
+                        <div class="chart-title-group">
+                            <h3>Customer Overview</h3>
+                            <div class="chart-metrics">
+                                <div class="metric-item active">
+                                    <h4>25k</h4>
+                                    <p>Active Customers</p>
+                                </div>
+                                <div class="metric-item">
+                                    <h4>5.6k</h4>
+                                    <p>Repeat Customers</p>
+                                </div>
+                                <div class="metric-item">
+                                    <h4>250k</h4>
+                                    <p>Shop Visitor</p>
+                                </div>
+                                <div class="metric-item">
+                                    <h4>5.5%</h4>
+                                    <p>Conversion Rate</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-controls">
+                            <div class="tab-switch">
+                                <button class="tab-btn active">This week</button>
+                                <button class="tab-btn">Last week</button>
+                            </div>
+                            <div style="font-size: 1.5rem; color: #6b7280; line-height: 0.5;">⋮</div>
+                        </div>
+                    </div>
+
+                    <!-- Reusing Chart SVG -->
+                    <div style="width: 100%; height: 250px; position: relative;">
+                        <svg width="100%" height="100%" viewBox="0 0 800 250" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1" />
+                                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Grid Lines -->
+                            <g class="grid-lines" stroke="#f3f4f6" stroke-width="1">
+                                <line x1="0" y1="50" x2="800" y2="50" />
+                                <line x1="0" y1="100" x2="800" y2="100" />
+                                <line x1="0" y1="150" x2="800" y2="150" />
+                                <line x1="0" y1="200" x2="800" y2="200" />
+                            </g>
+
+                            <!-- Y Labels -->
+                            <g class="y-labels" font-size="10" fill="#9ca3af" text-anchor="start">
+                                <text x="0" y="50">40k</text>
+                                <text x="0" y="100">30k</text>
+                                <text x="0" y="150">20k</text>
+                                <text x="0" y="200">10k</text>
+                                <text x="0" y="240">0k</text>
+                            </g>
+
+                            <!-- Area Path -->
+                            <path
+                                d="M40,180 C100,180 140,100 180,100 S220,100 260,150 S300,150 340,50 S440,50 500,150 S560,150 620,50 S760,50 800,50 V250 H40 Z"
+                                fill="url(#areaGradient)" stroke="none" />
+
+                            <!-- Line Path -->
+                            <path
+                                d="M40,180 C100,180 140,100 180,100 S220,100 260,150 S300,150 340,50 S440,50 500,150 S560,150 620,50 S760,50 800,50"
+                                fill="none" stroke="#2dd4bf" stroke-width="2" />
+
+                            <!-- Tooltip Point (Thursday/Wed area) -->
+                            <g transform="translate(350, 60)">
+                                <circle r="4" fill="#fff" stroke="#86efac" stroke-width="2" />
+                                <line x1="0" y1="4" x2="0" y2="190" stroke="#86efac" stroke-width="1"
+                                    stroke-dasharray="4 4" />
+                                <foreignObject x="-50" y="-50" width="100" height="50">
+                                    <div style="background:#dbeafe; padding:4px 8px; border-radius:8px; font-size:0.75rem; text-align:center; box-shadow:0 2px 4px rgba(0,0,0,0.05); color: #1e40af;"
+                                        xmlns="http://www.w3.org/1999/xhtml">
+                                        <div style="font-weight:600">Thursday</div>
+                                        <div>25,409</div>
+                                    </div>
+                                </foreignObject>
+                            </g>
+
+                            <!-- X Labels -->
+                            <g class="x-labels" font-size="10" fill="#9ca3af" text-anchor="middle"
+                                transform="translate(0, 20)">
+                                <text x="40" y="210">Sun</text>
+                                <text x="160" y="210">Mon</text>
+                                <text x="280" y="210">Tue</text>
+                                <text x="350" y="210" font-weight="bold" fill="#374151">Wed</text>
+                                <text x="500" y="210">Thu</text>
+                                <text x="620" y="210">Fri</text>
+                                <text x="740" y="210">Sat</text>
+                            </g>
+
+                        </svg>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Id</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Order Count</th>
+                            <th>Total Spend</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                        <!-- Row 1 -->
+                        <tr data-name="John Doe" data-email="john.doe@example.com" data-phone="+1234567890">
+                            <td>#CUST001</td>
+                            <td>John Doe</td>
+                            <td>+1234567890</td>
+                            <td>25</td>
+                            <td>3,450.00</td>
+                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
+                            </td>
+                            <td>
+                                <div class="action-icons">
+                                    <svg class="icon action-icon-btn" style="width:16px; height: 16px;"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                        </path>
+                                    </svg>
+                                    <svg class="icon action-icon-btn delete" style="width:16px; height: 16px;"
+                                        viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr data-name="Jane Smith" data-email="jane.smith@example.com" data-phone="+1234567890">
+                            <td>#CUST002</td>
+                            <td>Jane Smith</td>
+                            <td>+1234567890</td>
+                            <td>5</td>
+                            <td>250.00</td>
+                            <td><span class="status-inactive"><span
+                                        class="status-dot dot-inactive"></span>Inactive</span></td>
+                            <td>
+                                <div class="action-icons">
+                                    <svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg>
+                                    <svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Repeat Rows... -->
+                        <tr data-name="Emily Davis" data-email="emily.davis@example.com" data-phone="+1234567890">
+                            <td>#CUST003</td>
+                            <td>Emily Davis</td>
+                            <td>+1234567890</td>
+                            <td>30</td>
+                            <td>4,600.00</td>
+                            <td><span class="status-vip"><span class="status-dot dot-vip"></span>VIP</span></td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                        <tr data-name="Michael Brown" data-email="m.brown@example.com" data-phone="+1234567890">
+                            <td>#CUST004</td>
+                            <td>Michael Brown</td>
+                            <td>+1234567890</td>
+                            <td>15</td>
+                            <td>1,200.00</td>
+                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
+                            </td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                        <tr data-name="Sarah Wilson" data-email="sarah.w@example.com" data-phone="+1234567890">
+                            <td>#CUST005</td>
+                            <td>Sarah Wilson</td>
+                            <td>+1234567890</td>
+                            <td>8</td>
+                            <td>750.00</td>
+                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
+                            </td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                        <tr data-name="David Lee" data-email="david.lee@example.com" data-phone="+1234567890">
+                            <td>#CUST006</td>
+                            <td>David Lee</td>
+                            <td>+1234567890</td>
+                            <td>42</td>
+                            <td>5,320.00</td>
+                            <td><span class="status-vip"><span class="status-dot dot-vip"></span>VIP</span></td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                        <tr data-name="Lisa Anderson" data-email="lisa.a@example.com" data-phone="+1234567890">
+                            <td>#CUST007</td>
+                            <td>Lisa Anderson</td>
+                            <td>+1234567890</td>
+                            <td>3</td>
+                            <td>150.00</td>
+                            <td><span class="status-inactive"><span
+                                        class="status-dot dot-inactive"></span>Inactive</span></td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                        <tr data-name="Robert Taylor" data-email="bob.taylor@example.com" data-phone="+1234567890">
+                            <td>#CUST008</td>
+                            <td>Robert Taylor</td>
+                            <td>+1234567890</td>
+                            <td>25</td>
+                            <td>3,450.00</td>
+                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
+                            </td>
+                            <td>
+                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn">← Previous</button>
+                <div class="page-numbers">
+                    <div class="page-num active">1</div>
+                    <div class="page-num">2</div>
+                    <div class="page-num">3</div>
+                    <div class="page-num">4</div>
+                    <div class="page-num">5</div>
+                    <div class="page-num dots">...</div>
+                    <div class="page-num">24</div>
+                </div>
+                <button class="page-btn">Next →</button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Slide-in Customer Details Panel -->
+    <div class="details-panel" id="customerDetailsPanel">
+        <div class="panel-header">
+            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80"
+                alt="Avatar" class="panel-avatar" id="detailsAvatar">
+            <div class="panel-user-info">
+                <h3 id="detailsName">John Doe</h3>
+                <p id="detailsEmail">john.doe@example.com</p>
+                <a href="#"
+                    style="font-size: 0.8rem; color: #4e73df; text-decoration: none; margin-top: 4px; display: inline-block;">View
+                    public profile</a>
+            </div>
+            <div class="close-btn" id="closePanelBtn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div class="panel-content">
+            <!-- Info -->
+            <div class="info-section">
+                <div class="section-title">Customer Info</div>
+                <div class="info-row">
+                    <div class="info-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.12 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.81.57A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg></div>
+                    <span id="detailsPhone">+1234567890</span>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg></div>
+                    <span>123 Main St, NY</span>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="info-section">
+                <div class="section-title">Social Media</div>
+                <div class="social-icons">
+                    <div class="social-btn bg-fb"><svg style="width:16px;height:16px;fill:currentColor;"
+                            viewBox="0 0 24 24">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg></div>
+                    <div class="social-btn bg-tw"><svg style="width:16px;height:16px;fill:currentColor;"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg></div>
+                    <div class="social-btn bg-li"><svg style="width:16px;height:16px;fill:currentColor;"
+                            viewBox="0 0 24 24">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg></div>
+                    <div class="social-btn bg-in"><svg
+                            style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2"
+                            viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg></div>
+                </div>
+            </div>
+
+            <!-- Activity -->
+            <div class="info-section">
+                <div class="section-title">Activity</div>
+                <div class="activity-row">
+                    <span class="activity-label">Registration:</span>
+                    <span class="activity-val">15.01.2025</span>
+                </div>
+                <div class="activity-row">
+                    <span class="activity-label">Last purchase:</span>
+                    <span class="activity-val">10.01.2025</span>
+                </div>
+            </div>
+
+            <!-- Order Overview -->
+            <div class="info-section">
+                <div class="section-title">Order overview</div>
+                <div class="order-overview-grid">
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-val text-blue">150</div>
+                        <div class="mini-stat-label">Total order</div>
+                    </div>
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-val text-green">140</div>
+                        <div class="mini-stat-label">Completed</div>
+                    </div>
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-val text-red">10</div>
+                        <div class="mini-stat-label">Canceled</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const panel = document.getElementById('customerDetailsPanel');
+        const closeBtn = document.getElementById('closePanelBtn');
+        const tableRows = document.querySelectorAll('#customersTableBody tr');
+
+        // Panel Elements to Update
+        const detailsName = document.getElementById('detailsName');
+        const detailsEmail = document.getElementById('detailsEmail');
+        const detailsPhone = document.getElementById('detailsPhone');
+        const detailsAvatar = document.getElementById('detailsAvatar');
+
+        function openPanel(row) {
+            // Highlight row
+            tableRows.forEach(r => r.classList.remove('selected'));
+            row.classList.add('selected');
+
+            // Populate data (using data-attributes for demo, falling back to cell text)
+            const name = row.dataset.name || row.cells[1].textContent;
+            const email = row.dataset.email || name.toLowerCase().replace(/\s/g, '.') + '@example.com';
+            const phone = row.dataset.phone || row.cells[2].textContent;
+
+            detailsName.textContent = name;
+            detailsEmail.textContent = email;
+            detailsPhone.textContent = phone;
+
+            // Randomize avatar slightly for effect (in real app user would have specific avatar URL)
+            // Using UI Avatars for consistent letters
+            detailsAvatar.src = `https://ui-avatars.com/api/?name=${name}&background=random&color=fff&size=200`;
+
+            // Open Panel
+            panel.classList.add('active');
+        }
+
+        function closePanel() {
+            panel.classList.remove('active');
+            tableRows.forEach(r => r.classList.remove('selected'));
+        }
+
+        // Event Listeners
+        tableRows.forEach(row => {
+            row.addEventListener('click', (e) => {
+                // Prevent opening if clicking action buttons
+                if (e.target.closest('.action-icons')) return;
+                openPanel(row);
+            });
+        });
+
+        closeBtn.addEventListener('click', closePanel);
+
+        // Optional: Close when clicking outside (on main content) - simple implementation
+        document.querySelector('.main-content').addEventListener('click', (e) => {
+            // If click is outside panel and we are active, close? 
+            // Logic: Check if click target is NOT in panel AND NOT in a row
+            if (panel.classList.contains('active') && !e.target.closest('tr')) {
+                closePanel();
+            }
+        });
+    </script>
+</body>
+
+</html>

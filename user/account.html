@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .account-section {
+            padding: 120px 0 6rem;
+            min-height: 80vh;
+        }
+
+        .breadcrumb {
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-white);
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4rem;
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        /* Content Area */
+        .content-header {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .profile-card {
+            background: #FFFFFF;
+            /* White Card as requested */
+            border-radius: 4px;
+            /* Slightly rounded or sharp based on image */
+            padding: 3rem;
+            color: #333;
+            /* Dark text on white bg */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* Form Grid */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            background: #F5F5F5;
+            /* Light gray input bg */
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            color: #333;
+            font-family: var(--font-main);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: 1px solid var(--accent);
+        }
+
+        .password-section {
+            margin-top: 2rem;
+        }
+
+        .password-section h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .btn-cancel {
+            background: none;
+            border: none;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-save {
+            background: #00C851;
+            /* Green save button from image concept or brand red */
+            /* User image usually shows green for success/save in some templates, but let's see. 
+               The image description says "Save Changes". I'll use the brand accent if unsure, but standard UI often uses green.
+               I'll use Brand Accent to stick to theme, or the green from the user's uploaded image if visible. 
+               Since I can't confirm the uploaded image color, I'll use a nice Action Green as it acts as a robust save.
+             */
+            background: #00D87D;
+            /* Using a vibrant green */
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .account-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sidebar-section {
+                display: none;
+                /* Hide sidebar on mobile or make collapsible */
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .profile-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">HOME</a></li>
+                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="about.html" class="nav-item">ABOUT</a></li>
+                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <button class="icon-btn auth-required active-user">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="account-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Account</span>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
+                        style="color:var(--accent)">John Doe</span></h1>
+            </div>
+
+            <div class="account-grid">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Manage My Account</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="account.html" class="active">My Profile</a></li>
+                            <li><a href="address-book.html">Address Book</a></li>
+                            <li><a href="payment-options.html">Payment Options</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">My Orders</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="orders.html">My Orders</a></li>
+                            <li><a href="returns.html">My Returns</a></li>
+                            <li><a href="cancellations.html">My Cancellations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Logout</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="#" id="sideLogout" style="color: #ff4444;">Log Out</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Profile Form -->
+                <main class="profile-content">
+                    <h2 class="content-header">Edit Your Profile</h2>
+                    <div class="profile-card">
+                        <form id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" value="John">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" value="Doe">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" value="john.doe@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" value="123 Street, City">
+                                </div>
+                            </div>
+
+                            <div class="password-section">
+                                <h4>Password Changes</h4>
+                                <div class="form-group" style="margin-bottom: 1rem;">
+                                    <input type="password" class="form-control" placeholder="Current Password">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 1rem;">
+                                    <input type="password" class="form-control" placeholder="New Password">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 1rem;">
+                                    <input type="password" class="form-control" placeholder="Confirm New Password">
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn-cancel">Cancel</button>
+                                <button type="submit" class="btn-save">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
+                    </p>
+                </div>
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="f-col">
+                    <h4>Account</h4>
+                    <ul class="f-links">
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // Check Auth immediately
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        } else {
+            // Hide Signup Link
+            const signupLink = document.getElementById('signupLink');
+            if (signupLink) signupLink.style.display = 'none';
+        }
+
+        // Navbar Logic
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileNavLinks.classList.toggle('active');
+            });
+        }
+
+        // Side Logout
+        document.getElementById('sideLogout').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        // Form Submit
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('.btn-save');
+            const originalText = btn.innerText;
+            btn.innerText = 'Saving...';
+            setTimeout(() => {
+                btn.innerText = 'Changes Saved!';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                }, 2000);
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

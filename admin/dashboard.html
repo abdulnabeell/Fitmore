@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitmore - Admin Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #4e73df;
+            --primary-bg: #f5f7fb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --sidebar-width: 260px;
+            --success-green: #1cc88a;
+            --danger-red: #e74a3b;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            position: fixed;
+            /* Fixed for mobile behavior if needed */
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                /* Static on desktop */
+                transform: none;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.25);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-avatar-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            /* Fallback */
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .logout-icon {
+            margin-left: auto;
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            /* Darker black */
+        }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 50px;
+            /* Fully rounded */
+            border: 1px solid transparent;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #fff;
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-icon {
+            color: var(--text-gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .avatar-top {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* Dashboard Content */
+        .content-wrapper {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-weight: 600;
+            color: #374151;
+            font-size: 1rem;
+        }
+
+        .more-dots {
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        .stat-main {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .stat-trend {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: var(--success-green);
+        }
+
+        .trend-down {
+            color: var(--danger-red);
+        }
+
+        .stat-subtext {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-subtext span {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .stat-details-btn {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            background: transparent;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .stat-details-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Specific modifications for 3rd card */
+        .pending-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .pending-item h5 {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        .pending-item .val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .pending-item .val-sub {
+            font-size: 0.85rem;
+            color: var(--success-green);
+        }
+
+        /* Assuming green for user count */
+        .pending-item .val-sub.red {
+            color: var(--danger-red);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title-group h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .chart-metrics {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .metric-item h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-item p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Active indicator for chart metric */
+        .metric-item.active {
+            position: relative;
+        }
+
+        .metric-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            /* Adjust based on padding */
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #38bdf8;
+            /* Light blue like in image */
+        }
+
+        .chart-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tab-switch {
+            background: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 8px;
+            display: flex;
+        }
+
+        .tab-btn {
+            padding: 0.4rem 1rem;
+            border: none;
+            background: transparent;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--primary-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* SVG Chart Container */
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .chart-tooltip {
+            position: absolute;
+            background: #38bdf8;
+            /* Light blue */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            transform: translate(-50%, -100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .chart-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px 6px 0;
+            border-style: solid;
+            border-color: #38bdf8 transparent transparent transparent;
+        }
+
+        /* Helper Utilities */
+        .hidden {
+            display: none;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        /* Icons */
+        /* Using a simple font-awesome workaround or SVG icons would be ideal. I will use embedded SVGs for zero dependencies. */
+        svg.icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">FITMORE</div>
+
+        <div class="menu-category">Main menu</div>
+        <div class="nav-item active" onclick="window.location.href='dashboard.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            Dashboard
+        </div>
+        <div class="nav-item" onclick="window.location.href='orders.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </div>
+            Order Management
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            Customers
+        </div>
+        <div class="nav-item" onclick="window.location.href='coupons.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            Coupon Code
+        </div>
+        <div class="nav-item" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            Categories
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </div>
+            Transaction
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+            </div>
+            Brand
+        </div>
+
+        <div class="menu-category">Product</div>
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            Add Products
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            Product Media
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            Product List
+        </div>
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                    </path>
+                </svg>
+            </div>
+            Product Reviews
+        </div>
+
+        <div class="menu-category">Admin</div>
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            Admin Role
+        </div>
+
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Dealport&background=333&color=fff" alt="User"
+                class="user-avatar-sm">
+            <div class="user-info">
+                <h4>Dealport</h4>
+                <p>Mark@thedesigner...</p>
+            </div>
+            <div class="logout-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #374151;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                </svg>
+                Your Shop
+            </div>
+            <svg class="icon" style="width: 16px; height: 16px; color: #9ca3af;" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+        <!-- Navbar -->
+        <header class="top-navbar">
+            <div class="page-title">Dashboard</div>
+            <div class="search-container">
+                <svg class="icon search-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search data, users, or reports">
+            </div>
+            <div class="nav-actions">
+                <div class="action-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </div>
+                <div class="action-icon">
+                    <!-- Sun/Settings icon toggle -->
+                    <div
+                        style="background: #e0f2fe; padding: 4px 8px; border-radius: 20px; display: flex; align-items: center; gap: 4px;">
+                        <svg class="icon" style="width: 16px; height: 16px; color: #0ea5e9; fill: #0ea5e9;"
+                            viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <div style="width: 16px; height: 16px; background: white; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                    alt="Avatar" class="avatar-top">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Stats -->
+            <section class="stats-grid">
+                <!-- Card 1 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Total Sales</div>
+                        <div class="more-dots">⋮</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem;">Last 7 days</div>
+                    <div class="stat-main">
+                        <div class="stat-value">$350K</div>
+                        <div class="stat-trend trend-up">Sales ↑ 10.4%</div>
+                    </div>
+                    <div class="stat-subtext">Previous 7days <span>($235)</span></div>
+                    <button class="stat-details-btn">Details</button>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Total Orders</div>
+                        <div class="more-dots">⋮</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem;">Last 7 days</div>
+                    <div class="stat-main">
+                        <div class="stat-value">10.7K</div>
+                        <div class="stat-trend trend-up">order ↑ 14.4%</div>
+                    </div>
+                    <div class="stat-subtext">Previous 7days <span>(7.6k)</span></div>
+                    <button class="stat-details-btn">Details</button>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Pending & Canceled</div>
+                        <div class="more-dots">⋮</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem;">Last 7 days</div>
+
+                    <div class="pending-stats">
+                        <div class="pending-item">
+                            <h5>Pending</h5>
+                            <div class="val">509 <span class="val-sub">user 204</span></div>
+                        </div>
+                        <div class="pending-item">
+                            <h5>Canceled</h5>
+                            <div class="val">94 <span class="val-sub red">↓ 14.4%</span></div>
+                        </div>
+                    </div>
+                    <button class="stat-details-btn">Details</button>
+                </article>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <div class="chart-header">
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: #111827; margin-bottom: 2rem;">Customer
+                            Overview</h3>
+                        <div class="chart-metrics">
+                            <div class="metric-item active">
+                                <h4>25k</h4>
+                                <p>Active Customers</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>5.6k</h4>
+                                <p>Repeat Customers</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>250k</h4>
+                                <p>Shop Visitor</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>5.5%</h4>
+                                <p>Conversion Rate</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-controls">
+                        <div class="tab-switch">
+                            <button class="tab-btn active">This week</button>
+                            <button class="tab-btn">Last week</button>
+                        </div>
+                        <div class="more-dots" style="font-size: 1.5rem; line-height: 0.5;">⋮</div>
+                    </div>
+                </div>
+
+                <!-- SVG Area Chart -->
+                <div class="chart-container" id="chartContainer">
+                    <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none">
+                        <!-- Defs for Gradient -->
+                        <defs>
+                            <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+                                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1" />
+                                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Grid Lines -->
+                        <g class="grid-lines" stroke="#f3f4f6" stroke-width="1">
+                            <line x1="0" y1="50" x2="800" y2="50" />
+                            <line x1="0" y1="100" x2="800" y2="100" />
+                            <line x1="0" y1="150" x2="800" y2="150" />
+                            <line x1="0" y1="200" x2="800" y2="200" />
+                            <line x1="0" y1="250" x2="800" y2="250" />
+                        </g>
+
+                        <!-- Y Axis Labels -->
+                        <g class="y-labels" font-size="10" fill="#9ca3af" text-anchor="start">
+                            <text x="0" y="50">50k</text>
+                            <text x="0" y="100">40k</text>
+                            <text x="0" y="150">30k</text>
+                            <text x="0" y="200">20k</text>
+                            <text x="0" y="250">10k</text>
+                            <text x="0" y="290">0k</text>
+                        </g>
+
+                        <!-- Chart Path (Smooth Area) -->
+                        <!-- Data points approximate: Sun:200, Mon:120, Tue:120, Wed:150, Thu:50, Fri:150, Sat:120 (Y coordinates inverted roughly) -->
+                        <!-- Using cubic bezier for smoothness -->
+                        <path
+                            d="M40,220 C100,220 120,130 180,130 S220,130 260,150 S300,150 340,150 S380,50 420,50 S500,50 540,130 S600,130 640,110 S760,110 800,110 V300 H40 Z"
+                            fill="url(#areaGradient)" stroke="none" />
+
+                        <!-- Line Path -->
+                        <path
+                            d="M40,220 C100,220 120,130 180,130 S220,130 260,150 S300,150 340,150 S380,50 420,50 S500,50 540,130 S600,130 640,110 S760,110 800,110"
+                            fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Interactive Point (Wednesday) -->
+                        <g transform="translate(340, 150)">
+                            <circle r="6" fill="#fff" stroke="#86efac" stroke-width="2" />
+
+                            <!-- Tooltip shown by default for the demo -->
+                            <foreignObject x="-50" y="-60" width="100" height="50">
+                                <div class="chart-tooltip" xmlns="http://www.w3.org/1999/xhtml">
+                                    <div style="font-weight:600">Thursday</div>
+                                    <div>25,409</div>
+                                </div>
+                            </foreignObject>
+                            <!-- Dotted vertical line -->
+                            <line x1="0" y1="6" x2="0" y2="150" stroke="#86efac" stroke-width="1"
+                                stroke-dasharray="4 4" />
+                        </g>
+
+                        <!-- X Axis Labels -->
+                        <g class="x-labels" font-size="10" fill="#9ca3af" text-anchor="middle"
+                            transform="translate(0, 20)">
+                            <text x="40" y="270">Sun</text>
+                            <text x="160" y="270">Mon</text>
+                            <text x="280" y="270">Tue</text>
+                            <text x="340" y="270" font-weight="bold" fill="#374151">Wed</text>
+                            <text x="420" y="270">Thu</text>
+                            <text x="540" y="270">Fri</text>
+                            <text x="660" y="270">Sat</text>
+                        </g>
+                    </svg>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Basic sidebar toggle logic for mobile (not fully styled for mobile in this pass but prepared)
+        // Adjust chart width on resize if needed
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                // Remove active class from all
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                // Add to clicked
+                this.classList.add('active');
+            });
+        });
+
+        // Tab switching logic (Visual only)
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
