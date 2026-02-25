@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Account - FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page Specific Styles matching verify-code.html */
+        body {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 80px;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .auth-desc {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: white;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: var(--transition);
+            text-align: center;
+            letter-spacing: 5px;
+            font-size: 1.2rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-auth {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-auth:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-auth:disabled {
+            background: #444;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .resend-link {
+            display: block;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .resend-link a {
+            color: white;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .resend-link a.disabled {
+            color: var(--text-muted);
+            text-decoration: none;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 2rem;
+            }
+
+            .auth-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">Home</a></li>
+                    <li><a href="shop.html" class="nav-item">Shop</a></li>
+                    <li><a href="contact.html" class="nav-item">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Verify Your Account</h1>
+            <p class="auth-desc">Enter the 6-digit code we sent to your email to verify your account.</p>
+
+            <form id="otpForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="otp" placeholder="000000" maxlength="6"
+                        pattern="\d{6}" required>
+                </div>
+
+                <button type="submit" class="btn-auth">Verify Code</button>
+
+                <div class="resend-link">
+                    Didn't receive code?
+                    <a href="#" id="resendBtn">Resend</a>
+                    <span id="timerText" style="display:none; margin-left: 5px; color: var(--text-muted);">(30s)</span>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
+                    </p>
+                </div>
+                <!-- ... Simplified footer for auth pages ... -->
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // Navbar Toggle
+        //         const mobileToggleBtn = document.getElementById('mobileToggle');
+        //         const mobileNavLinks = document.getElementById('navLinks');
+
+        //         if (mobileToggleBtn) {
+        //             mobileToggleBtn.addEventListener('click', () => {
+        //                 mobileNavLinks.classList.toggle('active');
+        //             });
+        //         }
+
+        //         // Logic
+        //         const otpForm = document.getElementById('otpForm');
+        // const otpInput = otpForm.querySelector('input[name="otp"]');
+        // const verifyBtn = otpForm.querySelector('button[type="submit"]');
+        // const resendBtn = document.getElementById('resendBtn');
+        // const timerText = document.getElementById('timerText');
+
+        // let timeLeft = 30;
+        // let timerId = null;
+
+        //         // const otpForm = document.getElementById('otpForm');
+        //         // const otpInput = otpForm.querySelector('input[name="otp"]');
+        //         // const verifyBtn = otpForm.querySelector('button[type="submit"]');
+        //         // const resendBtn = document.getElementById('resendBtn');
+        //         // const timerText = document.getElementById('timerText');
+
+        //         // otpForm.addEventListener('submit', (e) => {
+        //         //     e.preventDefault();
+        //         //     const enteredCode = otpInput.value.trim();
+
+        //         //     if (enteredCode === '123456') { // Dummy OTP
+        //         //         verifyBtn.innerText = 'Verifying...';
+        //         //         verifyBtn.disabled = true;
+
+        //         //         setTimeout(() => {
+        //         //             alert('Account verified successfully!');
+        //         //             window.location.href = 'login.html';
+        //         //         }, 1000);
+        //         //     } else {
+        //         //         alert('Invalid code. Please try again.');
+        //         //         otpInput.value = '';
+        //         //         otpInput.focus();
+        //         //     }
+        //         // });
+        //         const params = new URLSearchParams(window.location.search);
+        // const userId = params.get('userId');
+
+        // if (!userId) {
+        //     alert('Invalid access. Please signup again.');
+        //     window.location.href = 'signup.html';
+        // }
+
+        // otpForm.addEventListener('submit', async (e) => {
+        //     e.preventDefault();
+
+        //     const otp = otpInput.value.trim();
+
+        //     if (!otp) {
+        //         alert('Enter OTP');
+        //         return;
+        //     }
+
+        //     verifyBtn.innerText = 'Verifying...';
+        //     verifyBtn.disabled = true;
+
+        //     try {
+        //         const res = await fetch('/api/auth/verify-otp', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ userId, otp })
+        //         });
+
+        //         const data = await res.json();
+
+        //         if (!res.ok) throw new Error(data.message);
+
+        //         alert('Account verified successfully!');
+        //         window.location.href = 'login.html';
+
+        //     } catch (err) {
+        //         alert(err.message);
+        //         verifyBtn.disabled = false;
+        //         verifyBtn.innerText = 'Verify Code';
+        //     }
+        // });
+
+
+        //         // Resend Timer Logic
+        //         // let timeLeft = 30;
+        //         // let timerId = null;
+
+        //         // resendBtn.addEventListener('click', (e) => {
+        //         //     e.preventDefault();
+        //         //     if (resendBtn.classList.contains('disabled')) return;
+
+        //         //     // Start logic
+        //         //     startResendTimer();
+        //         //     alert('New code sent: 123456');
+        //         // });
+        //         resendBtn.addEventListener('click', async (e) => {
+        //     e.preventDefault();
+
+        //     if (resendBtn.classList.contains('disabled')) return;
+
+        //     try {
+        //         const res = await fetch('/api/auth/resend-otp', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ userId })
+        //         });
+
+        //         const data = await res.json();
+
+        //         if (!res.ok) throw new Error(data.message);
+
+        //         alert('New OTP sent to email');
+        //         startResendTimer();
+
+        //     } catch (err) {
+        //         alert(err.message);
+        //     }
+        // });
+
+
+        //         function startResendTimer() {
+        //             // Disable button
+        //             resendBtn.classList.add('disabled');
+        //             resendBtn.style.pointerEvents = 'none'; // Ensure check
+        //             timerText.style.display = 'inline';
+        //             timeLeft = 30;
+        //             timerText.innerText = `(${timeLeft}s)`;
+
+        //             timerId = setInterval(() => {
+        //                 timeLeft--;
+        //                 timerText.innerText = `(${timeLeft}s)`;
+
+        //                 if (timeLeft <= 0) {
+        //                     clearInterval(timerId);
+        //                     // Enable button
+        //                     resendBtn.classList.remove('disabled');
+        //                     resendBtn.style.pointerEvents = 'auto';
+        //                     timerText.style.display = 'none';
+        //                     resendBtn.innerText = 'Resend';
+        //                 }
+        //             }, 1000);
+        //         }
+        //
+        // Navbar Toggle
+        // const mobileToggleBtn = document.getElementById('mobileToggle');
+        // const mobileNavLinks = document.getElementById('navLinks');
+
+        // if (mobileToggleBtn) {
+        //     mobileToggleBtn.addEventListener('click', () => {
+        //         mobileNavLinks.classList.toggle('active');
+        //     });
+        // }
+
+        // // Elements
+        // const otpForm = document.getElementById('otpForm');
+        // const otpInput = otpForm.querySelector('input[name="otp"]');
+        // const verifyBtn = otpForm.querySelector('button[type="submit"]');
+        // const resendBtn = document.getElementById('resendBtn');
+        // const timerText = document.getElementById('timerText');
+
+        // let timeLeft = 30;
+        // let timerId = null;
+
+        // // Get userId from URL
+        // // const params = new URLSearchParams(window.location.search);
+        // // const userId = params.get('userId');
+
+        // // if (!userId) {
+        // //     alert('Invalid access. Please signup again.');
+        // //     window.location.href = 'signup.html';
+        // // }
+        // let userId;
+
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const params = new URLSearchParams(window.location.search);
+        //     userId = params.get('userId');
+
+        //     if (!userId) {
+        //         alert('Invalid access. Please signup again.');
+        //         window.location.href = 'signup.html';
+        //     }
+        // });
+
+
+        // // Verify OTP
+        // otpForm.addEventListener('submit', async (e) => {
+        //     e.preventDefault();
+
+        //     const otp = otpInput.value.trim();
+        //     if (!otp) return alert('Enter OTP');
+
+        //     verifyBtn.innerText = 'Verifying...';
+        //     verifyBtn.disabled = true;
+
+        //     try {
+        //         const res = await fetch('/api/auth/verify-otp', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ userId, otp })
+        //         });
+
+        //         const data = await res.json();
+        //         if (!res.ok) throw new Error(data.message);
+
+        //         alert('Account verified successfully!');
+        //         window.location.href = 'login.html';
+
+        //     } catch (err) {
+        //         alert(err.message);
+        //         verifyBtn.disabled = false;
+        //         verifyBtn.innerText = 'Verify Code';
+        //     }
+        // });
+
+        // // Resend OTP
+        // resendBtn.addEventListener('click', async (e) => {
+        //     e.preventDefault();
+        //     if (resendBtn.classList.contains('disabled')) return;
+
+        //     try {
+        //         const res = await fetch('/api/auth/resend-otp', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ userId })
+        //         });
+
+        //         const data = await res.json();
+        //         if (!res.ok) throw new Error(data.message);
+
+        //         alert('New OTP sent to email');
+        //         startResendTimer();
+
+        //     } catch (err) {
+        //         alert(err.message);
+        //     }
+        // });
+
+        // // Timer
+        // function startResendTimer() {
+        //     resendBtn.classList.add('disabled');
+        //     resendBtn.style.pointerEvents = 'none';
+        //     timerText.style.display = 'inline';
+
+        //     timeLeft = 30;
+        //     timerText.innerText = `(${timeLeft}s)`;
+
+        //     timerId = setInterval(() => {
+        //         timeLeft--;
+        //         timerText.innerText = `(${timeLeft}s)`;
+
+        //         if (timeLeft <= 0) {
+        //             clearInterval(timerId);
+        //             resendBtn.classList.remove('disabled');
+        //             resendBtn.style.pointerEvents = 'auto';
+        //             timerText.style.display = 'none';
+        //         }
+        //     }, 1000);
+        // }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Navbar
+            const mobileToggleBtn = document.getElementById('mobileToggle');
+            const mobileNavLinks = document.getElementById('navLinks');
+
+            if (mobileToggleBtn) {
+                mobileToggleBtn.addEventListener('click', () => {
+                    mobileNavLinks.classList.toggle('active');
+                });
+            }
+
+            // Elements
+            const otpForm = document.getElementById('otpForm');
+            const otpInput = otpForm.querySelector('input[name="otp"]');
+            const verifyBtn = otpForm.querySelector('button[type="submit"]');
+            const resendBtn = document.getElementById('resendBtn');
+            const timerText = document.getElementById('timerText');
+
+            let timeLeft = 30;
+            let timerId = null;
+
+            // Read userId AFTER page loads
+            // const params = new URLSearchParams(window.location.search);
+            // const userId = params.get('userId');
+
+            // if (!userId) {
+            //     alert('Invalid access. Please signup again.');
+            //     window.location.href = 'signup.html';
+            //     return;
+            // }
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get('userId');
+            const mode = params.get('mode');
+
+            if (!userId) {
+                errorAlert('Invalid access. Please signup again.');
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            // Verify OTP
+            //     otpForm.addEventListener('submit', async (e) => {
+            //         e.preventDefault();
+
+            //         const otp = otpInput.value.trim();
+            //         if (!otp) return alert('Enter OTP');
+
+            //         verifyBtn.innerText = 'Verifying...';
+            //         verifyBtn.disabled = true;
+
+            //         try {
+            //             const res = await fetch('/api/auth/verify-otp', {
+            //                 method: 'POST',
+            //                 headers: { 'Content-Type': 'application/json' },
+            //                 body: JSON.stringify({ userId, otp })
+            //             });
+
+            //             const data = await res.json();
+            //             if (!res.ok) throw new Error(data.message);
+
+            //             alert('Account verified successfully!');
+            //             // window.location.href = 'login.html';
+            //             if (mode === 'signup') {
+            //     window.location.href = 'login.html';
+            // } else {
+            //     window.location.href =
+            //       `change-password.html?userId=${userId}&otp=${otp}`;
+            // }
+
+
+            //         } catch (err) {
+            //             alert(err.message);
+            //             verifyBtn.disabled = false;
+            //             verifyBtn.innerText = 'Verify Code';
+            //         }
+            //     });
+            otpForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const otp = otpInput.value.replace(/\s/g, '');
+
+                if (!otp) return errorAlert('Enter OTP');
+
+                verifyBtn.innerText = 'Verifying...';
+                verifyBtn.disabled = true;
+
+                try {
+
+                    let url;
+                    let body;
+                    if (mode === 'signup') {
+                        url = '/api/auth/verify-otp';
+                        body = { userId, otp };
+                    } else {
+                        url = '/api/auth/verify-forgot-otp';
+                        body = { userId, otp };
+                    }
+
+
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message);
+
+                    if (mode === 'signup') {
+                        window.location.href = 'login.html';
+                    } else {
+                        window.location.href =
+                            `change-password.html?userId=${userId}&otp=${otp}`;
+                    }
+
+                } catch (err) {
+                    errorAlert(err.message);
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerText = 'Verify Code';
+                }
+            });
+
+            // Resend OTP
+            resendBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                if (resendBtn.classList.contains('disabled')) return;
+
+                try {
+                    const res = await fetch('/api/auth/resend-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userId })
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message);
+
+                    successAlert('New OTP sent to email');
+                    startResendTimer();
+
+                } catch (err) {
+                    errorAlert(err.message);
+                }
+            });
+
+            function startResendTimer() {
+                resendBtn.classList.add('disabled');
+                timerText.style.display = 'inline';
+
+                timeLeft = 30;
+                timerText.innerText = `(${timeLeft}s)`;
+
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    timerText.innerText = `(${timeLeft}s)`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        resendBtn.classList.remove('disabled');
+                        timerText.style.display = 'none';
+                    }
+                }, 1000);
+            }
+
+        });
+
+
+    </script>
+</body>
+
+</html>

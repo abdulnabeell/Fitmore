@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .checkout-section {
+            padding: 120px 0 6rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-white);
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Billing Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-label span {
+            color: var(--accent);
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 4px;
+            color: white;
+            font-family: var(--font-main);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            accent-color: var(--accent);
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: var(--text-white);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: transparent;
+            padding: 2rem 0;
+            /* No background/padding as per design image, just clean list */
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .summary-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: white;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .s-rows {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .s-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .s-row:last-child {
+            border-bottom: none;
+        }
+
+        .payment-methods {
+            margin-top: 2rem;
+        }
+
+        .payment-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-option input {
+            accent-color: var(--accent);
+            width: 18px;
+            height: 18px;
+        }
+
+        .bank-icons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .coupon-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .coupon-input {
+            flex: 1;
+            background: transparent;
+            border: 1px solid white;
+            padding: 12px;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .btn-apply {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-place {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+
+        .btn-place:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .order-summary {
+                background: var(--bg-card);
+                padding: 2rem;
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header (Reused) -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">HOME</a></li>
+                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="about.html" class="nav-item">ABOUT</a></li>
+                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <button class="icon-btn auth-required active-user">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Account</a> / <a href="#">My Account</a> / <a href="#">Product</a> / <a
+                    href="cart.html">View Cart</a> / <span style="color:var(--text-white)">CheckOut</span>
+            </div>
+
+            <h1 class="page-title">Billing Details</h1>
+
+            <div class="checkout-grid">
+                <!-- Left: Form -->
+                <form id="billingForm">
+                    <div class="form-group">
+                        <label class="form-label">First Name<span>*</span></label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Street Address<span>*</span></label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Apartment, floor, etc. (optional)</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Town/City<span>*</span></label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number<span>*</span></label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address<span>*</span></label>
+                        <input type="email" class="form-control" required>
+                    </div>
+
+                    <label class="checkbox-group">
+                        <input type="checkbox" checked>
+                        <span class="checkbox-label">Save this information for faster check-out next time</span>
+                    </label>
+                </form>
+
+                <!-- Right: Summary -->
+                <div class="order-summary">
+                    <div id="orderItems">
+                        <!-- Rendered via JS -->
+                    </div>
+
+                    <div class="s-rows">
+                        <div class="s-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotalDisplay">$0</span>
+                        </div>
+                        <div class="s-row">
+                            <span>Shipping:</span>
+                            <span>Free</span>
+                        </div>
+                        <div class="s-row">
+                            <span>Total:</span>
+                            <span id="totalDisplay" style="color:var(--accent)">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <div class="payment-left">
+                                <input type="radio" name="payment" value="wallet" id="paymentWallet">
+                                <span>Wallet (Bal: <span id="walletBalanceDisplay"
+                                        style="color:var(--accent)">$0.00</span>)</span>
+                            </div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
+                                <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
+                                <path d="M18 12a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v-8h-4z"></path>
+                            </svg>
+                        </label>
+
+                        <label class="payment-option">
+                            <div class="payment-left">
+                                <input type="radio" name="payment" value="bank">
+                                <span>Bank</span>
+                            </div>
+                            <!-- Mock Icons -->
+                            <div class="bank-icons">
+                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
+                                    <rect width="36" height="24" rx="2" />
+                                </svg>
+                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
+                                    <rect width="36" height="24" rx="2" />
+                                </svg>
+                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
+                                    <rect width="36" height="24" rx="2" />
+                                </svg>
+                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
+                                    <rect width="36" height="24" rx="2" />
+                                </svg>
+                            </div>
+                        </label>
+
+                        <label class="payment-option">
+                            <div class="payment-left">
+                                <input type="radio" name="payment" value="cod" checked>
+                                <span>Cash on delivery</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="coupon-row">
+                        <input type="text" class="coupon-input" placeholder="Coupon Code">
+                        <button class="btn-apply">Apply Coupon</button>
+                    </div>
+
+                    <button class="btn-place" id="placeOrderBtn">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
+                    </p>
+                </div>
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="f-col">
+                    <h4>Account</h4>
+                    <ul class="f-links">
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <!-- SweetAlert2 & Custom Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/alert.js"></script>
+
+    <script>
+        // Check Auth
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'signup.html';
+        }
+
+        // Mobile Toggle
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileNavLinks.classList.toggle('active');
+            });
+        }
+
+        // Load Cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderItemsContainer = document.getElementById('orderItems');
+        const subtotalDisplay = document.getElementById('subtotalDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+
+        // Render Summary
+        function renderSummary() {
+            let total = 0;
+            if (cart.length === 0) {
+                orderItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                orderItemsContainer.innerHTML = '';
+                cart.forEach(item => {
+                    total += item.price * item.qty;
+                    // Handle image path (encode for spaces)
+                    const imgSrc = item.image ? encodeURI(item.image) : 'images/download.jpg';
+
+                    const div = document.createElement('div');
+                    div.className = 'summary-item';
+                    div.innerHTML = `
+                        <div class="summary-info">
+                            <img src="${imgSrc}" alt="${item.name}" onerror="this.src='images/download.jpg'">
+                            <span>${item.name}</span>
+                        </div>
+                        <span>$${item.price * item.qty}</span>
+                    `;
+                    orderItemsContainer.appendChild(div);
+                });
+            }
+            subtotalDisplay.innerText = `$${total}`;
+            totalDisplay.innerText = `$${total}`;
+        }
+
+        renderSummary();
+
+        // Wallet Intialization
+        let walletBalance = parseFloat(localStorage.getItem('walletBalance'));
+        if (isNaN(walletBalance)) {
+            // Default Balance for Demo
+            walletBalance = 1000.00;
+            localStorage.setItem('walletBalance', walletBalance);
+        }
+
+        const walletBalanceDisplay = document.getElementById('walletBalanceDisplay');
+        if (walletBalanceDisplay) {
+            walletBalanceDisplay.innerText = `$${walletBalance.toFixed(2)}`;
+        }
+
+        // Place Order Logic
+        document.getElementById('placeOrderBtn').addEventListener('click', () => {
+            const form = document.getElementById('billingForm');
+            if (form.checkValidity()) {
+                const selectedPayment = document.querySelector('input[name="payment"]:checked');
+
+                if (selectedPayment && selectedPayment.value === 'wallet') {
+                    // Calculate Total
+                    let currentTotal = 0;
+                    cart.forEach(item => currentTotal += item.price * item.qty);
+
+                    if (walletBalance >= currentTotal) {
+                        walletBalance -= currentTotal;
+                        localStorage.setItem('walletBalance', walletBalance);
+                        successAlert(`Order Placed Successfully! Paid $${currentTotal.toFixed(2)} from Wallet. Remaining Balance: $${walletBalance.toFixed(2)}`).then(() => {
+                            localStorage.removeItem('cart');
+                            window.location.href = 'index.html';
+                        });
+                    } else {
+                        errorAlert(`Insufficient Wallet Balance! You need $${currentTotal.toFixed(2)} but have only $${walletBalance.toFixed(2)}. Please select another payment method.`);
+                        return; // Stop checkout
+                    }
+                } else {
+                    successAlert('Order Placed Successfully! Thank you for shopping with FITMORE.').then(() => {
+                        localStorage.removeItem('cart');
+                        window.location.href = 'index.html';
+                    });
+                }
+
+            } else {
+                form.reportValidity();
+            }
+        });
+    </script>
+</body>
+
+</html>

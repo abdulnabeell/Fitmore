@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitmore - Categories</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #4e73df;
+            --primary-bg: #f5f7fb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --sidebar-width: 260px;
+            --success-green: #10b981;
+            --danger-red: #ef4444;
+            --warning-yellow: #f59e0b;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            position: fixed;
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                transform: none;
+            }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.25);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-avatar-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 50px;
+            border: 1px solid transparent;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background-color: #fff;
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-icon {
+            color: var(--text-gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .avatar-top {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Categories Specific */
+        .page-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+            padding: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background-color: #f9fafb;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            color: #1f2937;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f9fafb;
+        }
+
+        .cat-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #f3f4f6;
+            border: 1px solid var(--border-color);
+        }
+
+        .cat-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .cat-info p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-published {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-draft {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-hidden {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(78, 115, 223, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #3b5ecc;
+            transform: translateY(-1px);
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background: #f9fafb;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #eff6ff;
+            color: var(--primary-blue);
+            border-color: #dbeafe;
+        }
+
+        .action-btn.delete:hover {
+            background: #fef2f2;
+            color: var(--danger-red);
+            border-color: #fee2e2;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        /* Slug Preview */
+        .slug-preview {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 150px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            background-color: #f9fafb;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        .image-preview.has-image img {
+            display: block;
+        }
+
+        .upload-placeholder {
+            text-align: center;
+            color: var(--text-gray);
+            pointer-events: none;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+    </style>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Cropper.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <style>
+        /* Cropper Customizations */
+        .img-container {
+            max-height: 400px;
+            width: 100%;
+            display: block;
+        }
+
+        .img-container img {
+            max-width: 100%;
+        }
+
+        .cropper-view-box,
+        .cropper-face {
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">FITMORE</div>
+
+        <div class="menu-category">Main menu</div>
+        <div class="nav-item" onclick="window.location.href='dashboard.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            Dashboard
+        </div>
+        <div class="nav-item" onclick="window.location.href='orders.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </div>
+            Order Management
+        </div>
+        <div class="nav-item" onclick="window.location.href='customers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            Customers
+        </div>
+        <div class="nav-item" onclick="window.location.href='coupons.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            Coupon Code
+        </div>
+        <div class="nav-item active" onclick="window.location.href='categories.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            Categories
+        </div>
+        <div class="nav-item" onclick="window.location.href='transactions.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </div>
+            Transaction
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+            </div>
+            Brand
+        </div>
+
+        <div class="menu-category">Product</div>
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            Add Products
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            Product Media
+        </div>
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            Product List
+        </div>
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                    </path>
+                </svg>
+            </div>
+            Product Reviews
+        </div>
+
+        <div class="menu-category">Admin</div>
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            Admin Role
+        </div>
+
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Dealport&background=333&color=fff" alt="User"
+                class="user-avatar-sm">
+            <div class="user-info">
+                <h4>Dealport</h4>
+                <p>Mark@thedesigner...</p>
+            </div>
+            <div class="logout-icon">
+                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
+                    viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Navbar -->
+        <header class="top-navbar">
+            <div class="page-title">Categories</div>
+            <div class="search-container">
+                <svg class="icon search-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search categories...">
+            </div>
+            <div class="nav-actions">
+                <div class="action-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+                    alt="Avatar" class="avatar-top">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Header Row -->
+            <div class="page-header-row">
+                <h2 class="section-heading">All Categories</h2>
+                <button class="btn btn-primary" onclick="openModal()">
+                    <svg class="icon" style="width:18px;height:18px;" viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Category
+                </button>
+            </div>
+
+            <!-- Categories Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Category</th>
+                            <th>Slug</th>
+                            <th>Total Products</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoriesTableBody">
+                        <!-- Data populated by JS -->
+                    </tbody>
+                </table>
+                <div id="noDataMessage" style="text-align: center; padding: 3rem; display: none;">
+                    <svg style="width: 48px; height: 48px; color: #d1d5db; margin-bottom: 1rem;" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 8h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"></path>
+                        <path d="M8 8V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"></path>
+                        <line x1="10" y1="14" x2="14" y2="14"></line>
+                    </svg>
+                    <p style="color: var(--text-gray); font-weight: 500;">No categories found</p>
+                    <p style="font-size: 0.85rem; color: #9ca3af; margin-top: 0.25rem;">Add a new category to get
+                        started</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Category Modal -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add Category</h3>
+                <button class="close-modal" onclick="closeModal()">
+                    <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="alert alert-error" id="modalError"></div>
+
+            <form id="categoryForm" onsubmit="handleCategorySubmit(event)">
+                <input type="hidden" id="categoryId">
+
+                <div class="form-group">
+                    <label class="form-label" for="categoryName">Category Name</label>
+                    <input type="text" id="categoryName" class="form-input" placeholder="e.g. Whey Protein" required
+                        oninput="generateSlug(this.value)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="categorySlug">Slug</label>
+                    <input type="text" id="categorySlug" class="form-input" placeholder="e.g. whey-protein" readonly
+                        style="background-color: #f3f4f6; color: #6b7280;">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="categoryDescription">Description</label>
+                    <textarea id="categoryDescription" class="form-textarea" rows="2"
+                        placeholder="Start your fitness journey..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Category Image</label>
+                        <input type="file" id="categoryFile" class="form-input" accept="image/*"
+                            onchange="previewImage(this)">
+                        <input type="hidden" id="categoryImageBase64">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="categoryStatus" class="form-select">
+                            <option value="Published">Published</option>
+                            <option value="Draft">Draft</option>
+                            <option value="Hidden">Hidden</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Image Preview Box -->
+                <div id="previewContainer" class="image-preview"
+                    style="margin-bottom: 1rem; height: auto; min-height: 200px; display: block;">
+                    <div class="img-container">
+                        <img id="previewImg" src="" style="display:none; max-width: 100%;">
+                    </div>
+                    <div id="uploadPlaceholder" class="upload-placeholder" style="padding: 3rem 0;">
+                        <svg style="width: 24px; height: 24px; margin-bottom: 0.5rem; color: #9ca3af;"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span style="font-size: 0.8rem; display: block;">Image preview</span>
+                    </div>
+                </div>
+
+                <div id="cropControls"
+                    style="display: none; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button type="button" class="btn"
+                        style="background: var(--danger-red); color: white; border: none; font-size: 0.8rem; padding: 0.4rem 0.8rem;"
+                        onclick="cancelCrop()">Cancel</button>
+                    <button type="button" class="btn"
+                        style="background: var(--success-green); color: white; border: none; font-size: 0.8rem; padding: 0.4rem 0.8rem;"
+                        onclick="handleCrop()">Crop & Save</button>
+                </div>
+
+
+                <div class="form-actions">
+                    <button type="button" class="btn" style="background: white; border: 1px solid #d1d5db;"
+                        onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveButton">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api/categories';
+
+        // State
+        let categories = [];
+        let isEditing = false;
+        let cropper = null;
+
+        // Fetch Categories on Load
+        document.addEventListener('DOMContentLoaded', fetchCategories);
+
+        async function fetchCategories() {
+            try {
+                // Add mode=admin to get all categories including Draft/Hidden
+                const token = localStorage.getItem('token');
+                const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+                const response = await fetch(`${API_URL}?mode=admin`, {
+                    headers: headers
+                });
+                const data = await response.json();
+
+                if (Array.isArray(data)) {
+                    categories = data;
+                    renderCategories(categories);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function renderCategories(data) {
+            const tbody = document.getElementById('categoriesTableBody');
+            const noData = document.getElementById('noDataMessage');
+
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                noData.style.display = 'block';
+                return;
+            }
+
+            noData.style.display = 'none';
+
+            data.forEach(category => {
+                const tr = document.createElement('tr');
+
+                // Image handling: Use placeholder if missing
+                const imgSrc = category.image || 'https://via.placeholder.com/48?text=IMG';
+                let statusClass = 'status-published';
+                if (category.status === 'Draft') statusClass = 'status-draft';
+                if (category.status === 'Hidden') statusClass = 'status-hidden';
+
+                tr.innerHTML = `
+                    <td>
+                        <img src="${imgSrc}" class="cat-img" alt="${category.name}">
+                    </td>
+                    <td>
+                        <div class="cat-info">
+                            <h4>${category.name}</h4>
+                            <p>${category.description || 'No description'}</p>
+                        </div>
+                    </td>
+                    <td><span style="color: #6b7280; font-family: monospace; font-size: 0.85rem;">${category.slug}</span></td>
+                    <td style="font-weight: 500;">${category.totalProducts || 0}</td>
+                    <td><span class="status-badge ${statusClass}">${category.status || 'Published'}</span></td>
+                    <td style="text-align: right;">
+                        <button class="action-btn" onclick="editCategory('${category._id}')" title="Edit">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
+                        <button class="action-btn delete" onclick="deleteCategory('${category._id}')" title="Delete">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = categories.filter(cat =>
+                cat.name.toLowerCase().includes(term) ||
+                (cat.description && cat.description.toLowerCase().includes(term))
+            );
+            renderCategories(filtered);
+        });
+
+        // Modal Functions
+        function openModal() {
+            isEditing = false;
+            document.getElementById('categoryModal').classList.add('active');
+            document.getElementById('modalTitle').innerText = 'Add Category';
+            document.getElementById('categoryForm').reset();
+            document.getElementById('categoryId').value = '';
+            document.getElementById('modalError').style.display = 'none';
+            document.getElementById('categoryImageBase64').value = '';
+            resetPreview();
+        }
+
+        function closeModal() {
+            document.getElementById('categoryModal').classList.remove('active');
+        }
+
+        function generateSlug(name) {
+            const slug = name.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
+            document.getElementById('categorySlug').value = slug;
+        }
+
+        function resetPreview() {
+            const img = document.getElementById('previewImg');
+            const placeholder = document.getElementById('uploadPlaceholder');
+            const cropControls = document.getElementById('cropControls');
+
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+
+            img.src = '';
+            img.style.display = 'none';
+            placeholder.style.display = 'block';
+            cropControls.style.display = 'none';
+            document.getElementById('categoryFile').value = ''; // Clear file input
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('previewImg');
+                    const placeholder = document.getElementById('uploadPlaceholder');
+                    const cropControls = document.getElementById('cropControls');
+
+                    // Reset previous cropper if exists
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    cropControls.style.display = 'flex';
+
+                    // Initialize Cropper
+                    cropper = new Cropper(img, {
+                        aspectRatio: 16 / 9, // Adjust as needed, e.g., 1, 16/9, NaN (free)
+                        viewMode: 1,
+                        autoCropArea: 1,
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleCrop() {
+            if (!cropper) return;
+
+            // Get cropped canvas
+            const canvas = cropper.getCroppedCanvas({
+                width: 600, // Optimize size
+                height: 600, // Optimize size - logic will maintain aspect ratio
+            });
+
+            const base64 = canvas.toDataURL('image/jpeg', 0.8);
+
+            // Set Hidden Input
+            document.getElementById('categoryImageBase64').value = base64;
+
+            // Update UI to show cropped result (optional, or just keep it)
+            // For now, we keep the cropper active or we can destroy it and show the result
+            // Let's destroy and show result to confirm
+            cropper.destroy();
+            cropper = null;
+
+            const img = document.getElementById('previewImg');
+            img.src = base64;
+            document.getElementById('cropControls').style.display = 'none';
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Image Cropped',
+                text: 'Image has been processed successfully.',
+                timer: 1000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        }
+
+        function cancelCrop() {
+            resetPreview();
+            document.getElementById('categoryImageBase64').value = '';
+        }
+
+        async function editCategory(id) {
+            const category = categories.find(c => c._id === id);
+            if (!category) return;
+
+            isEditing = true;
+            document.getElementById('categoryId').value = id;
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('categoryDescription').value = category.description || '';
+            document.getElementById('categorySlug').value = category.slug;
+            document.getElementById('categoryStatus').value = category.status || 'Published';
+
+            // Handle Image
+            if (category.image) {
+                const img = document.getElementById('previewImg');
+                const placeholder = document.getElementById('uploadPlaceholder');
+
+                img.src = category.image;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+
+                document.getElementById('categoryImageBase64').value = category.image;
+            } else {
+                resetPreview();
+            }
+
+            document.getElementById('modalTitle').innerText = 'Edit Category';
+            document.getElementById('categoryModal').classList.add('active');
+        }
+
+        async function handleCategorySubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveButton');
+            const errorDiv = document.getElementById('modalError');
+
+            const name = document.getElementById('categoryName').value;
+            const description = document.getElementById('categoryDescription').value;
+            const status = document.getElementById('categoryStatus').value;
+            const image = document.getElementById('categoryImageBase64').value;
+            const id = document.getElementById('categoryId').value;
+
+            // Only send image if changed or new
+            const payload = { name, description, status, image };
+
+            try {
+                btn.disabled = true;
+                btn.innerText = 'Saving...';
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('You are not logged in. Please log in first.');
+                }
+
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                };
+                let response;
+
+                if (isEditing) {
+                    response = await fetch(`${API_URL}/${id}`, {
+                        method: 'PUT',
+                        headers: headers,
+                        body: JSON.stringify(payload)
+                    });
+                } else {
+                    response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(payload)
+                    });
+                }
+
+                const result = await response.json();
+
+                if (!response.ok) throw new Error(result.message || 'Operation failed');
+
+                closeModal();
+                fetchCategories();
+                Swal.fire({
+                    icon: 'success',
+                    title: isEditing ? 'Updated!' : 'Created!',
+                    text: `Category has been ${isEditing ? 'updated' : 'created'}.`,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+            } catch (error) {
+                errorDiv.innerText = error.message;
+                errorDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Save Category';
+            }
+        }
+
+        function deleteCategory(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will permanently delete the category.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const token = localStorage.getItem('token');
+                        if (!token) {
+                            throw new Error('You are not logged in');
+                        }
+
+                        const response = await fetch(`${API_URL}/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        if (response.ok) {
+                            fetchCategories();
+                            Swal.fire('Deleted!', 'Category deleted.', 'success');
+                        } else {
+                            throw new Error('Failed to delete');
+                        }
+                    } catch (error) {
+                        Swal.fire('Error', 'Could not delete category', 'error');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

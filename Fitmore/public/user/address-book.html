@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book | FITMORE</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .account-section {
+            padding: 120px 0 6rem;
+            min-height: 80vh;
+        }
+
+        .breadcrumb {
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-white);
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4rem;
+        }
+
+        /* Sidebar */
+        /* Sidebar */
+        /* .sidebar styles inherited or defined below */
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        /* Content Area */
+        .content-header {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .content-card {
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 3rem;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .address-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .address-box {
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #555;
+            position: relative;
+        }
+
+        .address-box p {
+            margin-bottom: 0.3rem;
+        }
+
+        .address-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .add-new-btn {
+            display: block;
+            margin-left: auto;
+            margin-top: 2rem;
+            background: transparent;
+            border: 1px solid #E0E0E0;
+            /* or nice accent border */
+            color: var(--accent);
+            /* or grey text */
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .add-new-btn:hover {
+            background: var(--bg-card);
+            /* light bg */
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .edit-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .account-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sidebar-section {
+                display: none;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                    <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                    <path d="M8 10v10"></path>
+                    <path d="M16 10v10"></path>
+                </svg>
+                FITMORE
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-item">HOME</a></li>
+                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="about.html" class="nav-item">ABOUT</a></li>
+                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <button class="icon-btn auth-required active-user">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="account-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Account</span>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
+                        style="color:var(--accent)">John Doe</span></h1>
+            </div>
+
+            <div class="account-grid">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Manage My Account</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="account.html">My Profile</a></li>
+                            <li><a href="address-book.html" class="active">Address Book</a></li>
+                            <li><a href="payment-options.html">Payment Options</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">My Orders</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="orders.html">My Orders</a></li>
+                            <li><a href="returns.html">My Returns</a></li>
+                            <li><a href="cancellations.html">My Cancellations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Logout</h3>
+                        <ul class="sidebar-links">
+                            <li><a href="#" id="sideLogout" style="color: #ff4444;">Log Out</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Address Content -->
+                <main class="profile-content">
+                    <h2 class="content-header">Address Book</h2>
+                    <div class="content-card">
+                        <div class="address-list">
+                            <!-- Address 1 -->
+                            <div class="address-box">
+                                <span class="address-label">address:</span>
+                                <p style="margin-left: 1rem;">name: John Doe</p>
+                                <p style="margin-left: 1rem;">pin: 673015</p>
+                                <p style="margin-left: 1rem;">ph: 7034308604</p>
+                                <button class="edit-btn"
+                                    onclick="toastAlert('Edit Address Feature coming soon!')">Edit</button>
+                            </div>
+
+                            <!-- Address 2 -->
+                            <div class="address-box">
+                                <span class="address-label">address:</span>
+                                <p style="margin-left: 1rem;">name: John Doe</p>
+                                <p style="margin-left: 1rem;">pin: 673015</p>
+                                <p style="margin-left: 1rem;">ph: 7034308604</p>
+                                <button class="edit-btn"
+                                    onclick="toastAlert('Edit Address Feature coming soon!')">Edit</button>
+                            </div>
+                        </div>
+
+                        <button class="add-new-btn">+ Add New Address</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
+                    </p>
+                </div>
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="f-col">
+                    <h4>Account</h4>
+                    <ul class="f-links">
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <!-- SweetAlert2 & Custom Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/alert.js"></script>
+
+    <script>
+        // Check Auth immediately
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        } else {
+            // Hide Signup Link
+            const signupLink = document.getElementById('signupLink');
+            if (signupLink) signupLink.style.display = 'none';
+        }
+
+        // Navbar Logic
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileNavLinks.classList.toggle('active');
+            });
+        }
+
+        // Side Logout
+        document.getElementById('sideLogout').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        // Add New Address Mock
+        document.querySelector('.add-new-btn').addEventListener('click', () => {
+            toastAlert('Add New Address Feature coming soon!');
+        });
+    </script>
+</body>
+
+</html>
