@@ -11,15 +11,26 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Minimal Dark UI Overrides */
         .account-section {
-            padding: 120px 0 6rem;
+            padding: 100px 0 6rem;
             min-height: 80vh;
+            background: var(--bg-dark);
+            /* Using style.css dark variable */
+            color: var(--text-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .breadcrumb {
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-size: 0.9rem;
             color: var(--text-muted);
         }
@@ -33,22 +44,35 @@
             color: var(--accent);
         }
 
+        /* Left Sidebar styling (dark, minimal, text links) */
         .account-grid {
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 4rem;
+            grid-template-columns: 260px 1fr;
+            gap: 2rem;
+            align-items: start;
         }
 
-        /* Sidebar */
+        .sidebar {
+            background: transparent;
+            padding-top: 0;
+        }
+
         .sidebar-section {
             margin-bottom: 2rem;
         }
 
         .sidebar-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
             color: var(--text-white);
+            font-family: var(--font-main);
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .sidebar-links li {
@@ -56,146 +80,157 @@
         }
 
         .sidebar-links a {
-            color: var(--text-muted);
+            display: flex;
+            align-items: center;
             font-size: 1rem;
-            transition: var(--transition);
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
         }
 
-        .sidebar-links a:hover,
         .sidebar-links a.active {
             color: var(--accent);
-            padding-left: 5px;
         }
 
-        /* Content Area */
-        .content-header {
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-            font-size: 1.2rem;
-            font-weight: 500;
+        .logout-link {
+            color: var(--accent) !important;
         }
 
-        .profile-card {
-            background: #FFFFFF;
-            /* White Card as requested */
-            border-radius: 4px;
-            /* Slightly rounded or sharp based on image */
-            padding: 3rem;
-            color: #333;
-            /* Dark text on white bg */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .sidebar-links a:hover:not(.active) {
+            color: var(--text-white);
         }
 
-        .profile-card h3 {
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
+        /* Main Profile Content Area */
+        .profile-content {
+            background: transparent;
+            padding: 0;
+            min-height: 600px;
         }
 
-        /* Form Grid */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: #000;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            background: #F5F5F5;
-            /* Light gray input bg */
-            border: none;
-            padding: 14px;
-            border-radius: 4px;
-            color: #333;
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 2rem;
             font-family: var(--font-main);
-            font-size: 1rem;
+            /* Standard font instead of heavy display */
         }
 
-        .form-control:focus {
-            outline: 1px solid var(--accent);
-        }
-
-        .password-section {
-            margin-top: 2rem;
-        }
-
-        .password-section h4 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .btn-group {
+        /* Avatar Section */
+        .avatar-section {
             display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            margin-top: 1rem;
         }
 
-        .btn-cancel {
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e2e2e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .avatar-circle span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .avatar-icon-btn {
+            position: absolute;
+            bottom: -5px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        .avatar-icon-btn.remove {
+            left: 0;
+            background: var(--accent);
+            /* red */
+        }
+
+        .avatar-icon-btn.edit {
+            right: 0;
+            background: #111;
+            /* black */
+        }
+
+        /* Form / Info Rows (Dark Theme) */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-white);
+        }
+
+        .btn-edit {
             background: none;
             border: none;
-            color: #333;
+            font-weight: 600;
+            color: var(--text-white);
             cursor: pointer;
-            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0;
         }
 
-        .btn-save {
-            background: #00C851;
-            /* Green save button from image concept or brand red */
-            /* User image usually shows green for success/save in some templates, but let's see. 
-               The image description says "Save Changes". I'll use the brand accent if unsure, but standard UI often uses green.
-               I'll use Brand Accent to stick to theme, or the green from the user's uploaded image if visible. 
-               Since I can't confirm the uploaded image color, I'll use a nice Action Green as it acts as a robust save.
-             */
-            background: #00D87D;
-            /* Using a vibrant green */
-            color: white;
-            padding: 12px 30px;
-            border-radius: 4px;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .btn-save:hover {
-            opacity: 0.9;
+        .btn-edit:hover {
+            color: var(--accent);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .account-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
 
-            .sidebar-section {
-                display: none;
-                /* Hide sidebar on mobile or make collapsible */
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 2rem;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            .sidebar-links {
+                display: flex;
+                gap: 10px;
             }
 
-            .profile-card {
-                padding: 1.5rem;
+            .sidebar-links li {
+                margin: 0;
+            }
+
+            .sidebar-links a {
+                white-space: nowrap;
             }
         }
     </style>
@@ -221,7 +256,7 @@
                     <li><a href="index.html" class="nav-item">HOME</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                 </ul>
             </nav>
 
@@ -246,12 +281,12 @@
     <section class="account-section">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Account</span>
+                <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Profile</span>
             </div>
 
-            <div style="margin-bottom: 2rem;">
-                <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
-                        style="color:var(--accent)">John Doe</span></h1>
+            <div style="margin-bottom: 3rem;">
+                <h1 style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 700;">Welcome! <span
+                        style="color:var(--accent)" id="welcomeName">User</span></h1>
             </div>
 
             <div class="account-grid">
@@ -278,89 +313,152 @@
                     <div class="sidebar-section">
                         <h3 class="sidebar-title">Logout</h3>
                         <ul class="sidebar-links">
-                            <li><a href="#" id="sideLogout" style="color: #ff4444;">Log Out</a></li>
+                            <li><a href="#" id="sideLogout" class="logout-link">Log Out</a></li>
                         </ul>
                     </div>
                 </aside>
 
-                <!-- Profile Form -->
+                <!-- Profile Info Viewer -->
                 <main class="profile-content">
-                    <h2 class="content-header">Edit Your Profile</h2>
-                    <div class="profile-card">
-                        <form id="profileForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" value="John">
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input type="text" class="form-control" value="Doe">
-                                </div>
-                            </div>
+                    <h2 class="page-title">Profile</h2>
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" value="john.doe@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" value="123 Street, City">
-                                </div>
-                            </div>
-
-                            <div class="password-section">
-                                <h4>Password Changes</h4>
-                                <div class="form-group" style="margin-bottom: 1rem;">
-                                    <input type="password" class="form-control" placeholder="Current Password">
-                                </div>
-                                <div class="form-group" style="margin-bottom: 1rem;">
-                                    <input type="password" class="form-control" placeholder="New Password">
-                                </div>
-                                <div class="form-group" style="margin-bottom: 1rem;">
-                                    <input type="password" class="form-control" placeholder="Confirm New Password">
-                                </div>
-                            </div>
-
-                            <div class="btn-group">
-                                <button type="button" class="btn-cancel">Cancel</button>
-                                <button type="submit" class="btn-save">Save Changes</button>
-                            </div>
-                        </form>
+                    <div class="avatar-section">
+                        <div class="avatar-circle">
+                            <span id="avatarInitial">U</span>
+                            <button class="avatar-icon-btn remove" title="Remove Avatar"><i
+                                    class="ph ph-trash"></i></button>
+                            <button class="avatar-icon-btn edit" title="Edit Avatar"><i
+                                    class="ph ph-pencil-simple"></i></button>
+                        </div>
                     </div>
+
+                    <!-- Read-only Details Grid mapping closely to image -->
+                    <div class="info-row">
+                        <div class="info-text">
+                            <span class="info-label">First Name</span>
+                            <div class="info-value" id="displayFName">Loading...</div>
+                        </div>
+                        <button class="btn-edit">Edit</button>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-text">
+                            <span class="info-label">Last Name</span>
+                            <div class="info-value" id="displayLName">Loading...</div>
+                        </div>
+                        <button class="btn-edit">Edit</button>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-text">
+                            <span class="info-label">Email</span>
+                            <div class="info-value" id="displayEmail">Loading...</div>
+                        </div>
+                        <button class="btn-edit">Edit</button>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-text">
+                            <span class="info-label">Mobile Number</span>
+                            <div class="info-value" id="displayPhone">Loading...</div>
+                        </div>
+                        <button class="btn-edit">Edit</button>
+                    </div>
+
+                    <div
+                        style="margin-top: 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h3
+                                style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: normal;">
+                                Fitness Wallet Balance</h3>
+                            <div style="font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; color: #10b981;"
+                                id="displayWalletBalance">₹0.00</div>
+                        </div>
+                        <button class="btn" id="addFundsBtn"
+                            style="padding: 12px 24px; border-radius: 6px; font-weight: 600; font-size: 0.95rem;">+ Add
+                            Funds</button>
+                    </div>
+
                 </main>
             </div>
         </div>
     </section>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
-                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
-                    </p>
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
                 </div>
+
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
+
                 <div class="f-col">
-                    <h4>Account</h4>
+                    <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="account.html">My Account</a></li>
-                        <li><a href="login.html">Login</a></li>
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <script>
@@ -389,19 +487,156 @@
             window.location.href = 'index.html';
         });
 
-        // Form Submit
-        document.getElementById('profileForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('.btn-save');
-            const originalText = btn.innerText;
-            btn.innerText = 'Saving...';
-            setTimeout(() => {
-                btn.innerText = 'Changes Saved!';
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                }, 2000);
-            }, 1000);
+        // Profile Editing Logic
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const row = e.target.closest('.info-row');
+                const valElem = row.querySelector('.info-value');
+                const label = row.querySelector('.info-label').innerText;
+
+                const newText = prompt(`Enter new ${label}:`, valElem.innerText);
+                if (!newText || newText === valElem.innerText) return;
+
+                // Map Labels to API Fields
+                let fieldKey = '';
+                if (label === 'First Name') fieldKey = 'firstName';
+                else if (label === 'Last Name') fieldKey = 'lastName';
+                else if (label === 'Email') fieldKey = 'email';
+                else if (label === 'Mobile Number') fieldKey = 'phone';
+
+                if (!fieldKey) return;
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    alert('Please log in again');
+                    return;
+                }
+
+                try {
+                    const btnOriginalText = e.target.innerText;
+                    e.target.innerText = 'Saving...';
+
+                    const res = await fetch('/api/user/profile', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ [fieldKey]: newText })
+                    });
+
+                    e.target.innerText = btnOriginalText;
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        // Update specific row
+                        valElem.innerText = newText;
+
+                        // If First Name changed, update Header & Avatar too
+                        if (fieldKey === 'firstName') {
+                            document.getElementById('welcomeName').innerText = newText;
+                            document.getElementById('avatarInitial').innerText = newText.charAt(0).toUpperCase();
+                        }
+                    } else {
+                        alert(data.message || 'Error updating profile');
+                    }
+                } catch (err) {
+                    console.error("Profile update error", err);
+                    alert("Network error updating profile.");
+                    e.target.innerText = 'Edit';
+                }
+            });
         });
+
+        // Fetch User Profile Data
+        async function fetchProfileData() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (response.ok && data.user) {
+                    const u = data.user;
+                    document.getElementById('displayFName').innerText = u.firstName || u.name || 'User';
+                    document.getElementById('displayLName').innerText = u.lastName || '';
+                    document.getElementById('displayEmail').innerText = u.email || '';
+                    document.getElementById('displayPhone').innerText = u.phone || 'Not provided';
+
+                    document.getElementById('welcomeName').innerText = u.firstName || u.name || 'User';
+                    if (u.firstName || u.name) {
+                        document.getElementById('avatarInitial').innerText = (u.firstName || u.name).charAt(0).toUpperCase();
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching profile", err);
+            }
+
+            // Fetch Wallet Balance
+            try {
+                const response = await fetch('/api/user/wallet', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('displayWalletBalance').innerText = `₹${data.walletBalance.toFixed(2)}`;
+                }
+            } catch (err) {
+                console.error("Error fetching wallet", err);
+            }
+        }
+
+        // Add Funds Logic
+        const addFundsBtn = document.getElementById('addFundsBtn');
+        if (addFundsBtn) {
+            addFundsBtn.addEventListener('click', async () => {
+                const amount = prompt("Enter amount to add to your wallet (₹):");
+                if (!amount) return;
+
+                const parsedAmount = parseFloat(amount);
+                if (isNaN(parsedAmount) || parsedAmount <= 0) {
+                    alert("Please enter a valid amount.");
+                    return;
+                }
+
+                const token = localStorage.getItem('token');
+
+                addFundsBtn.innerText = "Adding...";
+                addFundsBtn.disabled = true;
+
+                try {
+                    const res = await fetch('/api/user/wallet/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ amount: parsedAmount })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        alert(data.message);
+                        document.getElementById('displayWalletBalance').innerText = `₹${data.walletBalance.toFixed(2)}`;
+                    } else {
+                        alert(data.message || 'Failed to add funds.');
+                    }
+                } catch (err) {
+                    console.error("Error adding funds", err);
+                    alert("Network error. Please try again.");
+                } finally {
+                    addFundsBtn.innerText = "+ Add Funds";
+                    addFundsBtn.disabled = false;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProfileData);
     </script>
 </body>
 

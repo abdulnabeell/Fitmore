@@ -924,8 +924,8 @@
                             <div>Total Customers</div>
                             <div>⋮</div>
                         </div>
-                        <div class="stat-val">11,040 <span class="stat-growth">↑ 14.4%</span></div>
-                        <div class="stat-footer">Last 7 days</div>
+                        <div class="stat-val" id="stat-total-customers">- <span class="stat-growth"></span></div>
+                        <div class="stat-footer">All time</div>
                     </article>
 
                     <!-- Card 2 -->
@@ -934,7 +934,7 @@
                             <div>New Customers</div>
                             <div>⋮</div>
                         </div>
-                        <div class="stat-val">2,370 <span class="stat-growth">↑ 20%</span></div>
+                        <div class="stat-val" id="stat-new-customers">- <span class="stat-growth"></span></div>
                         <div class="stat-footer">Last 7 days</div>
                     </article>
 
@@ -944,7 +944,7 @@
                             <div>Visitor</div>
                             <div>⋮</div>
                         </div>
-                        <div class="stat-val">250k <span class="stat-growth">↑ 20%</span></div>
+                        <div class="stat-val" id="stat-visitors">2,140 <span class="stat-growth">↑ 8%</span></div>
                         <div class="stat-footer">Last 7 days</div>
                     </article>
                 </div>
@@ -956,11 +956,11 @@
                             <h3>Customer Overview</h3>
                             <div class="chart-metrics">
                                 <div class="metric-item active">
-                                    <h4>25k</h4>
+                                    <h4 id="chart-active-customers">-</h4>
                                     <p>Active Customers</p>
                                 </div>
                                 <div class="metric-item">
-                                    <h4>5.6k</h4>
+                                    <h4 id="chart-repeat-customers">-</h4>
                                     <p>Repeat Customers</p>
                                 </div>
                                 <div class="metric-item">
@@ -1066,183 +1066,7 @@
                         </tr>
                     </thead>
                     <tbody id="customersTableBody">
-                        <!-- Row 1 -->
-                        <tr data-name="John Doe" data-email="john.doe@example.com" data-phone="+1234567890">
-                            <td>#CUST001</td>
-                            <td>John Doe</td>
-                            <td>+1234567890</td>
-                            <td>25</td>
-                            <td>3,450.00</td>
-                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
-                            </td>
-                            <td>
-                                <div class="action-icons">
-                                    <svg class="icon action-icon-btn" style="width:16px; height: 16px;"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
-                                        </path>
-                                    </svg>
-                                    <svg class="icon action-icon-btn delete" style="width:16px; height: 16px;"
-                                        viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr data-name="Jane Smith" data-email="jane.smith@example.com" data-phone="+1234567890">
-                            <td>#CUST002</td>
-                            <td>Jane Smith</td>
-                            <td>+1234567890</td>
-                            <td>5</td>
-                            <td>250.00</td>
-                            <td><span class="status-inactive"><span
-                                        class="status-dot dot-inactive"></span>Inactive</span></td>
-                            <td>
-                                <div class="action-icons">
-                                    <svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg>
-                                    <svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Repeat Rows... -->
-                        <tr data-name="Emily Davis" data-email="emily.davis@example.com" data-phone="+1234567890">
-                            <td>#CUST003</td>
-                            <td>Emily Davis</td>
-                            <td>+1234567890</td>
-                            <td>30</td>
-                            <td>4,600.00</td>
-                            <td><span class="status-vip"><span class="status-dot dot-vip"></span>VIP</span></td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
-                        <tr data-name="Michael Brown" data-email="m.brown@example.com" data-phone="+1234567890">
-                            <td>#CUST004</td>
-                            <td>Michael Brown</td>
-                            <td>+1234567890</td>
-                            <td>15</td>
-                            <td>1,200.00</td>
-                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
-                            </td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
-                        <tr data-name="Sarah Wilson" data-email="sarah.w@example.com" data-phone="+1234567890">
-                            <td>#CUST005</td>
-                            <td>Sarah Wilson</td>
-                            <td>+1234567890</td>
-                            <td>8</td>
-                            <td>750.00</td>
-                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
-                            </td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
-                        <tr data-name="David Lee" data-email="david.lee@example.com" data-phone="+1234567890">
-                            <td>#CUST006</td>
-                            <td>David Lee</td>
-                            <td>+1234567890</td>
-                            <td>42</td>
-                            <td>5,320.00</td>
-                            <td><span class="status-vip"><span class="status-dot dot-vip"></span>VIP</span></td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
-                        <tr data-name="Lisa Anderson" data-email="lisa.a@example.com" data-phone="+1234567890">
-                            <td>#CUST007</td>
-                            <td>Lisa Anderson</td>
-                            <td>+1234567890</td>
-                            <td>3</td>
-                            <td>150.00</td>
-                            <td><span class="status-inactive"><span
-                                        class="status-dot dot-inactive"></span>Inactive</span></td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
-                        <tr data-name="Robert Taylor" data-email="bob.taylor@example.com" data-phone="+1234567890">
-                            <td>#CUST008</td>
-                            <td>Robert Taylor</td>
-                            <td>+1234567890</td>
-                            <td>25</td>
-                            <td>3,450.00</td>
-                            <td><span class="status-active"><span class="status-dot dot-active"></span>Active</span>
-                            </td>
-                            <td>
-                                <div class="action-icons"><svg class="icon action-icon-btn" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg><svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg></div>
-                            </td>
-                        </tr>
+                        <!-- Dynamic content injected here via JS -->
                     </tbody>
                 </table>
             </div>
@@ -1427,6 +1251,152 @@
             if (panel.classList.contains('active') && !e.target.closest('tr')) {
                 closePanel();
             }
+        });
+
+        // Backend Integration Code
+
+        // Paging defaults
+        let currentPage = 1;
+        let totalPages = 1;
+
+        async function fetchCustomers(page = 1) {
+            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch(`/api/admin/customers?page=${page}&limit=10`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error("Failed to fetch customers");
+
+                const data = await response.json();
+                if (data.success) {
+                    renderCustomers(data.customers);
+                    currentPage = data.pagination.page;
+                    totalPages = data.pagination.pages;
+                    renderPagination();
+                }
+            } catch (err) {
+                console.error("Error fetching customers:", err);
+            }
+        }
+
+        function renderCustomers(customers) {
+            const tbody = document.getElementById('customersTableBody');
+            tbody.innerHTML = '';
+
+            if (customers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No customers found.</td></tr>';
+                return;
+            }
+
+            customers.forEach((customer, index) => {
+                const isActive = customer.status !== 'Inactive'; // Simple mock logic based on field or defaults
+                const statusClass = isActive ? 'status-active' : 'status-inactive';
+                const dotClass = isActive ? 'dot-active' : 'dot-inactive';
+
+                // Format ID
+                const custId = `#CUST${String(index + 1).padStart(3, '0')}`;
+
+                const tr = document.createElement('tr');
+                tr.dataset.name = customer.name;
+                tr.dataset.email = customer.email;
+                tr.dataset.phone = customer.phone;
+
+                tr.innerHTML = `
+                    <td>${custId}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.orderCount}</td>
+                    <td>$${(customer.totalSpend || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td><span class="${statusClass}"><span class="status-dot ${dotClass}"></span>${customer.status}</span></td>
+                    <td>
+                        <div class="action-icons">
+                            <svg class="icon action-icon-btn" viewBox="0 0 24 24">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <svg class="icon action-icon-btn delete" viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </div>
+                    </td>
+                `;
+
+                // Add click listener for row (excluding action buttons)
+                tr.addEventListener('click', (e) => {
+                    if (e.target.closest('.action-icons')) return;
+                    openPanel(tr);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderPagination() {
+            const numbersContainer = document.querySelector('.page-numbers');
+            numbersContainer.innerHTML = ''; // Clear default
+
+            for (let i = 1; i <= totalPages; i++) {
+                const numDiv = document.createElement('div');
+                numDiv.className = `page-num ${i === currentPage ? 'active' : ''}`;
+                numDiv.textContent = i;
+                numDiv.addEventListener('click', () => fetchCustomers(i));
+                numbersContainer.appendChild(numDiv);
+            }
+        }
+
+        // Hook up Previous / Next buttons
+        document.querySelectorAll('.page-btn').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                if (idx === 0 && currentPage > 1) { // Prev
+                    fetchCustomers(currentPage - 1);
+                } else if (idx === 1 && currentPage < totalPages) { // Next
+                    fetchCustomers(currentPage + 1);
+                }
+            });
+        });
+
+        async function fetchDashboardStats() {
+            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error("Failed to fetch dashboard stats");
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update Stats Cards
+                    document.getElementById('stat-total-customers').innerHTML =
+                        `${data.activeCustomers} <span class="stat-growth">All Users</span>`;
+
+                    document.getElementById('stat-new-customers').innerHTML =
+                        `${data.newCustomers} <span class="stat-growth">Recent</span>`;
+
+                    // Update Chart Metrics
+                    document.getElementById('chart-active-customers').textContent = data.activeCustomers;
+                    document.getElementById('chart-repeat-customers').textContent = data.repeatCustomers;
+                }
+            } catch (err) {
+                console.error("Error fetching admin stats:", err);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDashboardStats();
+            fetchCustomers(1);
         });
     </script>
 </body>

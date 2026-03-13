@@ -373,7 +373,8 @@
                     <li><a href="index.html" class="nav-item">HOME</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html"
+                            class="nav-item">SIGN UP</a></li>
                 </ul>
             </nav>
 
@@ -397,14 +398,14 @@
     <!-- Main Content -->
     <section class="account-section">
         <div class="container">
-            <div class="breadcrumb">
+            <div class="breadcrumb" id="breadcrumbNav">
                 <a href="index.html">Home</a> / <a href="orders.html">My Orders</a> / <span
-                    style="color:var(--text-white)">Order #D6048</span>
+                    style="color:var(--text-white)">Loading...</span>
             </div>
 
             <div style="margin-bottom: 2rem;">
                 <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
-                        style="color:var(--accent)">John Doe</span></h1>
+                        style="color:var(--accent)" id="welcomeName">User</span></h1>
             </div>
 
             <div class="account-grid">
@@ -438,59 +439,8 @@
 
                 <!-- Order Detail Content -->
                 <main class="profile-content">
-
-                    <div class="detail-card">
-                        <h2 class="content-header">Order #D6048</h2>
-
-                        <!-- Address -->
-                        <div class="address-container">
-                            <span class="addr-title">address:</span>
-                            <div class="addr-text">
-                                name: John Doe<br>
-                                pin: 673015<br>
-                                ph: 7034308604
-                            </div>
-                        </div>
-
-                        <!-- Payment & Total -->
-                        <div class="payment-row">
-                            <div>
-                                <span class="pay-label">PAYMENT</span>
-                                <span class="tag-cod">COD</span>
-                            </div>
-                            <div>
-                                <span class="pay-label" style="text-align: right;">TOTAL</span>
-                                <span class="total-price">$450</span>
-                            </div>
-                        </div>
-
-                        <!-- Items -->
-                        <div class="items-section">
-                            <div class="items-title">ITEMS</div>
-
-                            <div class="item-row">
-                                <div class="item-img-box">
-                                    <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/94522929e06b4793aeaaac7400e947f6_9366/Ultraboost_1.0_DNA_Shoes_Black_H05265_01_standard.jpg"
-                                        alt="Product">
-                                </div>
-
-                                <div class="item-info">
-                                    <div class="item-title">NIKE COMPRESSION PANTS</div>
-                                    <div class="item-desc">Men's Compression Pants<br>Enamel Blue/ University White
-                                    </div>
-                                    <div class="item-meta">
-                                        Size: 10 &nbsp;&nbsp; Quantity: 1
-                                    </div>
-                                    <span class="status-badge">PENDING</span>
-                                </div>
-
-                                <div class="item-actions">
-                                    <span class="item-price">$450</span>
-                                    <button class="btn-cancel-item">Cancel Order</button>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="detail-card" id="dynamicOrderContainer">
+                        <h2 class="content-header" style="color:#666; font-size:1rem;">Loading Order Details...</h2>
                     </div>
                 </main>
             </div>
@@ -517,14 +467,81 @@
         </div>
     </div>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Shop</h4>
+                    <ul class="f-links">
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="copyright">
-                &copy; 2026 FITMORE. All Rights Reserved.
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <script>
@@ -578,52 +595,208 @@
             });
         }
 
-        <!-- SweetAlert2 & Custom Alerts -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/alert.js"></script>
-
-    <script>
-        // ... (existing code) ...
-            // Modal Logic
-            const cancelBtn = document.querySelector('.btn-cancel-item'); // Use class selector as ID might not be on button yet
-            const modal = document.getElementById('cancelModal');
-            const confirmCancel = document.getElementById('confirmCancel');
-            const abortCancel = document.getElementById('abortCancel');
-
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', () => {
-                    modal.classList.add('active');
-                });
+        if (confirmCancel) {
+            confirmCancel.addEventListener('click', () => {
+                // Logic to confirm cancel
+                successAlert('Item Cancelled! Refund will be added to wallet.');
+                closeModal();
+                // In a real app, refresh list or update UI state
+                if (cancelBtn) {
+                    cancelBtn.textContent = 'Cancelled';
+                    cancelBtn.disabled = true;
+                    cancelBtn.style.opacity = '0.5';
+                    cancelBtn.style.background = '#ccc';
+                }
+            });
         }
 
-        const closeModal = () => {
-                modal.classList.remove('active');
-        };
+        async function fetchOrderDetails() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-            if (abortCancel) abortCancel.addEventListener('click', closeModal);
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
 
-            // Close on clicking outside
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) closeModal();
+            if (!orderId) {
+                window.location.href = 'orders.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/orders/${orderId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    errorAlert(data.message || 'Error loading order');
+                    window.location.href = 'orders.html';
+                    return;
+                }
+
+                const order = data.order;
+
+                // Update Breadcrumb Navigation
+                document.getElementById('breadcrumbNav').innerHTML = `
+                    <a href="index.html">Home</a> / <a href="orders.html">My Orders</a> / <span style="color:var(--text-white)">Order #${order._id.slice(-6)}</span>
+                `;
+
+                const formatStatus = (status) => {
+                    if (!status) return 'Placed';
+                    return status.replace(/_/g, ' ').replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+                }
+
+                let actionButtonHTML = '';
+                if (order.status === "PLACED" || order.status === "CONFIRMED") {
+                    actionButtonHTML = `<button class="btn" style="padding: 10px 20px; font-size: 0.85rem;" onclick="cancelOrder('${order._id}')">Cancel Order</button>`;
+                } else if (order.status === "SHIPPED" || order.status === "OUT_FOR_DELIVERY") {
+                    actionButtonHTML = `<button class="btn" style="background:#FFA500;color:black; padding: 10px 20px; font-size: 0.85rem;" onclick="trackOrder('${order._id}')">Track Order</button>`;
+                } else if (order.status === "DELIVERED") {
+                    actionButtonHTML = `<button class="btn" style="padding: 10px 20px; font-size: 0.85rem;" onclick="returnOrder('${order._id}')">Return Order</button>`;
+                } else if (order.status === "RETURN_REQUESTED") {
+                    actionButtonHTML = `<button class="btn" disabled style="opacity:0.5;cursor:not-allowed; padding: 10px 20px; font-size: 0.85rem;">Return Requested</button>`;
+                } else if (order.status === "RETURNED") {
+                    actionButtonHTML = `<button class="btn" disabled style="opacity:0.5;cursor:not-allowed; padding: 10px 20px; font-size: 0.85rem;">Returned</button>`;
+                }
+
+                // Calculate formatting
+                const paymentBadge = order.paymentMethod.toUpperCase();
+                const totalFormatted = `₹${order.total.toFixed(2)}`;
+                let addrHTML = "No address available";
+
+                if (order.shippingAddress) {
+                    addrHTML = `
+                        Location: ${order.shippingAddress.address}<br>
+                        Pin: ${order.shippingAddress.postalCode}<br>
+                    `;
+                }
+
+                const itemsHTML = order.items.map(item => `
+                    <div class="item-row">
+                        <div class="item-img-box">
+                            <img src="${item.image || 'assets/placeholder.jpg'}" alt="${item.name}">
+                        </div>
+
+                        <div class="item-info">
+                            <div class="item-title">${item.name}</div>
+                            <div class="item-meta">Quantity: ${item.qty}</div>
+                            <span class="status-badge" style="background:#eee; padding:3px 8px; border-radius:12px; font-size:0.8rem; color: #111;">
+                                ${formatStatus(order.status || order.orderStatus || 'PLACED')}
+                            </span>
+                        </div>
+
+                        <div class="item-actions">
+                            <span class="item-price">₹${item.price.toFixed(2)}</span>
+                            <!-- Cancel item logic can go here later -->
+                        </div>
+                    </div>
+                `).join('');
+
+                const container = document.getElementById('dynamicOrderContainer');
+                container.innerHTML = `
+                    <h2 class="content-header">Order #${order._id.slice(-6)}</h2>
+
+                    <!-- Address -->
+                    <div class="address-container">
+                        <span class="addr-title">Shipping Address:</span>
+                        <div class="addr-text">${addrHTML}</div>
+                    </div>
+
+                    <!-- Payment & Total -->
+                    <div class="payment-row">
+                        <div>
+                            <span class="pay-label">PAYMENT</span>
+                            <span class="tag-cod" style="background:${order.isPaid ? '#10b981' : '#222'};">${paymentBadge}</span>
+                        </div>
+                        <div>
+                            <span class="pay-label" style="text-align: right;">TOTAL</span>
+                            <span class="total-price" style="color:#00BFFF;">${totalFormatted}</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                        ${actionButtonHTML}
+                    </div>
+
+                    <!-- Items -->
+                    <div class="items-section">
+                        <div class="items-title">ITEMS</div>
+                        ${itemsHTML}
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error("Error fetching order details", err);
+                errorAlert("Network error fetching order.");
+            }
         }
 
-            if (confirmCancel) {
-                confirmCancel.addEventListener('click', () => {
-                    // Logic to confirm cancel
-                    successAlert('Item Cancelled! Refund will be added to wallet.');
-                    closeModal();
-                    // In a real app, refresh list or update UI state
-                    if (cancelBtn) {
-                        cancelBtn.textContent = 'Cancelled';
-                        cancelBtn.disabled = true;
-                        cancelBtn.style.opacity = '0.5';
-                        cancelBtn.style.background = '#ccc';
+        /* ===============================
+           ACTIONS LOGIC
+        =============================== */
+
+        const tokenForActions = localStorage.getItem('token');
+
+        function cancelOrder(orderId) {
+            confirmAlert(`Cancel Order #${orderId}?`, async () => {
+                await fetch(`http://localhost:5000/api/orders/${orderId}/cancel`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${tokenForActions}`
                     }
                 });
+                successAlert("Order Cancelled");
+                fetchOrderDetails();
+            });
         }
+
+        function trackOrder(orderId) {
+            successAlert("Order is currently in transit! Tracking #183749303");
+        }
+
+        function returnOrder(orderId) {
+            confirmAlert(`Request Return for Order #${orderId}?`, async () => {
+                await fetch(`http://localhost:5000/api/orders/${orderId}/return`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${tokenForActions}`
+                    }
+                });
+                successAlert("Return requested");
+                fetchOrderDetails();
+            });
+        }
+
+
+        // Fetch User Profile Data for Header
+        async function fetchProfileData() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.user) {
+                    document.getElementById('welcomeName').innerText = data.user.firstName || data.user.name || 'User';
+                }
+            } catch (err) {
+                console.error("Error fetching profile", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchProfileData();
+            fetchOrderDetails();
+        });
     </script>
+    <!-- SweetAlert2 & Custom Alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/alert.js"></script>
 </body>
 
 </html>

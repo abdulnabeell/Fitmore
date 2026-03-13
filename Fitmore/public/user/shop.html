@@ -170,7 +170,7 @@
             <nav>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="index.html" class="nav-item">HOME</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                     <li><a href="shop.html" class="nav-item active" id="shopLink">SHOP</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
@@ -269,135 +269,11 @@
     <!-- Shop Content -->
     <div class="shop-container">
         <!-- Product Grid (Left) -->
-        <main class="shop-products">
-            <!-- Product 1 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=creatine-1'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/creatine-on.jpg" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>Creatine</h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Green</span>
-                    <span class="prod-price">$125</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
+        <main class="shop-products" id="shopProducts">
 
-            <!-- Product 2 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=creatine-2'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/creatine-micronized.jpg" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>Creatine </h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Green</span>
-                    <span class="prod-price">$125</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=fish-oil-1'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/fish-oil-gold.jpg" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>Fish Oil</h4>
-                    <span style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Running
-                        Shoes</span>
-                    <span class="prod-price">$125</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=fish-oil-2'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/fish-oil-blace.jpg" alt="Whey">
-                </div>
-                <div class="prod-info">
-                    <h4>Fish Oil</h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Nutrition</span>
-                    <span class="prod-price">$62.50</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 5 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=bcaa-glutamine'"
-                style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/vitastrong.png" alt="BCAA">
-                </div>
-                <div class="prod-info">
-                    <h4>BCAA + GLUTAMINE</h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Nutrition</span>
-                    <span class="prod-price">$25</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 6 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=elite-protein'"
-                style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/protein-elite.jpg" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>Elite Protein</h4>
-                    <span style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Core
-                        Black</span>
-                    <span class="prod-price">$160</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Duplicated Products to Fill Grid -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=ultraboost'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/fish-oil-blace.jpg" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>ULTRABOOST 1.0 CL</h4>
-                    <span style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Triple
-                        Black</span>
-                    <span class="prod-price">$140</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 8 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=bcaa'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/vitastrong.png" alt="Shoes">
-                </div>
-                <div class="prod-info">
-                    <h4>BCAA</h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Grey/Carbon</span>
-                    <span class="prod-price">$110</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
-
-            <!-- Product 9 -->
-            <div class="prod-card" onclick="window.location.href='product.html?id=whey-gold'" style="cursor: pointer;">
-                <div class="prod-img-box">
-                    <img src="images/whey-gold.jpg" alt="Whey">
-                </div>
-                <div class="prod-info">
-                    <h4>GOLD STANDARD WHEY</h4>
-                    <span
-                        style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">Chocolate
-                        5lbs</span>
-                    <span class="prod-price">$75</span>
-                    <button class="add-btn auth-required">VIEW PRODUCT</button>
-                </div>
-            </div>
+            <p style="grid-column:1/-1;text-align:center;color:var(--text-muted)">
+                Loading products...
+            </p>
 
         </main>
 
@@ -431,21 +307,23 @@
             <div class="filter-group">
                 <h3>Categories</h3>
                 <ul class="filter-list">
-                    <li><a href="#">All Products</a></li>
-                    <li><a href="#">Best Sellers</a></li>
-                    <li><a href="#">New Arrivals</a></li>
-                    <li><a href="#">Retro</a></li>
+                    <li><a href="shop.html">All Products</a></li>
+                    <li><a href="shop.html?category=protein">Protein</a></li>
+                    <li><a href="shop.html?category=creatine">Creatine</a></li>
+                    <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                    <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
                 </ul>
             </div>
         </aside>
     </div>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="#" class="logo" style="margin-bottom:1rem">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             style="color: var(--accent)">
@@ -480,30 +358,30 @@
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Track Order</a></li>
-                        <li><a href="#">Returns & Refunds</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="#">Protein</a></li>
-                        <li><a href="#">Vitamins</a></li>
-                        <li><a href="#">Apparel</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Company</h4>
                     <ul class="f-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Affiliate Program</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
@@ -514,86 +392,257 @@
         </div>
     </footer>
 
-
     <script>
-        // --- AUTH & NAVBAR LOGIC (Replicated from index.html) ---
 
-        // Navbar Auth UI Update
+        /* =====================================
+           NAVBAR AUTH STATE
+        =====================================*/
         function updateNavbarAuth() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const signupLink = document.getElementById('signupLink');
-            const userIconBtn = document.getElementById('userIconBtn');
-            const wishlistBtn = document.getElementById('wishlistBtn');
+
+            const isLoggedIn =
+                localStorage.getItem("isLoggedIn") === "true";
+
+            const signupLink =
+                document.getElementById("signupLink");
+
+            const wishlistBtn =
+                document.getElementById("wishlistBtn");
+
+            const userIconBtn =
+                document.getElementById("userIconBtn");
 
             if (isLoggedIn) {
-                // Logged In State
-                if (signupLink) signupLink.classList.add('hidden');
-                if (userIconBtn) userIconBtn.classList.add('active-user');
-                if (wishlistBtn) wishlistBtn.style.display = 'flex';
+                signupLink?.classList.add("hidden");
+                userIconBtn?.classList.add("active-user");
+                if (wishlistBtn) wishlistBtn.style.display = "flex";
             } else {
-                // Logged Out State
-                if (signupLink) signupLink.classList.remove('hidden');
-                if (userIconBtn) userIconBtn.classList.remove('active-user');
-                if (wishlistBtn) wishlistBtn.style.display = 'none';
+                signupLink?.classList.remove("hidden");
+                userIconBtn?.classList.remove("active-user");
+                if (wishlistBtn) wishlistBtn.style.display = "none";
             }
         }
 
-        // Dropdown Logic
-        const userIconBtn = document.getElementById('userIconBtn');
-        const accountDropdown = document.getElementById('accountDropdown');
-        const dropdownLogout = document.getElementById('dropdownLogout');
 
-        if (userIconBtn) {
-            userIconBtn.addEventListener('click', (e) => {
-                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                if (isLoggedIn) {
-                    e.stopPropagation();
-                    accountDropdown.classList.toggle('open');
-                }
-            });
-        }
+        /* =====================================
+           DROPDOWN MENU
+        =====================================*/
+        const userIconBtn = document.getElementById("userIconBtn");
+        const accountDropdown = document.getElementById("accountDropdown");
+        const dropdownLogout = document.getElementById("dropdownLogout");
 
-        document.addEventListener('click', (e) => {
-            if (accountDropdown && accountDropdown.classList.contains('open')) {
-                if (!e.target.closest('.user-menu-wrap')) {
-                    accountDropdown.classList.remove('open');
-                }
+        userIconBtn?.addEventListener("click", e => {
+
+            const isLoggedIn =
+                localStorage.getItem("isLoggedIn") === "true";
+
+            if (isLoggedIn) {
+                e.stopPropagation();
+                accountDropdown.classList.toggle("open");
             }
         });
 
-        if (dropdownLogout) {
-            dropdownLogout.addEventListener('click', () => {
-                localStorage.removeItem('isLoggedIn');
-                window.location.href = 'index.html';
-            });
-        }
+        document.addEventListener("click", e => {
+            if (!e.target.closest(".user-menu-wrap")) {
+                accountDropdown?.classList.remove("open");
+            }
+        });
 
-        // Mobile Menu
-        const mobileToggleBtn = document.getElementById('mobileToggle');
-        const mobileNavLinks = document.getElementById('navLinks');
 
-        if (mobileToggleBtn) {
-            mobileToggleBtn.addEventListener('click', () => {
-                mobileNavLinks.classList.toggle('active');
-                const bars = mobileToggleBtn.querySelectorAll('.bar');
-                if (mobileNavLinks.classList.contains('active')) {
-                    bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-                    bars[1].style.opacity = '0';
-                    bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-                } else {
-                    bars[0].style.transform = 'none';
-                    bars[1].style.opacity = '1';
-                    bars[2].style.transform = 'none';
+        /* =====================================
+           LOGOUT
+        =====================================*/
+        dropdownLogout?.addEventListener("click", () => {
+
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("token");
+
+            window.location.href = "index.html";
+        });
+
+
+        /* =====================================
+           MOBILE MENU
+        =====================================*/
+        const mobileToggle =
+            document.getElementById("mobileToggle");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+        mobileToggle?.addEventListener("click", () => {
+
+            navLinks.classList.toggle("active");
+
+            const bars = mobileToggle.querySelectorAll(".bar");
+
+            if (navLinks.classList.contains("active")) {
+                bars[0].style.transform =
+                    "rotate(45deg) translate(5px,6px)";
+                bars[1].style.opacity = "0";
+                bars[2].style.transform =
+                    "rotate(-45deg) translate(5px,-6px)";
+            } else {
+                bars[0].style.transform = "none";
+                bars[1].style.opacity = "1";
+                bars[2].style.transform = "none";
+            }
+        });
+
+
+        /* =====================================
+           LOAD PRODUCTS FROM DATABASE
+        =====================================*/
+        async function loadShopProducts() {
+
+            const container =
+                document.getElementById("shopProducts");
+
+            if (!container) return;
+
+            // Fetch User Wishlist
+            let userWishlist = [];
+            const token = localStorage.getItem('token');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn && token) {
+                try {
+                    const wRes = await fetch('http://localhost:5000/api/user/wishlist', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const wData = await wRes.json();
+                    if (wData.success && wData.wishlist) {
+                        userWishlist = wData.wishlist.map(p => p._id || p);
+                    }
+                } catch (err) {
+                    console.error('Error fetching wishlist:', err);
                 }
-            });
+            }
+
+            try {
+                // Parse URL parameters
+                const params = new URLSearchParams(window.location.search);
+                let qs = [];
+                if (params.has('category')) qs.push(`category=${params.get('category')}`);
+                if (params.has('search')) qs.push(`search=${params.get('search')}`);
+                if (params.has('sort')) qs.push(`sort=${params.get('sort')}`);
+                const queryString = qs.length ? `?${qs.join('&')}` : '';
+
+                const res =
+                    await fetch(`http://localhost:5000/api/products${queryString}`);
+
+                const products = await res.json();
+
+                container.innerHTML = "";
+
+                if (!products.length) {
+                    container.innerHTML =
+                        `<p style="grid-column:1/-1;text-align:center">
+                    No products found
+                 </p>`;
+                    return;
+                }
+
+                products.forEach(product => {
+
+                    const card = document.createElement("div");
+                    card.className = "prod-card";
+
+                    const isWishlisted = userWishlist.includes(product._id);
+                    card.innerHTML = `
+                <div class="prod-img-box product-link" style="position: relative;">
+                    <button class="wishlist-toggle auth-required" data-id="${product._id}" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8); border: none; cursor: pointer; z-index: 10; border-radius: 50%; padding: 5px; display: flex; align-items: center; justify-content: center; color: ${isWishlisted ? 'var(--accent)' : '#333'};">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="${isWishlisted ? 'var(--accent)' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                    <img src="${product.image ||
+                        product.images?.[0] ||
+                        "images/no-image.png"
+                        }">
+                </div>
+
+                <div class="prod-info product-link">
+                    <h4>${product.name}</h4>
+                    <span class="prod-price">₹${product.price}</span>
+                    <button class="add-btn">
+                        VIEW PRODUCT
+                    </button>
+                </div>
+            `;
+
+                    card.querySelectorAll(".product-link img, .prod-info")
+                        .forEach(el => {
+                            el.addEventListener("click", () => {
+                                window.location.href =
+                                    `product.html?id=${product._id}`;
+                            });
+                        });
+
+                    /* ===== WISHLIST TOGGLE ===== */
+                    const wishBtn = card.querySelector(".wishlist-toggle");
+                    wishBtn.addEventListener("click", async (e) => {
+                        e.stopPropagation();
+
+                        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                        if (!loggedIn) {
+                            alert('Please log in to add to wishlist');
+                            window.location.href = 'login.html';
+                            return;
+                        }
+
+                        try {
+                            const token = localStorage.getItem('token');
+                            const res = await fetch('http://localhost:5000/api/user/wishlist/toggle', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify({ productId: product._id })
+                            });
+                            const data = await res.json();
+                            if (data.success) {
+                                const svg = wishBtn.querySelector('svg');
+                                if (data.added) {
+                                    wishBtn.style.color = 'var(--accent)';
+                                    svg.setAttribute('fill', 'var(--accent)');
+                                } else {
+                                    wishBtn.style.color = '#333';
+                                    svg.setAttribute('fill', 'none');
+                                }
+                            }
+                        } catch (err) {
+                            console.error('Error toggling wishlist', err);
+                        }
+                    });
+
+                    container.appendChild(card);
+                });
+
+            } catch (err) {
+
+                console.error("Product load error:", err);
+
+                container.innerHTML =
+                    `<p style="grid-column:1/-1;text-align:center">
+                Failed to load products
+            </p>`;
+            }
         }
 
-        // Init
-        document.addEventListener('DOMContentLoaded', () => {
+
+        /* =====================================
+           INIT PAGE
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+
             updateNavbarAuth();
+            loadShopProducts();
+
         });
 
     </script>
+
+
 </body>
 
 </html>

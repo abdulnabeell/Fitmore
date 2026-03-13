@@ -4,7 +4,7 @@ const router = express.Router();
 const protect = require('../middleware/authMiddleware');
 const adminOnly = require('../middleware/adminMiddleware');
 
-const controller = require('../controllers/categoryController');
+const controller = require('../controllers/category');
 
 
 router.get('/', controller.getCategories);

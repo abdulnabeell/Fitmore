@@ -72,7 +72,7 @@ document.head.appendChild(style);
  * @param {string} message 
  */
 function successAlert(message) {
-    Swal.fire({
+    return Swal.fire({
         ...commonConfig,
         icon: 'success',
         title: 'SUCCESS',
@@ -87,7 +87,7 @@ function successAlert(message) {
  * @param {string} message 
  */
 function errorAlert(message) {
-    Swal.fire({
+    return Swal.fire({
         ...commonConfig,
         icon: 'error',
         title: 'ERROR',

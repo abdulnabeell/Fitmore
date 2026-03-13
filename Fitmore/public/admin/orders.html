@@ -836,10 +836,10 @@
                         <div>⋮</div>
                     </div>
                     <div class="stat-main">
-                        <span class="stat-val">1,240</span>
-                        <span class="stat-badge text-green">↑ 14.4%</span>
+                        <span class="stat-val" id="stat-total-orders">0</span>
+                        <span class="stat-badge text-green"></span>
                     </div>
-                    <div class="stat-footer">Last 7 days</div>
+                    <div class="stat-footer">All time</div>
                 </article>
 
                 <!-- Card 2 -->
@@ -849,8 +849,8 @@
                         <div>⋮</div>
                     </div>
                     <div class="stat-main">
-                        <span class="stat-val">240</span>
-                        <span class="stat-badge text-green">↑ 20%</span>
+                        <span class="stat-val" id="stat-new-orders">0</span>
+                        <span class="stat-badge text-green"></span>
                     </div>
                     <div class="stat-footer">Last 7 days</div>
                 </article>
@@ -862,10 +862,10 @@
                         <div>⋮</div>
                     </div>
                     <div class="stat-main">
-                        <span class="stat-val">960</span>
-                        <span class="stat-badge text-green">85%</span>
+                        <span class="stat-val" id="stat-completed-orders">0</span>
+                        <span class="stat-badge text-green"></span>
                     </div>
-                    <div class="stat-footer">Last 7 days</div>
+                    <div class="stat-footer">All time</div>
                 </article>
 
                 <!-- Card 4 -->
@@ -875,21 +875,22 @@
                         <div>⋮</div>
                     </div>
                     <div class="stat-main">
-                        <span class="stat-val">87</span>
-                        <span class="stat-badge text-red">↓ 5%</span>
+                        <span class="stat-val" id="stat-canceled-orders">0</span>
+                        <span class="stat-badge text-red"></span>
                     </div>
-                    <div class="stat-footer">Last 7 days</div>
+                    <div class="stat-footer">All time</div>
                 </article>
             </section>
 
             <!-- Table Container -->
             <section class="orders-container">
                 <div class="toolbar">
-                    <div class="tab-group">
-                        <div class="tab-item active">All order (240)</div>
-                        <div class="tab-item">Completed</div>
-                        <div class="tab-item">Pending</div>
-                        <div class="tab-item">Canceled</div>
+                    <div class="tab-group" id="filter-tabs">
+                        <div class="tab-item active" data-filter="all">All order (<span id="tab-all-count">0</span>)
+                        </div>
+                        <div class="tab-item" data-filter="DELIVERED">Completed</div>
+                        <div class="tab-item" data-filter="PLACED">Pending</div>
+                        <div class="tab-item" data-filter="CANCELLED">Canceled</div>
                     </div>
                     <div class="toolbar-actions">
                         <div class="search-small">
@@ -937,223 +938,8 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Row 1 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>1</td>
-                                <td>#ORD0001</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Band">
-                                        <span>Resistance Band</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
-                                </td>
-                                <td>
-                                    <select class="status-select status-delivered"
-                                        onchange="updateOrderStatus('#ORD0001', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered" selected>Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 2 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>2</td>
-                                <td>#ORD0002</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Weight">
-                                        <span>Wrist Band</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-unpaid"><span
-                                            class="status-dot"></span>Unpaid</span></td>
-                                <td>
-                                    <select class="status-select status-pending"
-                                        onchange="updateOrderStatus('#ORD0002', this)">
-                                        <option value="pending" selected>Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 3 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>3</td>
-                                <td>#ORD0003</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1598289431512-b97b0917affc?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Mat">
-                                        <span>Yoga Mat</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
-                                </td>
-                                <td>
-                                    <select class="status-select status-delivered"
-                                        onchange="updateOrderStatus('#ORD0003', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered" selected>Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 4 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>4</td>
-                                <td>#ORD0004</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1620188467120-5042ed1eb5da?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Knee">
-                                        <span>Knee Cap</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
-                                </td>
-                                <td>
-                                    <select class="status-select status-shipped"
-                                        onchange="updateOrderStatus('#ORD0004', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped" selected>Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 5 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>5</td>
-                                <td>#ORD0005</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1579722820308-d74e571900a9?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Protein">
-                                        <span>Whey Protein</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-unpaid"><span
-                                            class="status-dot"></span>Unpaid</span></td>
-                                <td>
-                                    <select class="status-select status-pending"
-                                        onchange="updateOrderStatus('#ORD0005', this)">
-                                        <option value="pending" selected>Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 6 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>6</td>
-                                <td>#ORD0006</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Dumbell">
-                                        <span>Dumbell</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-unpaid"><span
-                                            class="status-dot"></span>Unpaid</span></td>
-                                <td>
-                                    <select class="status-select status-canceled"
-                                        onchange="updateOrderStatus('#ORD0006', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="canceled" selected>Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 7 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>7</td>
-                                <td>#ORD0007</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Shoe">
-                                        <span>Shoe</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
-                                </td>
-                                <td>
-                                    <select class="status-select status-delivered"
-                                        onchange="updateOrderStatus('#ORD0007', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered" selected>Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <!-- Row 8 -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>8</td>
-                                <td>#ORD0008</td>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="https://images.unsplash.com/photo-1515775538093-d2d95c5ee4f5?auto=format&fit=crop&w=50&q=80"
-                                            class="product-img" alt="Track">
-                                        <span>Compression Track</span>
-                                    </div>
-                                </td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td><span class="status-badge status-paid"><span class="status-dot"></span>Paid</span>
-                                </td>
-                                <td>
-                                    <select class="status-select status-delivered"
-                                        onchange="updateOrderStatus('#ORD0008', this)">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered" selected>Delivered</option>
-                                        <option value="canceled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
+                        <tbody id="ordersTableBody">
+                            <!-- Rows rendered dynamically -->
                         </tbody>
                     </table>
 
@@ -1176,24 +962,197 @@
     </main>
 
     <script>
-        function updateOrderStatus(orderId, selectElement) {
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchOrders();
+            setupTabs();
+        });
+
+        let allOrdersList = [];
+
+        async function fetchOrders() {
+            try {
+                const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+
+                if (!token) {
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+
+                const response = await fetch('/api/orders/admin/all', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
+                }
+
+                const data = await response.json();
+                allOrdersList = data.orders || [];
+
+                updateDashboardStats();
+                renderOrders(allOrdersList);
+            } catch (err) {
+                console.error(err);
+                alert("Could not load orders");
+            }
+        }
+
+        function updateDashboardStats() {
+            const total = allOrdersList.length;
+            const completed = allOrdersList.filter(o => o.status === 'DELIVERED').length;
+            const canceled = allOrdersList.filter(o => o.status === 'CANCELLED').length;
+
+            // Calculate new orders (last 7 days)
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            const newOrdersCount = allOrdersList.filter(o => new Date(o.createdAt) >= sevenDaysAgo).length;
+
+            document.getElementById('stat-total-orders').textContent = total;
+            document.getElementById('tab-all-count').textContent = total;
+            document.getElementById('stat-completed-orders').textContent = completed;
+            document.getElementById('stat-canceled-orders').textContent = canceled;
+            document.getElementById('stat-new-orders').textContent = newOrdersCount;
+        }
+
+        function renderOrders(orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = '';
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem;">No orders found</td></tr>`;
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                const isPaid = order.isPaid;
+                const paymentBadgeClass = isPaid ? 'status-paid' : 'status-unpaid';
+                const paymentText = isPaid ? 'Paid' : 'Unpaid';
+                const orderDate = new Date(order.createdAt).toLocaleDateString();
+
+                // Construct products string/preview
+                let productCellHtml = '';
+                if (order.items && order.items.length > 0) {
+                    const firstItem = order.items[0];
+                    productCellHtml = `
+                        <div class="product-cell">
+                            <img src="${firstItem.image || 'https://via.placeholder.com/50'}" class="product-img" alt="Product">
+                            <span>${firstItem.name} ${order.items.length > 1 ? `(+${order.items.length - 1} more)` : ''}</span>
+                        </div>
+                    `;
+                }
+
+                // Map status class
+                let statusClass = '';
+                switch (order.status) {
+                    case "PLACED": statusClass = "status-pending"; break;
+                    case "CONFIRMED": statusClass = "status-confirmed"; break;
+                    case "SHIPPED": statusClass = "status-shipped"; break;
+                    case "OUT_FOR_DELIVERY": statusClass = "status-shipped"; break;
+                    case "DELIVERED": statusClass = "status-delivered"; break;
+                    case "RETURN_REQUESTED": statusClass = "status-pending"; break;
+                    case "RETURNED": statusClass = "status-canceled"; break;
+                    case "CANCELLED": statusClass = "status-canceled"; break;
+                    default: statusClass = "status-pending"; break;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${index + 1}</td>
+                    <td>#ORD-${order._id.substring(0, 6).toUpperCase()}</td>
+                    <td>${productCellHtml}</td>
+                    <td>${orderDate}</td>
+                    <td>$${order.total}</td>
+                    <td><span class="status-badge ${paymentBadgeClass}"><span class="status-dot"></span>${paymentText}</span></td>
+                    <td>
+                        <select class="status-select ${statusClass}" onchange="updateOrderStatus('${order._id}', this)">
+                            <option value="PLACED" ${order.status === 'PLACED' ? 'selected' : ''}>Placed</option>
+                            <option value="CONFIRMED" ${order.status === 'CONFIRMED' ? 'selected' : ''}>Confirmed</option>
+                            <option value="SHIPPED" ${order.status === 'SHIPPED' ? 'selected' : ''}>Shipped</option>
+                            <option value="OUT_FOR_DELIVERY" ${order.status === 'OUT_FOR_DELIVERY' ? 'selected' : ''}>Out for Delivery</option>
+                            <option value="DELIVERED" ${order.status === 'DELIVERED' ? 'selected' : ''}>Delivered</option>
+                            <option value="RETURN_REQUESTED" ${order.status === 'RETURN_REQUESTED' ? 'selected' : ''}>Return Requested</option>
+                            <option value="RETURNED" ${order.status === 'RETURNED' ? 'selected' : ''}>Returned</option>
+                            <option value="CANCELLED" ${order.status === 'CANCELLED' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('#filter-tabs .tab-item');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const filter = tab.getAttribute('data-filter');
+                    if (filter === 'all') {
+                        renderOrders(allOrdersList);
+                    } else {
+                        const filtered = allOrdersList.filter(o => o.status === filter);
+                        renderOrders(filtered);
+                    }
+                });
+            });
+        }
+
+        async function updateOrderStatus(orderId, selectElement) {
             const status = selectElement.value;
+            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
 
-            // Remove old status classes
-            selectElement.classList.remove(
-                'status-pending',
-                'status-confirmed',
-                'status-shipped',
-                'status-delivered',
-                'status-canceled'
-            );
+            try {
+                const response = await fetch(`/api/orders/admin/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
 
-            // Add new status class
-            const statusClass = `status-${status}`;
-            selectElement.classList.add(statusClass);
+                if (!response.ok) {
+                    throw new Error("Failed to update status");
+                }
 
-            // Log change
-            console.log(`Order ID ${orderId} status changed to ${status}`);
+                // Remove old classes
+                selectElement.classList.remove(
+                    'status-pending',
+                    'status-confirmed',
+                    'status-shipped',
+                    'status-delivered',
+                    'status-canceled'
+                );
+
+                // Add new status class map
+                let statusClass = '';
+                switch (status) {
+                    case "PLACED": statusClass = "status-pending"; break;
+                    case "CONFIRMED": statusClass = "status-confirmed"; break;
+                    case "SHIPPED": statusClass = "status-shipped"; break;
+                    case "OUT_FOR_DELIVERY": statusClass = "status-shipped"; break;
+                    case "DELIVERED": statusClass = "status-delivered"; break;
+                    case "RETURN_REQUESTED": statusClass = "status-pending"; break;
+                    case "RETURNED": statusClass = "status-canceled"; break;
+                    case "CANCELLED": statusClass = "status-canceled"; break;
+                    default: statusClass = "status-pending"; break;
+                }
+
+                selectElement.classList.add(statusClass);
+
+                // Also update local data
+                const orderIndex = allOrdersList.findIndex(o => o._id === orderId);
+                if (orderIndex !== -1) {
+                    allOrdersList[orderIndex].status = status;
+                }
+                updateDashboardStats();
+
+            } catch (err) {
+                console.error(err);
+                alert("Update failed");
+            }
         }
     </script>
 </body>

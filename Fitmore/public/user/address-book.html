@@ -167,6 +167,29 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -190,7 +213,7 @@
                     <li><a href="index.html" class="nav-item">HOME</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                 </ul>
             </nav>
 
@@ -218,9 +241,9 @@
                 <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Account</span>
             </div>
 
-            <div style="margin-bottom: 2rem;">
+            <div style="margin-bottom: 3rem;">
                 <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
-                        style="color:var(--accent)">John Doe</span></h1>
+                        style="color:var(--accent)" id="welcomeName">User</span></h1>
             </div>
 
             <div class="account-grid">
@@ -256,62 +279,128 @@
                 <main class="profile-content">
                     <h2 class="content-header">Address Book</h2>
                     <div class="content-card">
-                        <div class="address-list">
-                            <!-- Address 1 -->
-                            <div class="address-box">
-                                <span class="address-label">address:</span>
-                                <p style="margin-left: 1rem;">name: John Doe</p>
-                                <p style="margin-left: 1rem;">pin: 673015</p>
-                                <p style="margin-left: 1rem;">ph: 7034308604</p>
-                                <button class="edit-btn"
-                                    onclick="toastAlert('Edit Address Feature coming soon!')">Edit</button>
-                            </div>
-
-                            <!-- Address 2 -->
-                            <div class="address-box">
-                                <span class="address-label">address:</span>
-                                <p style="margin-left: 1rem;">name: John Doe</p>
-                                <p style="margin-left: 1rem;">pin: 673015</p>
-                                <p style="margin-left: 1rem;">ph: 7034308604</p>
-                                <button class="edit-btn"
-                                    onclick="toastAlert('Edit Address Feature coming soon!')">Edit</button>
-                            </div>
+                        <div class="address-list" id="addressListContainer">
+                            <!-- Dynamic addresses injected here -->
                         </div>
 
-                        <button class="add-new-btn">+ Add New Address</button>
+                        <button id="addAddressBtn" class="add-new-btn">+ Add New Address</button>
                     </div>
                 </main>
             </div>
         </div>
     </section>
 
+    <!-- Add Address Modal -->
+    <div id="addAddressModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1rem; color: var(--accent);">Add New Address</h3>
+            <form id="addAddressForm">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Full Name</label>
+                    <input type="text" id="addrName" required
+                        style="width:100%; padding:0.8rem; border:1px solid #ccc; border-radius:4px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Phone Number</label>
+                    <input type="text" id="addrPhone" required
+                        style="width:100%; padding:0.8rem; border:1px solid #ccc; border-radius:4px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>PIN Code</label>
+                    <input type="text" id="addrPin" required
+                        style="width:100%; padding:0.8rem; border:1px solid #ccc; border-radius:4px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>Full Address</label>
+                    <textarea id="addrText" required rows="3"
+                        style="width:100%; padding:0.8rem; border:1px solid #ccc; border-radius:4px; resize:none;"></textarea>
+                </div>
+                <div style="display:flex; gap:1rem; justify-content: flex-end;">
+                    <button type="button" id="closeModalBtn"
+                        style="padding:0.8rem 1.5rem; background:none; border:none; cursor:pointer;">Cancel</button>
+                    <button type="submit"
+                        style="padding:0.8rem 1.5rem; background:var(--accent); color:#000; font-weight:600; border:none; border-radius:4px; border: 1px solid var(--accent); cursor:pointer;">Save
+                        Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
-                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
-                    </p>
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
                 </div>
+
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
+
                 <div class="f-col">
-                    <h4>Account</h4>
+                    <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="account.html">My Account</a></li>
-                        <li><a href="login.html">Login</a></li>
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <!-- SweetAlert2 & Custom Alerts -->
@@ -320,7 +409,8 @@
 
     <script>
         // Check Auth immediately
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
+        const token = localStorage.getItem('token');
+        if (localStorage.getItem('isLoggedIn') !== 'true' || !token) {
             window.location.href = 'login.html';
         } else {
             // Hide Signup Link
@@ -341,13 +431,232 @@
         document.getElementById('sideLogout').addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
             window.location.href = 'index.html';
         });
 
-        // Add New Address Mock
-        document.querySelector('.add-new-btn').addEventListener('click', () => {
-            toastAlert('Add New Address Feature coming soon!');
+        // Edit Address
+        function editAddress(id) {
+            window.location.href = `edit-address.html?id=${id}`;
+        }
+
+        // Fetch User Profile Data for Header
+        async function fetchProfileData() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.user) {
+                    document.getElementById('welcomeName').innerText = data.user.firstName || data.user.name || 'User';
+                }
+            } catch (err) {
+                console.error("Error fetching profile", err);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', fetchProfileData);
+
+        // ==========================
+        // ADDRESS BOOK LOGIC
+        // ==========================
+        const modal = document.getElementById('addAddressModal');
+        const addBtn = document.getElementById('addAddressBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const form = document.getElementById('addAddressForm');
+        const container = document.getElementById('addressListContainer');
+
+        // Modal triggers
+        addBtn.addEventListener('click', () => {
+            // Reset state
+            form.reset();
+            form.removeAttribute('data-edit-id');
+            document.querySelector('#addAddressModal h3').innerText = 'Add New Address';
+            document.querySelector('#addAddressModal button[type="submit"]').innerText = 'Save Address';
+            modal.style.display = 'flex';
         });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            form.reset();
+        });
+
+        // Close on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                form.reset();
+            }
+        });
+
+        // Fetch user addresses on load
+        async function fetchAddresses() {
+            try {
+                const res = await fetch('http://localhost:5000/api/user/addresses', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    renderAddresses(data.addresses);
+                } else {
+                    console.error("Failed to load addresses:", data.message);
+                }
+            } catch (err) {
+                console.error("Error fetching addresses", err);
+            }
+        }
+
+        // Render HTML for addresses
+        function renderAddresses(addresses) {
+            container.innerHTML = ''; // clear
+
+            if (!addresses || addresses.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted);">You have no saved addresses yet.</p>`;
+                return;
+            }
+
+            addresses.forEach(addr => {
+                const box = document.createElement('div');
+                box.className = 'address-box';
+                box.innerHTML = `
+                    <span class="address-label">address:</span>
+                    <p style="margin-left: 1rem;">name: ${addr.name}</p>
+                    <p style="margin-left: 1rem;">pin: ${addr.pin}</p>
+                    <p style="margin-left: 1rem;">ph: ${addr.ph}</p>
+                    <p style="margin-left: 1rem; margin-top:0.5rem; color:#666;">${addr.addressLine}</p>
+                    
+                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; display: flex; gap: 1rem;">
+                        <button class="edit-btn" style="position: static;" onclick='openEditModal(${JSON.stringify(addr).replace(/'/g, "&#39;")})'>Edit</button>
+                        <button class="edit-btn" style="position: static; color: #ff4444;" onclick='deleteAddress("${addr._id}")'>Remove</button>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        // Open Edit Modal
+        function openEditModal(addr) {
+            // Populate form
+            document.getElementById('addrName').value = addr.name;
+            document.getElementById('addrPhone').value = addr.ph;
+            document.getElementById('addrPin').value = addr.pin;
+            document.getElementById('addrText').value = addr.addressLine;
+
+            // Set state to Edit
+            form.setAttribute('data-edit-id', addr._id);
+            document.querySelector('#addAddressModal h3').innerText = 'Edit Address';
+            document.querySelector('#addAddressModal button[type="submit"]').innerText = 'Update Address';
+
+            modal.style.display = 'flex';
+        }
+
+        // Delete address
+        async function deleteAddress(addressId) {
+            if (typeof Swal !== 'undefined') {
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#E50914',
+                    cancelButtonColor: '#333',
+                    confirmButtonText: 'Yes, delete it',
+                    background: '#151515',
+                    color: '#fff'
+                });
+                if (!result.isConfirmed) return;
+            } else {
+                if (!confirm("Are you sure you want to delete this address?")) return;
+            }
+
+            try {
+                const res = await fetch(`http://localhost:5000/api/user/address/${addressId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    if (typeof Swal !== 'undefined') successAlert('Address Removed!');
+                    else alert('Address Removed!');
+
+                    renderAddresses(data.addresses);
+                } else {
+                    if (typeof Swal !== 'undefined') errorAlert(data.message || 'Failed to remove address');
+                    else alert(data.message || 'Failed to remove address');
+                }
+            } catch (err) {
+                console.error("Delete error", err);
+                alert("Server error");
+            }
+        }
+
+        // Submit new/edited address
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                name: document.getElementById('addrName').value,
+                ph: document.getElementById('addrPhone').value,
+                pin: document.getElementById('addrPin').value,
+                addressLine: document.getElementById('addrText').value
+            };
+
+            const editId = form.getAttribute('data-edit-id');
+            const url = editId
+                ? `http://localhost:5000/api/user/address/${editId}`
+                : 'http://localhost:5000/api/user/address';
+            const method = editId ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    modal.style.display = 'none';
+                    form.reset();
+                    form.removeAttribute('data-edit-id');
+
+                    const successMsg = editId ? 'Address Updated!' : 'Address Added!';
+
+                    // Custom Alert if available or fallback to standard alert
+                    if (typeof Swal !== 'undefined') {
+                        successAlert(successMsg);
+                    } else {
+                        alert(successMsg);
+                    }
+
+                    renderAddresses(data.addresses); // backend returns updated array directly
+                } else {
+                    if (typeof Swal !== 'undefined') {
+                        errorAlert(data.message || 'Failed to save address');
+                    } else {
+                        alert(data.message || 'Failed to save address');
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server error");
+            }
+        });
+
+        // Init
+        fetchAddresses();
+
     </script>
 </body>
 

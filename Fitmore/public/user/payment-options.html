@@ -244,7 +244,7 @@
                     <li><a href="index.html" class="nav-item">HOME</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                 </ul>
             </nav>
 
@@ -274,7 +274,7 @@
 
             <div style="margin-bottom: 2rem;">
                 <h1 style="font-family: var(--font-display); font-size: 2rem;">Welcome! <span
-                        style="color:var(--accent)">John Doe</span></h1>
+                        style="color:var(--accent)" id="welcomeName">User</span></h1>
             </div>
 
             <div class="account-grid">
@@ -365,19 +365,87 @@
         </div>
     </section>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Shop</h4>
+                    <ul class="f-links">
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="copyright">
-                &copy; 2026 FITMORE. All Rights Reserved.
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
         // Check Auth immediately
@@ -405,10 +473,161 @@
             window.location.href = 'index.html';
         });
 
-        // Mock Add Funds
-        document.querySelector('.btn-add-funds').addEventListener('click', () => {
-            toastAlert('Payment Gateway Integration Pending.');
-        });
+        
+        // Fetch Razorpay Key
+        let rzpKey = '';
+        async function fetchRazorpayKey() {
+            try {
+                const res = await fetch('/api/payment/config');
+                const data = await res.json();
+                if (data.success) {
+                    rzpKey = data.key;
+                }
+            } catch (err) {
+                console.error('Error fetching Razorpay config:', err);
+            }
+        }
+        fetchRazorpayKey();
+
+        // ----------------------------------------
+        // GET WALLET DATA
+        // ----------------------------------------
+        async function loadWallet() {
+            const token = localStorage.getItem('token');
+            if(!token) return;
+            try {
+                const res = await fetch('/api/user/wallet', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.querySelector('.balance-amount h2').innerText = `₹${(data.walletBalance || 0).toFixed(2)}`;
+                    
+                    const tbody = document.querySelector('.history-table tbody');
+                    if (data.transactions && data.transactions.length > 0) {
+                        tbody.innerHTML = data.transactions.map(t => {
+                            const date = new Date(t.createdAt).toLocaleDateString();
+                            const sign = t.type === 'credit' ? '+' : '-';
+                            const color = t.type === 'credit' ? '#4CAF50' : '#F44336';
+                            return `
+                                <tr>
+                                    <td>${date}</td>
+                                    <td>${t.description}</td>
+                                    <td style="text-align: right; color: ${color}; font-weight: 600;">${sign}₹${t.amount.toFixed(2)}</td>
+                                </tr>
+                            `;
+                        }).join('');
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="3"><span class="empty-state">No transactions yet.</span></td></tr>`;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading wallet", error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadWallet);
+
+        // Razorpay Add Funds
+        const btnAddFunds = document.querySelector('.btn-add-funds');
+        if(btnAddFunds) {
+            btnAddFunds.addEventListener('click', async () => {
+                const amountInput = document.querySelector('.money-input').value;
+                const amount = parseFloat(amountInput);
+
+                if (isNaN(amount) || amount <= 0) {
+                    return errorAlert('Please enter a valid amount greater than 0');
+                }
+
+                const token = localStorage.getItem('token');
+
+                try {
+                    // 1. Create order
+                    const orderRes = await fetch('/api/payment/create-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ amount })
+                    });
+
+                    const orderData = await orderRes.json();
+                    if (!orderData.success) {
+                        return errorAlert(orderData.message || 'Error creating order');
+                    }
+
+                    // 2. Open Razorpay Widget
+                    const options = {
+                        key: rzpKey,
+                        amount: orderData.order.amount,
+                        currency: orderData.order.currency,
+                        name: 'Fitmore Wallet',
+                        description: 'Wallet Top-up',
+                        order_id: orderData.order.id,
+                        handler: async function (response) {
+                            // 3. Verify Signature & Add funds
+                            try {
+                                const verifyRes = await fetch('/api/user/wallet/add', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    },
+                                    body: JSON.stringify({
+                                        amount: amount,
+                                        razorpay_payment_id: response.razorpay_payment_id,
+                                        razorpay_order_id: response.razorpay_order_id,
+                                        razorpay_signature: response.razorpay_signature
+                                    })
+                                });
+
+                                const verifyData = await verifyRes.json();
+
+                                if (verifyData.success) {
+                                    successAlert(verifyData.message);
+                                    document.querySelector('.money-input').value = '';
+                                    loadWallet(); // Refresh UI
+                                } else {
+                                    errorAlert(verifyData.message || 'Payment verification failed');
+                                }
+                            } catch (err) {
+                                console.error('Verify error', err);
+                                errorAlert('Error processing payment confirmation');
+                            }
+                        },
+                        theme: {
+                            color: '#E50914'
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+
+                } catch (err) {
+                    console.error('Checkout error:', err);
+                    errorAlert('An error occurred during checkout');
+                }
+            });
+        }
+
+        // Fetch User Profile Data for Header
+        async function fetchProfileData() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.user) {
+                    document.getElementById('welcomeName').innerText = data.user.firstName || data.user.name || 'User';
+                }
+            } catch (err) {
+                console.error("Error fetching profile", err);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', fetchProfileData);
     </script>
 </body>
 

@@ -219,6 +219,171 @@
             background: var(--accent-hover);
         }
 
+        /* Address Cards Custom Styling */
+        .address-selection-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .address-card-label {
+            display: block;
+            cursor: pointer;
+        }
+
+        .address-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        /* Hide default radio */
+        .address-card-label input[type="radio"] {
+            display: none;
+        }
+
+        /* Custom Radio Button Circle */
+        .custom-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: var(--transition);
+        }
+
+        .custom-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            transition: var(--transition);
+        }
+
+        /* Active Card Style */
+        .address-card-label input[type="radio"]:checked+.address-card {
+            border-color: var(--accent);
+            background: rgba(229, 9, 20, 0.05);
+            /* very faint red tint */
+        }
+
+        .address-card-label input[type="radio"]:checked+.address-card .custom-radio {
+            border-color: var(--accent);
+        }
+
+        .address-card-label input[type="radio"]:checked+.address-card .custom-radio::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-name {
+            font-weight: 600;
+            color: var(--text-white);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .card-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-phone {
+            color: var(--text-white);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-line {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .no-address-msg {
+            background: var(--bg-card);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .no-address-msg p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            color: var(--text-white);
+            background: transparent;
+            padding: 10px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .checkout-grid {
@@ -255,7 +420,7 @@
                     <li><a href="index.html" class="nav-item">HOME</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                 </ul>
             </nav>
 
@@ -287,48 +452,20 @@
             <h1 class="page-title">Billing Details</h1>
 
             <div class="checkout-grid">
-                <!-- Left: Form -->
-                <form id="billingForm">
-                    <div class="form-group">
-                        <label class="form-label">First Name<span>*</span></label>
-                        <input type="text" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Company Name</label>
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Street Address<span>*</span></label>
-                        <input type="text" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Apartment, floor, etc. (optional)</label>
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Town/City<span>*</span></label>
-                        <input type="text" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Phone Number<span>*</span></label>
-                        <input type="tel" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Email Address<span>*</span></label>
-                        <input type="email" class="form-control" required>
-                    </div>
-
-                    <label class="checkbox-group">
-                        <input type="checkbox" checked>
-                        <span class="checkbox-label">Save this information for faster check-out next time</span>
-                    </label>
-                </form>
+                <!-- Left: Shipping Method Picker -->
+                <div class="checkout-left-column">
+                    <h3 style="color: var(--text-white); margin-bottom: 1.5rem; font-size: 1.3rem;">Shipping Address
+                    </h3>
+                    <form id="shippingAddressForm">
+                        <div id="addressSelectionContainer" class="address-selection-container">
+                            <!-- Injected by fetch logic -->
+                            <p style="color:var(--text-muted)">Loading addresses...</p>
+                        </div>
+                        <button type="button" id="openAddAddressBtn" class="btn-outline"
+                            style="width: 100%; margin-top: 1.5rem; text-align: center; border-style: dashed;">+ Add New
+                            Address</button>
+                    </form>
+                </div>
 
                 <!-- Right: Summary -->
                 <div class="order-summary">
@@ -368,8 +505,8 @@
 
                         <label class="payment-option">
                             <div class="payment-left">
-                                <input type="radio" name="payment" value="bank">
-                                <span>Bank</span>
+                                <input type="radio" name="payment" value="razorpay">
+                                <span>Online Payment (Razorpay)</span>
                             </div>
                             <!-- Mock Icons -->
                             <div class="bank-icons">
@@ -396,147 +533,823 @@
                         </label>
                     </div>
 
-                    <div class="coupon-row">
-                        <input type="text" class="coupon-input" placeholder="Coupon Code">
-                        <button class="btn-apply">Apply Coupon</button>
+                    <div id="paymentDetails" style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--accent);">
+                        Cash on delivery selected.
                     </div>
 
-                    <button class="btn-place" id="placeOrderBtn">Place Order</button>
+                    <div class="coupon-row">
+                        <input type="text" id="couponCodeInput" class="coupon-input" placeholder="Coupon Code">
+                        <button class="btn-apply" id="applyCouponBtn">Apply Coupon</button>
+                    </div>
+                    <div id="couponMessage" style="margin-top: 10px; font-size: 0.9rem;"></div>
+                    <div id="discountRowContainer" style="margin-top: 15px;"></div>
+
+                    <div class="form-group" style="margin-top: 1.5rem; margin-bottom: 0;">
+                        <label class="form-label">Order Notes (Optional)</label>
+                        <textarea id="orderNotes" class="form-control" rows="2"
+                            placeholder="Notes about your order, e.g. special notes for delivery."
+                            style="resize:none;"></textarea>
+                    </div>
+
+                    <div id="addressPreview"
+                        style="margin-top: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; display: none;">
+                        <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-white);">Selected Address
+                        </h4>
+                        <div id="addressPreviewText"
+                            style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;"></div>
+                    </div>
+
+                    <button class="btn-place" id="placeOrderBtn" style="margin-top: 1.5rem;">Place Order</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Add Address Modal -->
+    <div id="addAddressModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.5rem;">Add New Address</h3>
+            <form id="addAddressForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="addrName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" id="addrPhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">PIN Code</label>
+                    <input type="text" id="addrPin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Full Address</label>
+                    <textarea id="addrText" class="form-control" required rows="3" style="resize:none;"></textarea>
+                </div>
+                <div style="display:flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" id="closeModalBtn"
+                        style="padding:10px 24px; background:none; border:none; cursor:pointer; color: var(--text-white); font-weight: 500;">Cancel</button>
+                    <button type="submit" class="btn-outline">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="index.html" class="logo" style="margin-bottom:1rem">FITMORE</a>
-                    <p style="color:var(--text-muted); font-size:0.9rem;">The premium destination for serious athletes.
-                    </p>
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
                 </div>
+
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
+
                 <div class="f-col">
-                    <h4>Account</h4>
+                    <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="account.html">My Account</a></li>
-                        <li><a href="login.html">Login</a></li>
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+
     <!-- Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
 
     <script>
-        // Check Auth
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'signup.html';
+
+        /* ===========================
+           AUTH CHECK
+        =========================== */
+
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            window.location.href = "signup.html";
         }
 
-        // Mobile Toggle
-        const mobileToggleBtn = document.getElementById('mobileToggle');
-        const mobileNavLinks = document.getElementById('navLinks');
-        if (mobileToggleBtn) {
-            mobileToggleBtn.addEventListener('click', () => {
-                mobileNavLinks.classList.toggle('active');
+
+        /* ===========================
+           MOBILE MENU
+        =========================== */
+
+        const mobileToggleBtn =
+            document.getElementById("mobileToggle");
+
+        const mobileNavLinks =
+            document.getElementById("navLinks");
+
+        mobileToggleBtn?.addEventListener("click", () => {
+            mobileNavLinks.classList.toggle("active");
+        });
+
+
+        /* ===========================
+           GLOBAL CART
+        =========================== */
+
+        let cart = [];
+
+        const orderItemsContainer =
+            document.getElementById("orderItems");
+
+        const subtotalDisplay =
+            document.getElementById("subtotalDisplay");
+
+        const totalDisplay =
+            document.getElementById("totalDisplay");
+
+
+        /* ===========================
+           LOAD CART FROM DATABASE
+        =========================== */
+
+        async function loadCart() {
+            orderItemsContainer.innerHTML = "<p style='color: var(--text-muted); text-align: center; padding: 1rem;'>Loading your cart...</p>";
+            try {
+
+                const res = await fetch(
+                    "http://localhost:5000/api/cart",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                const data = await res.json();
+
+                cart = data.items || [];
+
+                if (cart.length === 0) {
+                    window.location.href = "cart.html";
+                    return;
+                }
+                console.log(data);
+                renderSummary();
+
+            } catch (err) {
+                console.error("Cart Load Error:", err);
+                orderItemsContainer.innerHTML = "<p style='color: #ef4444; text-align: center;'>Failed to load cart.</p>";
+            }
+        }
+
+
+        /* ===========================
+           RENDER ORDER SUMMARY
+        =========================== */
+
+        function renderSummary() {
+
+            let total = 0;
+
+            orderItemsContainer.innerHTML = "";
+
+            if (!cart.length) {
+                orderItemsContainer.innerHTML =
+                    "<p>Your cart is empty.</p>";
+                return;
+            }
+
+            cart.forEach(item => {
+
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+
+                const imgSrc =
+                    item.image || "images/download.jpg";
+
+                const div = document.createElement("div");
+                div.className = "summary-item";
+
+                div.innerHTML = `
+            <div class="summary-info">
+                <img src="${imgSrc}">
+                <span>${item.name} &times;${item.qty}</span>
+            </div>
+            <span>₹${subtotal.toFixed(2)}</span>
+        `;
+
+                orderItemsContainer.appendChild(div);
+            });
+
+            const appliedCoupon = JSON.parse(sessionStorage.getItem('appliedCoupon'));
+            let discount = 0;
+
+            if (appliedCoupon) {
+                if (appliedCoupon.minPurchase && total < appliedCoupon.minPurchase) {
+                    sessionStorage.removeItem('appliedCoupon');
+                    const msgEl = document.getElementById('couponMessage');
+                    if (msgEl) {
+                        msgEl.innerText = `Coupon removed: Minimum purchase of ₹${appliedCoupon.minPurchase} required.`;
+                        msgEl.style.color = '#ef4444';
+                    }
+                } else {
+                    if (appliedCoupon.type === 'percentage') {
+                        discount = (total * appliedCoupon.value) / 100;
+                    } else {
+                        discount = appliedCoupon.value;
+                        if (discount > total) discount = total;
+                    }
+                }
+            }
+
+            const finalTotal = total - discount;
+
+            subtotalDisplay.innerText = `₹${total.toFixed(2)}`;
+
+            const discountRowContainer = document.getElementById('discountRowContainer');
+            if (discount > 0) {
+                discountRowContainer.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:1rem; color:var(--accent); font-size:0.95rem;">
+                        <span>Discount (${appliedCoupon.code}) <span style="cursor:pointer; font-size:0.8rem; text-decoration:underline;" onclick="removeCoupon()">[Remove]</span></span>
+                        <span>-₹${discount.toFixed(2)}</span>
+                    </div>
+                `;
+            } else {
+                discountRowContainer.innerHTML = '';
+            }
+
+            totalDisplay.innerText = `₹${finalTotal.toFixed(2)}`;
+        }
+
+        /* ===========================
+           COUPON LOGIC
+        =========================== */
+
+        const applyCouponBtn = document.getElementById('applyCouponBtn');
+        const couponCodeInput = document.getElementById('couponCodeInput');
+        const couponMessage = document.getElementById('couponMessage');
+
+        if (applyCouponBtn) {
+            applyCouponBtn.addEventListener('click', async () => {
+                const code = couponCodeInput.value.trim();
+                if (!code) return;
+
+                couponMessage.innerText = 'Validating...';
+                couponMessage.style.color = 'var(--text-muted)';
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                let currentTotal = 0;
+                cart.forEach(item => { currentTotal += item.price * item.qty; });
+
+                try {
+                    const res = await fetch('http://localhost:5000/api/user/coupons/validate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ code: code, cartTotal: currentTotal })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        couponMessage.innerText = data.message;
+                        couponMessage.style.color = '#10b981';
+
+                        sessionStorage.setItem('appliedCoupon', JSON.stringify({
+                            code: data.coupon.code,
+                            type: data.coupon.type,
+                            value: data.coupon.value,
+                            minPurchase: data.coupon.minPurchase || 0
+                        }));
+
+                        renderSummary();
+                    } else {
+                        couponMessage.innerText = data.message;
+                        couponMessage.style.color = '#ef4444';
+                        sessionStorage.removeItem('appliedCoupon');
+                        renderSummary();
+                    }
+
+                } catch (err) {
+                    console.error('Coupon validation error:', err);
+                    couponMessage.innerText = 'Error validating coupon';
+                    couponMessage.style.color = '#ef4444';
+                }
             });
         }
 
-        // Load Cart
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const orderItemsContainer = document.getElementById('orderItems');
-        const subtotalDisplay = document.getElementById('subtotalDisplay');
-        const totalDisplay = document.getElementById('totalDisplay');
+        window.removeCoupon = function () {
+            sessionStorage.removeItem('appliedCoupon');
+            if (couponMessage) couponMessage.innerText = '';
+            if (couponCodeInput) couponCodeInput.value = '';
+            renderSummary();
+        };
 
-        // Render Summary
-        function renderSummary() {
-            let total = 0;
-            if (cart.length === 0) {
-                orderItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-            } else {
-                orderItemsContainer.innerHTML = '';
-                cart.forEach(item => {
-                    total += item.price * item.qty;
-                    // Handle image path (encode for spaces)
-                    const imgSrc = item.image ? encodeURI(item.image) : 'images/download.jpg';
 
-                    const div = document.createElement('div');
-                    div.className = 'summary-item';
-                    div.innerHTML = `
-                        <div class="summary-info">
-                            <img src="${imgSrc}" alt="${item.name}" onerror="this.src='images/download.jpg'">
-                            <span>${item.name}</span>
-                        </div>
-                        <span>$${item.price * item.qty}</span>
-                    `;
-                    orderItemsContainer.appendChild(div);
+        /* ===========================
+           WALLET INIT
+        =========================== */
+
+        let walletBalance = 0;
+
+        async function loadWallet() {
+            try {
+                const res = await fetch("http://localhost:5000/api/user/wallet", {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
-            }
-            subtotalDisplay.innerText = `$${total}`;
-            totalDisplay.innerText = `$${total}`;
-        }
+                const data = await res.json();
 
-        renderSummary();
-
-        // Wallet Intialization
-        let walletBalance = parseFloat(localStorage.getItem('walletBalance'));
-        if (isNaN(walletBalance)) {
-            // Default Balance for Demo
-            walletBalance = 1000.00;
-            localStorage.setItem('walletBalance', walletBalance);
-        }
-
-        const walletBalanceDisplay = document.getElementById('walletBalanceDisplay');
-        if (walletBalanceDisplay) {
-            walletBalanceDisplay.innerText = `$${walletBalance.toFixed(2)}`;
-        }
-
-        // Place Order Logic
-        document.getElementById('placeOrderBtn').addEventListener('click', () => {
-            const form = document.getElementById('billingForm');
-            if (form.checkValidity()) {
-                const selectedPayment = document.querySelector('input[name="payment"]:checked');
-
-                if (selectedPayment && selectedPayment.value === 'wallet') {
-                    // Calculate Total
-                    let currentTotal = 0;
-                    cart.forEach(item => currentTotal += item.price * item.qty);
-
-                    if (walletBalance >= currentTotal) {
-                        walletBalance -= currentTotal;
-                        localStorage.setItem('walletBalance', walletBalance);
-                        successAlert(`Order Placed Successfully! Paid $${currentTotal.toFixed(2)} from Wallet. Remaining Balance: $${walletBalance.toFixed(2)}`).then(() => {
-                            localStorage.removeItem('cart');
-                            window.location.href = 'index.html';
-                        });
-                    } else {
-                        errorAlert(`Insufficient Wallet Balance! You need $${currentTotal.toFixed(2)} but have only $${walletBalance.toFixed(2)}. Please select another payment method.`);
-                        return; // Stop checkout
+                if (data.success) {
+                    walletBalance = data.walletBalance;
+                    const walletDisplay = document.getElementById("walletBalanceDisplay");
+                    if (walletDisplay) {
+                        walletDisplay.innerText = `₹${walletBalance.toFixed(2)}`;
                     }
-                } else {
-                    successAlert('Order Placed Successfully! Thank you for shopping with FITMORE.').then(() => {
-                        localStorage.removeItem('cart');
-                        window.location.href = 'index.html';
-                    });
                 }
+            } catch (err) {
+                console.error("Wallet Load Error:", err);
+            }
+        }
 
-            } else {
-                form.reportValidity();
+        /* ===========================
+           ADDRESS BOOK INIT
+        =========================== */
+
+        const addressContainer = document.getElementById("addressSelectionContainer");
+
+        async function loadAddresses() {
+            try {
+                const res = await fetch("http://localhost:5000/api/user/addresses", {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.success && data.addresses.length > 0) {
+                    renderAddresses(data.addresses);
+                } else {
+                    // Empty State
+                    addressContainer.innerHTML = `
+                        <div class="no-address-msg">
+                            <p>You haven't saved any addresses yet.</p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.error("Address Load Error:", err);
+                addressContainer.innerHTML = `<p style="color:var(--accent)">Failed to load addresses.</p>`;
+            }
+        }
+
+        function renderAddresses(addresses) {
+            let html = "";
+            addresses.forEach((addr, index) => {
+                // Pre-check the first address natively
+                const isChecked = index === 0 ? "checked" : "";
+                const idStr = `addr_${addr._id}`;
+
+                // Serialize the address data to inject directly into the radio value
+                const serializedData = encodeURIComponent(JSON.stringify(addr));
+
+                html += `
+                    <label class="address-card-label" for="${idStr}">
+                        <input type="radio" name="selectedShipping" id="${idStr}" value="${serializedData}" ${isChecked}>
+                        <div class="address-card">
+                            <div class="custom-radio"></div>
+                            <div class="card-details">
+                                <div class="card-header">
+                                    <h4 class="card-name">${addr.name}</h4>
+                                    ${index === 0 ? '<span class="card-badge">Default</span>' : ''}
+                                </div>
+                                <div class="card-phone">Phone: ${addr.ph} (PIN: ${addr.pin})</div>
+                                <div class="card-line">${addr.addressLine}</div>
+                            </div>
+                        </div>
+                    </label>
+                `;
+            });
+
+            addressContainer.innerHTML = html;
+
+            // Attach listener for address preview
+            document.querySelectorAll('input[name="selectedShipping"]').forEach(radio => {
+                radio.addEventListener('change', updateAddressPreview);
+            });
+            updateAddressPreview();
+        }
+
+        function updateAddressPreview() {
+            const selectedRadio = document.querySelector('input[name="selectedShipping"]:checked');
+            const previewContainer = document.getElementById('addressPreview');
+            const previewText = document.getElementById('addressPreviewText');
+
+            if (selectedRadio && previewContainer && previewText) {
+                const addr = JSON.parse(decodeURIComponent(selectedRadio.value));
+                previewText.innerHTML = `<b>${addr.name}</b><br>${addr.ph}<br>${addr.addressLine}, PIN: ${addr.pin}`;
+                previewContainer.style.display = 'block';
+            } else if (previewContainer) {
+                previewContainer.style.display = 'none';
+            }
+        }
+
+        /* ===========================
+           ADDRESS MODAL LOGIC
+        =========================== */
+
+        const modal = document.getElementById('addAddressModal');
+        const openModalBtn = document.getElementById('openAddAddressBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const form = document.getElementById('addAddressForm');
+
+        if (openModalBtn) {
+            openModalBtn.addEventListener('click', () => {
+                form.reset();
+                modal.style.display = 'flex';
+            });
+        }
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                form.reset();
+            });
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                form.reset();
             }
         });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                name: document.getElementById('addrName').value,
+                ph: document.getElementById('addrPhone').value,
+                pin: document.getElementById('addrPin').value,
+                addressLine: document.getElementById('addrText').value
+            };
+
+            try {
+                const res = await fetch('http://localhost:5000/api/user/address', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    modal.style.display = 'none';
+                    form.reset();
+                    if (typeof Swal !== 'undefined') successAlert('Address Added!');
+                    else alert('Address Added!');
+
+                    if (data.addresses) {
+                        renderAddresses(data.addresses);
+                    } else {
+                        loadAddresses();
+                    }
+                } else {
+                    if (typeof Swal !== 'undefined') errorAlert(data.message || 'Failed to save address');
+                    else alert(data.message || 'Failed to save address');
+                }
+            } catch (err) {
+                console.error(err);
+                if (typeof Swal !== 'undefined') errorAlert("Server error");
+                else alert("Server error");
+            }
+        });
+
+        /* ===========================
+           PAYMENT METHOD SWITCH
+        =========================== */
+
+        const paymentRadios = document.querySelectorAll('input[name="payment"]');
+        const paymentDetails = document.getElementById('paymentDetails');
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (!paymentDetails) return;
+                if (radio.value === 'razorpay') {
+                    paymentDetails.innerHTML = 'Secure online payment via Razorpay. You will be redirected after clicking Place Order.';
+                } else if (radio.value === 'wallet') {
+                    paymentDetails.innerHTML = 'Wallet selected. Balance will be verified on checkout.';
+                } else {
+                    paymentDetails.innerHTML = 'Cash on delivery selected.';
+                }
+            });
+        });
+
+        /* ===========================
+           PLACE ORDER
+        =========================== */
+
+        document
+            .getElementById("placeOrderBtn")
+            .addEventListener("click", async (e) => {
+
+                const btn = e.target;
+
+                // CART VALIDATION
+                if (!cart || cart.length === 0) {
+                    if (typeof Swal !== 'undefined') errorAlert('Your cart is empty.');
+                    else alert('Your cart is empty.');
+                    return;
+                }
+
+                btn.disabled = true;
+                const originalText = btn.innerText;
+                btn.innerText = "Processing...";
+
+                // 1. Verify Address
+                const selectedRadio = document.querySelector('input[name="selectedShipping"]:checked');
+                if (!selectedRadio) {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                    if (typeof Swal !== 'undefined') errorAlert('Please select or add a shipping address.');
+                    else alert('Please select or add a shipping address.');
+                    return;
+                }
+
+                // Decode the attached address context
+                const parsedAddress = JSON.parse(decodeURIComponent(selectedRadio.value));
+
+                // Construct backend shippingAddress expectations
+                const shippingPayload = {
+                    address: parsedAddress.addressLine,
+                    city: "Default City", // Not explicitly tracked in Address schema yet
+                    postalCode: parsedAddress.pin,
+                    country: "Default Country" // Same here
+                };
+
+                // 2. Extract Payment and Cart info
+                const payment =
+                    document.querySelector(
+                        'input[name="payment"]:checked'
+                    ).value;
+
+                let total = 0;
+
+                cart.forEach(
+                    item => total += item.price * item.qty
+                );
+
+                const appliedCoupon = JSON.parse(sessionStorage.getItem('appliedCoupon'));
+                let discount = 0;
+                if (appliedCoupon) {
+                    if (appliedCoupon.type === 'percentage') {
+                        discount = (total * appliedCoupon.value) / 100;
+                    } else {
+                        discount = appliedCoupon.value;
+                        if (discount > total) discount = total;
+                    }
+                }
+                const finalTotal = total - discount;
+
+                /* ===== WALLET PAYMENT ===== */
+
+                if (payment === "wallet") {
+
+                    if (walletBalance < finalTotal) {
+                        btn.disabled = false;
+                        btn.innerText = originalText;
+                        errorAlert(
+                            `Insufficient Wallet Balance (₹${walletBalance.toFixed(2)})`
+                        );
+                        return;
+                    }
+
+                    // We do not locally deduct and save to localStorage here. 
+                    // The backend `POST /api/orders` will handle the actual secure deduction.
+                }
+
+                const notes = document.getElementById('orderNotes')?.value || '';
+
+                try {
+
+                    /* ===== RAZORPAY PAYMENT LOGIC ===== */
+
+                    if (payment === "razorpay") {
+                        // 1. Create native Razorpay order
+                        const rpayRes = await fetch("http://localhost:5000/api/payment/create-order", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
+                            },
+                            body: JSON.stringify({ amount: finalTotal })
+                        });
+
+                        const rpayData = await rpayRes.json();
+                        if (!rpayRes.ok || !rpayData.success) {
+                            throw new Error(rpayData.message || 'Razorpay order creation failed');
+                        }
+
+                        // 2. Open Razorpay Widget
+                        const options = {
+                            key: "YOUR_RAZORPAY_KEY_ID_HERE", // Replaced by backend safely or user configs
+                            amount: rpayData.order.amount,
+                            currency: rpayData.order.currency,
+                            name: "FITMORE",
+                            description: "Order Checkout",
+                            order_id: rpayData.order.id,
+                            handler: async function (response) {
+                                try {
+                                    // 3. Verify Payment
+                                    const verifyRes = await fetch("http://localhost:5000/api/payment/verify-signature", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            Authorization: `Bearer ${token}`
+                                        },
+                                        body: JSON.stringify({
+                                            razorpay_order_id: response.razorpay_order_id,
+                                            razorpay_payment_id: response.razorpay_payment_id,
+                                            razorpay_signature: response.razorpay_signature
+                                        })
+                                    });
+
+                                    const verifyData = await verifyRes.json();
+                                    if (verifyRes.ok && verifyData.success) {
+                                        // 4. Save Actual Database Order
+                                        await finalizeOrder();
+                                    } else {
+                                        errorAlert('Payment verification failed.');
+                                        btn.disabled = false;
+                                        btn.innerText = originalText;
+                                    }
+                                } catch (e) {
+                                    console.error("Verification Error", e);
+                                    errorAlert('Critical error verifying payment.');
+                                    btn.disabled = false;
+                                    btn.innerText = originalText;
+                                }
+                            },
+                            theme: { color: "#3b82f6" },
+                            modal: {
+                                ondismiss: function () {
+                                    btn.disabled = false;
+                                    btn.innerText = originalText;
+                                }
+                            }
+                        };
+
+                        // We need the dynamically assigned key. We shouldn't hardcode it on frontend.
+                        // For a real production app, we would supply the key from backend config route.
+                        // Here, we'll try to retrieve the env variable or just trigger Razorpay. 
+                        // The server must provide this key. For now, assuming standard flow.
+
+                        // Fetching public key from server
+                        const keyRes = await fetch("http://localhost:5000/api/payment/config");
+                        const keyData = await keyRes.json();
+                        options.key = keyData.key || "YOUR_RAZORPAY_KEY_ID_HERE";
+
+                        const rzp1 = new Razorpay(options);
+                        rzp1.on('payment.failed', function (response) {
+                            errorAlert(response.error.description);
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                        });
+                        rzp1.open();
+
+                    } else {
+                        // Regular flow for COD / Wallet
+                        await finalizeOrder();
+                    }
+
+                    /* ===== FINALIZE MONGODB ORDER ===== */
+                    async function finalizeOrder() {
+                        const response = await fetch(
+                            "http://localhost:5000/api/orders",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Bearer ${token}`
+                                },
+                                body: JSON.stringify({
+                                    items: cart,
+                                    total: finalTotal,
+                                    paymentMethod: payment,
+                                    shippingAddress: shippingPayload,
+                                    notes: notes
+                                })
+                            }
+                        );
+
+                        const data = await response.json();
+
+                        if (!response.ok || data.success === false) {
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                            if (typeof Swal !== 'undefined') errorAlert(data.message || 'Order Failed');
+                            else alert(data.message || 'Order Failed');
+                            return;
+                        }
+
+                        await fetch(
+                            "http://localhost:5000/api/cart/clear",
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    Authorization: `Bearer ${token}`
+                                }
+                            }
+                        );
+
+                        successAlert(
+                            "Order Placed Successfully!"
+                        ).then(() => {
+                            window.location.href = "orders.html";
+                        });
+                    }
+
+                } catch (err) {
+
+                    console.error(err);
+
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                    errorAlert("Order Failed. Please try again.");
+
+                }
+
+            });
+
+
+        /* ===========================
+           INIT
+        =========================== */
+
+        loadCart();
+        loadAddresses();
+        loadWallet();
+
     </script>
 </body>
 

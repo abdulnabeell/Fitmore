@@ -485,7 +485,8 @@
             <nav>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="index.html" class="nav-item">HOME</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html"
+                            class="nav-item">SIGN UP</a></li>
                     <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
@@ -599,26 +600,16 @@
 
                     <!-- Options -->
                     <div class="option-group">
-                        <span class="option-label">Colors:</span>
-                        <div class="color-opts">
-                            <label>
-                                <input type="radio" name="color" class="color-radio" checked>
-                                <div class="color-dot" style="background: #3b82f6;"></div>
-                            </label>
-                            <label>
-                                <input type="radio" name="color" class="color-radio">
-                                <div class="color-dot" style="background: #ef4444;"></div>
-                            </label>
-                            <label>
-                                <input type="radio" name="color" class="color-radio">
-                                <div class="color-dot" style="background: #10b981;"></div>
-                            </label>
+                        <span class="option-label">Flavour:</span>
+                        <div class="flavour-opts" id="flavourOptions"
+                            style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <!-- Rendered via JS -->
                         </div>
                     </div>
 
                     <div class="option-group">
-                        <span class="option-label">Size:</span>
-                        <div class="size-opts" id="sizeOptions">
+                        <span class="option-label">Weight:</span>
+                        <div class="size-opts" id="weightOptions" style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <!-- Rendered via JS -->
                         </div>
                     </div>
@@ -631,8 +622,8 @@
                             <button class="qty-btn" onclick="changeQty(1)">+</button>
                         </div>
                         <button class="btn-add" id="addToCartBtn">Buy Now</button>
-                        <button class="icon-btn"
-                            style="border:1px solid rgba(255,255,255,0.2); border-radius:4px; height:48px; width:48px;">
+                        <button class="icon-btn auth-required" id="prodWishlistBtn"
+                            style="border:1px solid rgba(255,255,255,0.2); border-radius:4px; height:48px; width:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; color: #fff;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path
@@ -671,6 +662,53 @@
                 </div>
             </div>
 
+            <!-- Reviews Section -->
+            <div class="product-reviews-section"
+                style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="font-family: var(--font-display); font-size: 2rem; text-transform: uppercase;">Customer
+                        Reviews</h2>
+                    <button class="btn-add auth-required" id="writeReviewBtn"
+                        style="width: auto; padding: 0.8rem 1.5rem;" onclick="toggleReviewForm()">Write a
+                        Review</button>
+                </div>
+
+                <!-- Review Form (Hidden initially) -->
+                <div id="reviewFormContainer"
+                    style="display: none; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1rem;">Submit Your Review</h3>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display:block; margin-bottom: 0.5rem; color: var(--text-muted);">Rating</label>
+                        <select id="reviewRatingInput"
+                            style="width: 100%; padding: 12px; background: #111; border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 4px;">
+                            <option value="5">5 Stars - Excellent</option>
+                            <option value="4">4 Stars - Very Good</option>
+                            <option value="3">3 Stars - Average</option>
+                            <option value="2">2 Stars - Poor</option>
+                            <option value="1">1 Star - Terrible</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display:block; margin-bottom: 0.5rem; color: var(--text-muted);">Comment</label>
+                        <textarea id="reviewCommentInput" rows="4"
+                            style="width: 100%; padding: 12px; background: #111; border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 4px; font-family: var(--font-main);"
+                            placeholder="What did you think about this product?"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn-add" id="submitReviewBtn" style="flex: 1;" onclick="submitReview()">Submit
+                            Review</button>
+                        <button class="btn-cancel-item"
+                            style="padding: 0 1.5rem; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;"
+                            onclick="toggleReviewForm()">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Reviews List Container -->
+                <div id="reviewsListContainer">
+                    <p style="color: var(--text-muted);">Loading reviews...</p>
+                </div>
+            </div>
+
             <!-- Flash Sales -->
             <div class="flash-section">
                 <span class="flash-tag">Today's</span>
@@ -704,490 +742,775 @@
         </div>
     </section>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="#" class="logo" style="margin-bottom:1rem">FITMORE</a>
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
                     <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
-                        serious athletes.</p>
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
                 </div>
+
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
+
                 <div class="f-col">
                     <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="#">Protein</a></li>
-                        <li><a href="#">Vitamins</a></li>
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">&copy; 2026 FITMORE. All Rights Reserved.</div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <script>
         // Mock DB
         // Mock DB
-    //     const products = [
-    //         {
-    //             id: 'creatine-1',
-    //             name: "Creatine Monohydrate",
-    //             price: 192.00,
-    //             desc: "High quality micronized creatine powder for building muscle mass, strength and endurance. Unflavored and easy to mix.",
-    //             category: "Supplements",
-    //             stock: true,
-    //             images: [
-    //                 "images/creatine-on.jpg",
-    //                 "images/creatine-detail.png"
-    //             ],
-    //             sizes: ["100g", "250g", "500g", "1kg"]
-    //         },
-    //         {
-    //             id: 'creatine-2',
-    //             name: "Creatine Micronized",
-    //             price: 125.00,
-    //             desc: "Pure creatine monohydrate for performance.",
-    //             category: "Supplements",
-    //             stock: true,
-    //             images: ["images/creatine-micronized.jpg"],
-    //             sizes: ["250g", "500g", "1kg"]
-    //         },
-    //         {
-    //             id: 'fish-oil-1',
-    //             name: "MuscleBlaze Omega 3",
-    //             price: 125.00,
-    //             desc: "Rich source of Omega 3 fatty acids for heart and joint health.",
-    //             category: "Supplements",
-    //             stock: true,
-    //             images: ["images/fish-oil-gold.jpg"],
-    //             sizes: ["30 Caps", "60 Caps", "90 Caps"]
-    //         },
-    //         {
-    //             id: 'fish-oil-2',
-    //             name: "Fish Oil Gold",
-    //             price: 62.50,
-    //             desc: "Premium fish oil supplement.",
-    //             category: "Supplements",
-    //             stock: true,
-    //             images: ["images/fish-oil-blace.jpg"],
-    //             sizes: ["60 Caps", "90 Caps"]
-    //         },
-    //         {
-    //             id: 'bcaa-glutamine',
-    //             name: "BCAA + GLUTAMINE",
-    //             price: 25.00,
-    //             desc: "Recovery formula with BCAA and Glutamine.",
-    //             category: "Nutrition",
-    //             stock: true,
-    //             images: ["images/vitastrong.png"],
-    //             sizes: ["250g", "500g", "1kg"]
-    //         },
-    //         {
-    //             id: 'elite-protein',
-    //             name: "Elite 100% Whey",
-    //             price: 160.00,
-    //             desc: "Fast absorbing whey protein for muscle recovery.",
-    //             category: "Protein",
-    //             stock: true,
-    //             images: ["images/protein-elite.jpg"],
-    //             sizes: ["1kg", "2kg", "5kg"]
-    //         },
-    //         {
-    //             id: 'ultraboost',
-    //             name: "Ultraboost Formula",
-    //             price: 140.00,
-    //             desc: "Energy boosting pre-workout supplement.",
-    //             category: "Nutrition",
-    //             stock: true,
-    //             images: ["images/preworkout.png"],
-    //             sizes: ["30 Servings", "60 Servings"]
-    //         },
-    //         {
-    //             id: 'bcaa',
-    //             name: "BCAA Powder",
-    //             price: 110.00,
-    //             desc: "Essential amino acids for muscle maintenance.",
-    //             category: "Nutrition",
-    //             stock: true,
-    //             images: ["images/vitastrong.png"],
-    //             sizes: ["250g", "500g"]
-    //         },
-    //         {
-    //             id: 'whey-gold',
-    //             name: "Gold Standard Whey",
-    //             price: 75.00,
-    //             desc: "The world's best selling whey protein powder.",
-    //             category: "Protein",
-    //             stock: true,
-    //             images: ["images/whey-gold.jpg"],
-    //             sizes: ["1lb", "2lbs", "5lbs", "10lbs"]
-    //         }
-    //     ];
+        //     const products = [
+        //         {
+        //             id: 'creatine-1',
+        //             name: "Creatine Monohydrate",
+        //             price: 192.00,
+        //             desc: "High quality micronized creatine powder for building muscle mass, strength and endurance. Unflavored and easy to mix.",
+        //             category: "Supplements",
+        //             stock: true,
+        //             images: [
+        //                 "images/creatine-on.jpg",
+        //                 "images/creatine-detail.png"
+        //             ],
+        //             sizes: ["100g", "250g", "500g", "1kg"]
+        //         },
+        //         {
+        //             id: 'creatine-2',
+        //             name: "Creatine Micronized",
+        //             price: 125.00,
+        //             desc: "Pure creatine monohydrate for performance.",
+        //             category: "Supplements",
+        //             stock: true,
+        //             images: ["images/creatine-micronized.jpg"],
+        //             sizes: ["250g", "500g", "1kg"]
+        //         },
+        //         {
+        //             id: 'fish-oil-1',
+        //             name: "MuscleBlaze Omega 3",
+        //             price: 125.00,
+        //             desc: "Rich source of Omega 3 fatty acids for heart and joint health.",
+        //             category: "Supplements",
+        //             stock: true,
+        //             images: ["images/fish-oil-gold.jpg"],
+        //             sizes: ["30 Caps", "60 Caps", "90 Caps"]
+        //         },
+        //         {
+        //             id: 'fish-oil-2',
+        //             name: "Fish Oil Gold",
+        //             price: 62.50,
+        //             desc: "Premium fish oil supplement.",
+        //             category: "Supplements",
+        //             stock: true,
+        //             images: ["images/fish-oil-blace.jpg"],
+        //             sizes: ["60 Caps", "90 Caps"]
+        //         },
+        //         {
+        //             id: 'bcaa-glutamine',
+        //             name: "BCAA + GLUTAMINE",
+        //             price: 25.00,
+        //             desc: "Recovery formula with BCAA and Glutamine.",
+        //             category: "Nutrition",
+        //             stock: true,
+        //             images: ["images/vitastrong.png"],
+        //             sizes: ["250g", "500g", "1kg"]
+        //         },
+        //         {
+        //             id: 'elite-protein',
+        //             name: "Elite 100% Whey",
+        //             price: 160.00,
+        //             desc: "Fast absorbing whey protein for muscle recovery.",
+        //             category: "Protein",
+        //             stock: true,
+        //             images: ["images/protein-elite.jpg"],
+        //             sizes: ["1kg", "2kg", "5kg"]
+        //         },
+        //         {
+        //             id: 'ultraboost',
+        //             name: "Ultraboost Formula",
+        //             price: 140.00,
+        //             desc: "Energy boosting pre-workout supplement.",
+        //             category: "Nutrition",
+        //             stock: true,
+        //             images: ["images/preworkout.png"],
+        //             sizes: ["30 Servings", "60 Servings"]
+        //         },
+        //         {
+        //             id: 'bcaa',
+        //             name: "BCAA Powder",
+        //             price: 110.00,
+        //             desc: "Essential amino acids for muscle maintenance.",
+        //             category: "Nutrition",
+        //             stock: true,
+        //             images: ["images/vitastrong.png"],
+        //             sizes: ["250g", "500g"]
+        //         },
+        //         {
+        //             id: 'whey-gold',
+        //             name: "Gold Standard Whey",
+        //             price: 75.00,
+        //             desc: "The world's best selling whey protein powder.",
+        //             category: "Protein",
+        //             stock: true,
+        //             images: ["images/whey-gold.jpg"],
+        //             sizes: ["1lb", "2lbs", "5lbs", "10lbs"]
+        //         }
+        //     ];
 
-    //     // Params
-    //     const params = new URLSearchParams(window.location.search);
-    //     let productId = params.get("id");
+        //     // Params
+        //     const params = new URLSearchParams(window.location.search);
+        //     let productId = params.get("id");
 
-    //     // Default to first product if no ID or not found
-    //     let product = products.find(p => p.id === productId);
-    //     if (!product) {
-    //         product = products[0];
-    //         productId = product.id;
-    //     }
+        //     // Default to first product if no ID or not found
+        //     let product = products.find(p => p.id === productId);
+        //     if (!product) {
+        //         product = products[0];
+        //         productId = product.id;
+        //     }
 
-    //     // Render Product
-    //     document.getElementById('breadName').innerText = product.name;
-    //     document.getElementById('prodTitle').innerText = product.name;
-    //     document.getElementById('prodPrice').innerText = "$" + product.price.toFixed(2);
-    //     document.getElementById('prodDesc').innerText = product.desc;
-    //     document.getElementById('mainImage').src = product.images[0];
+        //     // Render Product
+        //     document.getElementById('breadName').innerText = product.name;
+        //     document.getElementById('prodTitle').innerText = product.name;
+        //     document.getElementById('prodPrice').innerText = "$" + product.price.toFixed(2);
+        //     document.getElementById('prodDesc').innerText = product.desc;
+        //     document.getElementById('mainImage').src = product.images[0];
 
-    //     // Render Gallery
-    //     const galleryContainer = document.getElementById('galleryThumbs');
-    //     product.images.forEach((img, index) => {
-    //         const thumb = document.createElement('div');
-    //         thumb.className = `thumb-box ${index === 0 ? 'active' : ''}`;
-    //         thumb.innerHTML = `<img src="${img}" alt="thumb">`;
-    //         thumb.onclick = () => {
-    //             document.getElementById('mainImage').src = img;
-    //             document.querySelectorAll('.thumb-box').forEach(t => t.classList.remove('active'));
-    //             thumb.classList.add('active');
-    //         };
-    //         galleryContainer.appendChild(thumb);
-    //     });
+        //     // Render Gallery
+        //     const galleryContainer = document.getElementById('galleryThumbs');
+        //     product.images.forEach((img, index) => {
+        //         const thumb = document.createElement('div');
+        //         thumb.className = `thumb-box ${index === 0 ? 'active' : ''}`;
+        //         thumb.innerHTML = `<img src="${img}" alt="thumb">`;
+        //         thumb.onclick = () => {
+        //             document.getElementById('mainImage').src = img;
+        //             document.querySelectorAll('.thumb-box').forEach(t => t.classList.remove('active'));
+        //             thumb.classList.add('active');
+        //         };
+        //         galleryContainer.appendChild(thumb);
+        //     });
 
-    //     // Render Sizes
-    //     const sizeContainer = document.getElementById('sizeOptions');
-    //     sizeContainer.innerHTML = ''; // Clear existing
-    //     const sizes = product.sizes || ["Standard"]; // Fallback
+        //     // Render Sizes
+        //     const sizeContainer = document.getElementById('sizeOptions');
+        //     sizeContainer.innerHTML = ''; // Clear existing
+        //     const sizes = product.sizes || ["Standard"]; // Fallback
 
-    //     sizes.forEach((size, index) => {
-    //         const btn = document.createElement('button');
-    //         btn.className = `size-btn ${index === 0 ? 'active' : ''}`;
-    //         btn.innerText = size;
-    //         btn.onclick = () => {
-    //             document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    //             btn.classList.add('active');
-    //         };
-    //         sizeContainer.appendChild(btn);
-    //     });
+        //     sizes.forEach((size, index) => {
+        //         const btn = document.createElement('button');
+        //         btn.className = `size-btn ${index === 0 ? 'active' : ''}`;
+        //         btn.innerText = size;
+        //         btn.onclick = () => {
+        //             document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        //             btn.classList.add('active');
+        //         };
+        //         sizeContainer.appendChild(btn);
+        //     });
 
-    //     // Flash Sales Render
-    //     const flashSlider = document.getElementById('flashSlider');
-    //     products.forEach(p => {
-    //         const card = document.createElement('div');
-    //         card.className = "flash-card";
-    //         card.innerHTML = `
-    //             <div class="flash-badge">-40%</div>
-    //             <img src="${p.images[0]}" style="width:100%; height:150px; object-fit:contain; background:white; border-radius:4px; padding:10px; margin-bottom:1rem;">
-    //             <h4 style="font-size:0.9rem; margin-bottom:0.5rem">${p.name}</h4>
-    //             <div style="color:var(--accent); font-weight:700;">$${p.price}</div>
-    //         `;
-    //         card.onclick = () => window.location.href = `product.html?id=${p.id}`;
-    //         card.style.cursor = 'pointer';
-    //         flashSlider.appendChild(card);
-    //     });
+        //     // Flash Sales Render
+        //     const flashSlider = document.getElementById('flashSlider');
+        //     products.forEach(p => {
+        //         const card = document.createElement('div');
+        //         card.className = "flash-card";
+        //         card.innerHTML = `
+        //             <div class="flash-badge">-40%</div>
+        //             <img src="${p.images[0]}" style="width:100%; height:150px; object-fit:contain; background:white; border-radius:4px; padding:10px; margin-bottom:1rem;">
+        //             <h4 style="font-size:0.9rem; margin-bottom:0.5rem">${p.name}</h4>
+        //             <div style="color:var(--accent); font-weight:700;">$${p.price}</div>
+        //         `;
+        //         card.onclick = () => window.location.href = `product.html?id=${p.id}`;
+        //         card.style.cursor = 'pointer';
+        //         flashSlider.appendChild(card);
+        //     });
 
-    //     // Quantity
-    //     const qtyInput = document.getElementById('qtyInput');
-    //     window.changeQty = function (change) {
-    //         let val = parseInt(qtyInput.value) + change;
-    //         if (val < 1) val = 1;
-    //         qtyInput.value = val;
-    //     }
+        //     // Quantity
+        //     const qtyInput = document.getElementById('qtyInput');
+        //     window.changeQty = function (change) {
+        //         let val = parseInt(qtyInput.value) + change;
+        //         if (val < 1) val = 1;
+        //         qtyInput.value = val;
+        //     }
 
-    //     // Add to Cart Logic
-    //     document.getElementById('addToCartBtn').addEventListener('click', () => {
-    //         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        //     // Add to Cart Logic
+        //     document.getElementById('addToCartBtn').addEventListener('click', () => {
+        //         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-    //         if (!isLoggedIn) {
-    //             // Show modal logic or redirect
-    //             // Since user requested modal OR redirect, and redirect is simpler for standalone file:
-    //             window.location.href = 'signup.html';
-    //             return;
-    //         }
+        //         if (!isLoggedIn) {
+        //             // Show modal logic or redirect
+        //             // Since user requested modal OR redirect, and redirect is simpler for standalone file:
+        //             window.location.href = 'signup.html';
+        //             return;
+        //         }
 
 
-    //         <script>
-    //     // ... (existing code) ...
+        //         <script>
+        //     // ... (existing code) ...
 
-    //     // Add to Cart Logic
-    //     document.getElementById('addToCartBtn').addEventListener('click', () => {
-    //         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        //     // Add to Cart Logic
+        //     document.getElementById('addToCartBtn').addEventListener('click', () => {
+        //         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-    //             if (!isLoggedIn) {
-    //                 // Show modal logic or redirect
-    //                 window.location.href = 'signup.html';
-    //             return;
-    //         }
+        //             if (!isLoggedIn) {
+        //                 // Show modal logic or redirect
+        //                 window.location.href = 'signup.html';
+        //             return;
+        //         }
 
-    //             // Mock Add to Cart
-    //             toastAlert('Added to Cart!');
-    //             // Ideally push to localStorage.cart here
-    //             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    //             cart.push({
-    //                 id: Math.random(), // simple mock id
-    //             name: product.name,
-    //             price: product.price,
-    //             qty: parseInt(qtyInput.value),
-    //             image: product.images[0]
-    //         });
-    //             localStorage.setItem('cart', JSON.stringify(cart));
-    //     });
-    // </script>
+        //             // Mock Add to Cart
+        //             toastAlert('Added to Cart!');
+        //             // Ideally push to localStorage.cart here
+        //             let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        //             cart.push({
+        //                 id: Math.random(), // simple mock id
+        //             name: product.name,
+        //             price: product.price,
+        //             qty: parseInt(qtyInput.value),
+        //             image: product.images[0]
+        //         });
+        //             localStorage.setItem('cart', JSON.stringify(cart));
+        //     });
+        // </script>
 
-  
+
 
     // </script>
     <script>
 
-/* ===========================
-   GET PRODUCT ID FROM URL
-=========================== */
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");
+        /* ===========================
+           GET PRODUCT ID FROM URL
+        =========================== */
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get("id");
 
-if (!productId) {
-  window.location.href = "shop.html";
-}
+        if (!productId) {
+            window.location.href = "shop.html";
+        }
 
-/* ===========================
-   LOAD PRODUCT FROM BACKEND
-=========================== */
+        /* ===========================
+           LOAD PRODUCT FROM BACKEND
+        =========================== */
 
-async function loadProduct() {
-  try {
+        async function loadProduct() {
+            try {
 
-    const res = await fetch(`/api/products/single/${productId}`);
-    const product = await res.json();
+                const res = await fetch(`/api/products/single/${productId}`);
+                const product = await res.json();
 
-    if (!product || product.message) {
-      alert("Product not found");
-      window.location.href = "shop.html";
-      return;
-    }
+                if (!product || product.message) {
+                    alert("Product not found");
+                    window.location.href = "shop.html";
+                    return;
+                }
 
-    renderProduct(product);
+                renderProduct(product);
 
-  } catch (error) {
-    console.error("Error loading product:", error);
-  }
-}
+            } catch (error) {
+                console.error("Error loading product:", error);
+            }
+        }
 
-loadProduct();
+        loadProduct();
 
 
-/* ===========================
-   RENDER PRODUCT DATA
-=========================== */
+        /* ===========================
+           RENDER PRODUCT DATA
+        =========================== */
 
-function renderProduct(product) {
+        function renderProduct(product) {
 
-  // Breadcrumb
-  document.getElementById("breadName").innerText = product.name;
+            // Breadcrumb
+            document.getElementById("breadName").innerText = product.name;
 
-  // Title
-  document.getElementById("prodTitle").innerText = product.name;
+            // Title
+            document.getElementById("prodTitle").innerText = product.name;
 
-  // Price
-  document.getElementById("prodPrice").innerText =
-    "₹" + product.price;
+            // Price
+            document.getElementById("prodPrice").innerText =
+                "₹" + product.price;
 
-  // Description
-  document.getElementById("prodDesc").innerText =
-    product.description || "No description available";
+            // Description
+            document.getElementById("prodDesc").innerText =
+                product.description || "No description available";
 
-  // Stock
-  document.getElementById("stockStatus").innerText =
-    product.stock ? "In Stock" : "Out of Stock";
+            // Stock
+            document.getElementById("stockStatus").innerText =
+                product.stock ? "In Stock" : "Out of Stock";
 
-  /* =====================
-      IMAGE GALLERY
-  ===================== */
+            /* =====================
+                IMAGE GALLERY
+            ===================== */
 
-  const mainImage = document.getElementById("mainImage");
-  const gallery = document.getElementById("galleryThumbs");
+            const mainImage = document.getElementById("mainImage");
+            const gallery = document.getElementById("galleryThumbs");
 
-  gallery.innerHTML = "";
+            gallery.innerHTML = "";
 
-  const images = product.images?.length
-    ? product.images
-    : [product.image];
+            const images = product.images?.length
+                ? product.images
+                : [product.image];
 
-  mainImage.src = images[0];
+            mainImage.src = images[0];
 
-  images.forEach((img, index) => {
+            images.forEach((img, index) => {
 
-    const thumb = document.createElement("div");
-    thumb.className = `thumb-box ${index === 0 ? "active" : ""}`;
+                const thumb = document.createElement("div");
+                thumb.className = `thumb-box ${index === 0 ? "active" : ""}`;
 
-    thumb.innerHTML = `<img src="${img}" />`;
+                thumb.innerHTML = `<img src="${img}" />`;
 
-    thumb.onclick = () => {
-      mainImage.src = img;
+                thumb.onclick = () => {
+                    mainImage.src = img;
 
-      document
-        .querySelectorAll(".thumb-box")
-        .forEach(t => t.classList.remove("active"));
+                    document
+                        .querySelectorAll(".thumb-box")
+                        .forEach(t => t.classList.remove("active"));
 
-      thumb.classList.add("active");
-    };
+                    thumb.classList.add("active");
+                };
 
-    gallery.appendChild(thumb);
-  });
+                gallery.appendChild(thumb);
+            });
 
-  /* =====================
-        SIZE OPTIONS
-  ===================== */
+            /* =====================
+                  FLAVOUR OPTIONS
+            ===================== */
 
-  const sizeContainer = document.getElementById("sizeOptions");
-  sizeContainer.innerHTML = "";
-
-  const sizes = product.sizes || ["Standard"];
-
-  sizes.forEach((size, index) => {
-
-    const btn = document.createElement("button");
-
-    btn.className = `size-btn ${index === 0 ? "active" : ""}`;
-    btn.innerText = size;
-
-    btn.onclick = () => {
-      document
-        .querySelectorAll(".size-btn")
-        .forEach(b => b.classList.remove("active"));
-
-      btn.classList.add("active");
-    };
-
-    sizeContainer.appendChild(btn);
-  });
-
-}
-
-
-/* ===========================
-   QUANTITY BUTTONS
-=========================== */
-
-const qtyInput = document.getElementById("qtyInput");
-
-window.changeQty = function(change) {
-  let val = parseInt(qtyInput.value) + change;
-  if (val < 1) val = 1;
-  qtyInput.value = val;
-};
-
-
-/* ===========================
-   ADD TO CART
-=========================== */
-
-document
-  .getElementById("addToCartBtn")
-  .addEventListener("click", async () => {
-
-    const isLoggedIn =
-      localStorage.getItem("isLoggedIn") === "true";
-
-    if (!isLoggedIn) {
-      window.location.href = "signup.html";
-      return;
-    }
-
-    try {
-
-      const res = await fetch(`/api/products/single/${productId}`);
-      const product = await res.json();
-
-      let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-      cart.push({
-        productId: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.image || product.images?.[0],
-        qty: parseInt(qtyInput.value)
-      });
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-
-      Swal.fire({
-        icon: "success",
-        title: "Added to Cart",
-        timer: 1500,
-        showConfirmButton: false
-      });
-
-    } catch (error) {
-      console.error(error);
-    }
-
-});
-
-
-/* ===========================
-   NAVBAR AUTH LOGIC
-=========================== */
-
-const userIconBtn = document.getElementById('userIconBtn');
-const accountDropdown = document.getElementById('accountDropdown');
-const dropdownLogout = document.getElementById('dropdownLogout');
-const mobileToggleBtn = document.getElementById('mobileToggle');
-const mobileNavLinks = document.getElementById('navLinks');
-const signupLink = document.getElementById('signupLink');
-const shopLink = document.getElementById('shopLink');
-const wishlistBtn = document.getElementById('wishlistBtn');
-
-const isLoggedIn =
-  localStorage.getItem('isLoggedIn') === 'true';
-
-if (isLoggedIn) {
-  if (signupLink) signupLink.style.display = 'none';
-  if (shopLink) shopLink.style.display = 'block';
-  if (wishlistBtn) wishlistBtn.style.display = 'flex';
-}
-
-if (userIconBtn) {
-  userIconBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    accountDropdown.classList.toggle('open');
-  });
-}
-
-document.addEventListener('click', (e) => {
-  if (
-    userIconBtn &&
-    !userIconBtn.contains(e.target) &&
-    !accountDropdown.contains(e.target)
-  ) {
-    accountDropdown.classList.remove('open');
-  }
-});
-
-if (dropdownLogout) {
-  dropdownLogout.addEventListener('click', () => {
-    localStorage.removeItem('isLoggedIn');
-    window.location.href = 'index.html';
-  });
-}
-
-if (mobileToggleBtn) {
-  mobileToggleBtn.addEventListener('click', () => {
-    mobileNavLinks.classList.toggle('active');
-  });
-}
-
-</script>
+            const flavourContainer = document.getElementById("flavourOptions");
+            flavourContainer.innerHTML = "";
+
+            // Fallback Flavours if none in DB
+            const flavours = product.flavours || ["Molten Chocolate Cake", "Vanilla", "Strawberry"];
+
+            flavours.forEach((flavour, index) => {
+                const btn = document.createElement("button");
+
+                // Style the button
+                btn.className = `size-btn ${index === 0 ? "active" : ""}`;
+                btn.style.padding = "0.5rem 1rem";
+                btn.style.borderRadius = "4px";
+                btn.style.border = index === 0 ? "1px solid var(--accent)" : "1px solid rgba(255,255,255,0.2)";
+                btn.style.background = index === 0 ? "rgba(229, 9, 20, 0.1)" : "transparent";
+                btn.style.color = index === 0 ? "var(--text-white)" : "var(--text-muted)";
+                btn.style.cursor = "pointer";
+                btn.style.transition = "all 0.3s ease";
+                btn.style.fontFamily = "var(--font-main)";
+
+                btn.innerText = flavour;
+
+                btn.onclick = () => {
+                    document
+                        .querySelectorAll("#flavourOptions .size-btn")
+                        .forEach(b => {
+                            b.classList.remove("active");
+                            b.style.border = "1px solid rgba(255,255,255,0.2)";
+                            b.style.background = "transparent";
+                            b.style.color = "var(--text-muted)";
+                        });
+
+                    btn.classList.add("active");
+                    btn.style.border = "1px solid var(--accent)";
+                    btn.style.background = "rgba(229, 9, 20, 0.1)";
+                    btn.style.color = "var(--text-white)";
+                };
+
+                flavourContainer.appendChild(btn);
+            });
+
+            /* =====================
+                  WEIGHT OPTIONS
+            ===================== */
+
+            const weightContainer = document.getElementById("weightOptions");
+            weightContainer.innerHTML = "";
+
+            // Fallback Weights
+            const weights = product.weights || ["1kg", "2kg", "5kg"];
+
+            weights.forEach((weight, index) => {
+
+                const btn = document.createElement("button");
+
+                btn.className = `size-btn ${index === 0 ? "active" : ""}`;
+                btn.style.padding = "5px 15px";
+                btn.style.border = "1px solid rgba(255,255,255,0.2)";
+                btn.style.borderRadius = "4px";
+                btn.style.background = "transparent";
+                btn.style.color = "var(--text-muted)";
+                btn.style.cursor = "pointer";
+                btn.style.transition = "all 0.3s ease";
+
+                if (index === 0) {
+                    btn.style.border = "1px solid var(--accent)";
+                    btn.style.color = "var(--text-white)";
+                }
+
+                btn.innerText = weight;
+
+                btn.onclick = () => {
+                    document
+                        .querySelectorAll("#weightOptions .size-btn")
+                        .forEach(b => {
+                            b.classList.remove("active");
+                            b.style.border = "1px solid rgba(255,255,255,0.2)";
+                            b.style.color = "var(--text-muted)";
+                        });
+
+                    btn.classList.add("active");
+                    btn.style.border = "1px solid var(--accent)";
+                    btn.style.color = "var(--text-white)";
+                };
+
+                weightContainer.appendChild(btn);
+            });
+
+            /* =====================
+                  WISHLIST STATE
+            ===================== */
+
+            const checkWishlistState = async () => {
+                const token = localStorage.getItem('token');
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                if (!isLoggedIn || !token) return;
+
+                try {
+                    const res = await fetch('http://localhost:5000/api/user/wishlist', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (data.success && data.wishlist) {
+                        const isWishlisted = data.wishlist.some(w => w._id === product._id || w === product._id);
+                        const wishBtn = document.getElementById('prodWishlistBtn');
+                        if (wishBtn) {
+                            const svg = wishBtn.querySelector('svg');
+                            if (isWishlisted) {
+                                wishBtn.style.color = 'var(--accent)';
+                                wishBtn.style.borderColor = 'var(--accent)';
+                                svg.setAttribute('fill', 'var(--accent)');
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error("Error fetching wishlist for state", err);
+                }
+            };
+
+            checkWishlistState();
+            loadReviews(); // Load reviews after product renders
+        }
+
+        /* ===========================
+           PRODUCT REVIEWS LOGIC
+        =========================== */
+
+        function toggleReviewForm() {
+            const container = document.getElementById('reviewFormContainer');
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        async function submitReview() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                errorAlert('Please log in to submit a review.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const rating = document.getElementById('reviewRatingInput').value;
+            const comment = document.getElementById('reviewCommentInput').value.trim();
+            const btn = document.getElementById('submitReviewBtn');
+
+            if (!comment) {
+                errorAlert('Please provide a comment for your review.');
+                return;
+            }
+
+            btn.innerText = 'Submitting...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`/api/products/${productId}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ rating, comment })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    successAlert('Review submitted! It will appear once approved by an admin.');
+                    document.getElementById('reviewCommentInput').value = '';
+                    toggleReviewForm();
+                } else {
+                    errorAlert(data.message || 'Failed to submit review.');
+                }
+            } catch (err) {
+                console.error('Review submission error:', err);
+                errorAlert('Network error submitting review.');
+            } finally {
+                btn.innerText = 'Submit Review';
+                btn.disabled = false;
+            }
+        }
+
+        async function loadReviews() {
+            const container = document.getElementById('reviewsListContainer');
+            try {
+                const response = await fetch(`/api/products/${productId}/reviews`);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    if (data.reviews.length === 0) {
+                        container.innerHTML = `<p style="color: var(--text-muted); padding: 2rem 0; text-align: center;">No reviews yet. Be the first to review this product!</p>`;
+                        return;
+                    }
+
+                    container.innerHTML = data.reviews.map(review => {
+                        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                        const date = new Date(review.createdAt).toLocaleDateString();
+                        const userName = review.user ? (review.user.firstName || review.user.name) : 'Anonymous User';
+
+                        return `
+                            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <div style="font-weight: 600;">${userName}</div>
+                                    <div style="color: var(--text-muted); font-size: 0.85rem;">${date}</div>
+                                </div>
+                                <div style="color: #fbbf24; margin-bottom: 1rem; font-size: 1.1rem; letter-spacing: 2px;">
+                                    ${stars}
+                                </div>
+                                <div style="color: #eee; line-height: 1.6; font-size: 0.95rem;">
+                                    ${review.comment}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    container.innerHTML = `<p style="color: var(--text-muted);">Failed to load reviews.</p>`;
+                }
+            } catch (err) {
+                console.error('Error loading reviews:', err);
+                container.innerHTML = `<p style="color: var(--text-muted);">Error loading reviews.</p>`;
+            }
+        }
+
+
+        /* ===========================
+           QUANTITY BUTTONS
+        =========================== */
+
+        const qtyInput = document.getElementById("qtyInput");
+
+        window.changeQty = function (change) {
+            let val = parseInt(qtyInput.value) + change;
+            if (val < 1) val = 1;
+            qtyInput.value = val;
+        };
+
+
+        /* ===========================
+           BUY NOW → SAVE TO DB
+        =========================== */
+        document
+            .getElementById("addToCartBtn")
+            .addEventListener("click", async () => {
+
+                const token = localStorage.getItem("token");
+
+                if (!token) {
+                    window.location.href = "signup.html";
+                    return;
+                }
+
+                try {
+
+                    const res = await fetch(
+                        "http://localhost:5000/api/cart/add",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                productId: productId,
+                                qty: parseInt(qtyInput.value)
+                            })
+                        }
+                    );
+
+                    const data = await res.json();
+                    console.log("Cart Updated:", data);
+
+                    window.location.href = "cart.html";
+
+                } catch (err) {
+                    console.error("Cart Error:", err);
+                }
+            });
+
+        /* ===========================
+           TOGGLE SINGLE PRODUCT WISHLIST
+        =========================== */
+        const prodWishBtn = document.getElementById('prodWishlistBtn');
+        if (prodWishBtn) {
+            prodWishBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                if (!loggedIn) {
+                    alert('Please log in to add to wishlist');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                try {
+                    const token = localStorage.getItem('token');
+                    const res = await fetch('http://localhost:5000/api/user/wishlist/toggle', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ productId: productId })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        const svg = prodWishBtn.querySelector('svg');
+                        if (data.added) {
+                            prodWishBtn.style.color = 'var(--accent)';
+                            prodWishBtn.style.borderColor = 'var(--accent)';
+                            svg.setAttribute('fill', 'var(--accent)');
+                        } else {
+                            prodWishBtn.style.color = '#fff';
+                            prodWishBtn.style.borderColor = 'rgba(255,255,255,0.2)';
+                            svg.setAttribute('fill', 'none');
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error toggling wishlist', err);
+                }
+            });
+        }
+
+        /* ===========================
+           NAVBAR AUTH LOGIC
+        =========================== */
+
+        const userIconBtn = document.getElementById('userIconBtn');
+        const accountDropdown = document.getElementById('accountDropdown');
+        const dropdownLogout = document.getElementById('dropdownLogout');
+        const mobileToggleBtn = document.getElementById('mobileToggle');
+        const mobileNavLinks = document.getElementById('navLinks');
+        const signupLink = document.getElementById('signupLink');
+        const shopLink = document.getElementById('shopLink');
+        const wishlistBtn = document.getElementById('wishlistBtn');
+
+        const isLoggedIn =
+            localStorage.getItem('isLoggedIn') === 'true';
+
+        if (isLoggedIn) {
+            if (signupLink) signupLink.style.display = 'none';
+            if (shopLink) shopLink.style.display = 'block';
+            if (wishlistBtn) wishlistBtn.style.display = 'flex';
+        }
+
+        if (userIconBtn) {
+            userIconBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                accountDropdown.classList.toggle('open');
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (
+                userIconBtn &&
+                !userIconBtn.contains(e.target) &&
+                !accountDropdown.contains(e.target)
+            ) {
+                accountDropdown.classList.remove('open');
+            }
+        });
+
+        if (dropdownLogout) {
+            dropdownLogout.addEventListener('click', () => {
+                localStorage.removeItem('isLoggedIn');
+                window.location.href = 'index.html';
+            });
+        }
+
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileNavLinks.classList.toggle('active');
+            });
+        }
+
+    </script>
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>

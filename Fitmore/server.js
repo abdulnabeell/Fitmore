@@ -2,14 +2,29 @@ require('dotenv').config();
 const app = require('./src/app');
 const cookieParser = require('cookie-parser');
 const productRoutes = require('./src/routes/productRoutes');
+const orderRoutes = require("./src/routes/orderRoutes");
+const adminDashboardRoutes = require('./src/routes/adminDashboardRoutes');
+const adminReviewRoutes = require('./src/routes/adminReviewRoutes');
+const cartRoutes = require('./src/routes/cartRoutes');
+const contactRoutes = require('./src/routes/contactRoutes');
+const paymentRoutes = require('./src/routes/paymentRoutes');
+
 const express = require('express');
 const cors = require('cors');
 
 app.use(cookieParser());
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/categories', require('./src/routes/categoryRoutes'));
-app.use(express.json());
-app.use(cors());
+app.use(
+  "/api/admin",
+  require("./src/routes/adminDashboardRoutes")
+);
+app.use("/api/orders", orderRoutes);
+app.use('/api/admin/dashboard', adminDashboardRoutes);
+app.use('/api/admin/reviews', adminReviewRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/payment', paymentRoutes);
 
 app.use('/api/products', productRoutes);
 

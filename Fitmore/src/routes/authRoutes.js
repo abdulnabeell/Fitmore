@@ -13,8 +13,8 @@ const {
   signup,
   login,
   verifyOtp,
-  resendOtp,forgotPassword, resetPassword,  verifyForgotOtp 
-} = require('../controllers/authController');
+  resendOtp, forgotPassword, resetPassword, verifyForgotOtp
+} = require('../controllers/auth');
 
 router.post('/signup', signup);
 router.post('/login', login);

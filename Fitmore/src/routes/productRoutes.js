@@ -20,8 +20,10 @@ const {
   getProducts,
   getProductById,
   updateProduct,
-  deleteProduct,getSingleProduct
-} = require('../controllers/productController');
+  deleteProduct, getSingleProduct
+} = require('../controllers/product');
+
+const { addReview, getApprovedReviews } = require('../controllers/review/reviewController');
 
 const protect = require('../middleware/authMiddleware');
 const adminAuth = require('../middleware/adminAuth');
@@ -31,6 +33,10 @@ router.get('/', getProducts);
 router.get('/single/:id', getSingleProduct);
 
 router.get('/:id', getProductById);
+
+// Reviews (Public/User)
+router.get('/:id/reviews', getApprovedReviews);
+router.post('/:id/reviews', protect, addReview);
 
 // admin
 // router.post('/', protect, adminOnly, createProduct);

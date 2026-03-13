@@ -596,29 +596,29 @@
                             <th>ACTION</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="code-cell">FREE123</td>
-                            <td>Percentage</td>
-                            <td class="value-cell">50%</td>
-                            <td>All</td>
-                            <td>0</td>
-                            <td>No Expiry</td>
-                            <td><span class="status-pill">ACTIVE</span></td>
-                            <td>
-                                <div class="action-cell">
-                                    <svg class="icon action-link" style="width:16px;height:16px;" viewBox="0 0 24 24">
-                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg>
-                                    <svg class="icon action-link" style="width:16px;height:16px;" viewBox="0 0 24 24">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path
-                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                        </path>
-                                    </svg>
-                                </div>
-                            </td>
+                    <tbody id="couponTableBody">
+                        <!-- Rendered via JS -->
+                        <td class="code-cell">FREE123</td>
+                        <td>Percentage</td>
+                        <td class="value-cell">50%</td>
+                        <td>All</td>
+                        <td>0</td>
+                        <td>No Expiry</td>
+                        <td><span class="status-pill">ACTIVE</span></td>
+                        <td>
+                            <div class="action-cell">
+                                <svg class="icon action-link" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                                <svg class="icon action-link" style="width:16px;height:16px;" viewBox="0 0 24 24">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                    </path>
+                                </svg>
+                            </div>
+                        </td>
                         </tr>
                         <tr>
                             <td class="code-cell">CAT10</td>
@@ -672,6 +672,149 @@
 
         </div>
     </main>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+        if (!token) {
+            window.location.href = "login.html";
+        }
+
+        const couponTableBody = document.getElementById('couponTableBody');
+
+        async function fetchCoupons() {
+            try {
+                const res = await fetch('http://localhost:5000/api/admin/coupons', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    renderCoupons(data.coupons);
+                }
+            } catch (err) {
+                console.error("Error fetching coupons", err);
+            }
+        }
+
+        function renderCoupons(coupons) {
+            if (!coupons || coupons.length === 0) {
+                couponTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2rem;">No coupons found</td></tr>`;
+                return;
+            }
+
+            couponTableBody.innerHTML = coupons.map(c => `
+                <tr>
+                    <td class="code-cell">${c.code}</td>
+                    <td style="text-transform: capitalize;">${c.type}</td>
+                    <td class="value-cell">${c.type === 'percentage' ? c.value + '%' : '₹' + c.value}</td>
+                    <td>Min: ₹${c.minPurchase}</td>
+                    <td>${c.usedCount} / ${c.limit > 0 ? c.limit : '∞'}</td>
+                    <td>${c.expiryDate ? new Date(c.expiryDate).toLocaleDateString() : 'No Expiry'}</td>
+                    <td>
+                        <span class="status-pill" style="background-color: ${c.isActive ? 'var(--success-bg)' : '#fee2e2'}; color: ${c.isActive ? 'var(--success-green)' : '#ef4444'};">
+                            ${c.isActive ? 'ACTIVE' : 'INACTIVE'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-cell">
+                            <svg class="icon action-link" style="width:16px;height:16px; color: #ef4444;" viewBox="0 0 24 24" onclick="deleteCoupon('${c._id}')">
+                                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"></path>
+                            </svg>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function deleteCoupon(id) {
+            const confirm = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#9ca3af',
+                confirmButtonText: 'Yes, delete it!'
+            });
+
+            if (confirm.isConfirmed) {
+                try {
+                    const res = await fetch(`http://localhost:5000/api/admin/coupons/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        Swal.fire('Deleted!', 'Coupon has been removed.', 'success');
+                        fetchCoupons();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to delete', 'error');
+                    }
+                } catch (err) {
+                    console.error('Delete coupon error:', err);
+                    Swal.fire('Error', 'Server connection failed', 'error');
+                }
+            }
+        }
+
+        document.querySelector('.btn-add').addEventListener('click', async () => {
+            const { value: formValues } = await Swal.fire({
+                title: 'Add New Coupon',
+                html:
+                    '<input id="swal-input-code" class="swal2-input" placeholder="Coupon Code (e.g. SUMMER50)" style="text-transform: uppercase;">' +
+                    '<select id="swal-input-type" class="swal2-select" style="width: 70%; margin: 10px auto;"><option value="percentage">Percentage (%)</option><option value="fixed">Fixed Amount (₹)</option></select>' +
+                    '<input id="swal-input-value" type="number" class="swal2-input" placeholder="Discount Value">' +
+                    '<input id="swal-input-min" type="number" class="swal2-input" placeholder="Minimum Purchase (Optional)">' +
+                    '<input id="swal-input-limit" type="number" class="swal2-input" placeholder="Usage Limit (0 for unlimited)">' +
+                    '<input id="swal-input-expiry" type="date" class="swal2-input">',
+                focusConfirm: false,
+                showCancelButton: true,
+                preConfirm: () => {
+                    return {
+                        code: document.getElementById('swal-input-code').value,
+                        type: document.getElementById('swal-input-type').value,
+                        value: document.getElementById('swal-input-value').value,
+                        minPurchase: document.getElementById('swal-input-min').value,
+                        limit: document.getElementById('swal-input-limit').value,
+                        expiryDate: document.getElementById('swal-input-expiry').value
+                    }
+                }
+            });
+
+            if (formValues) {
+                if (!formValues.code || !formValues.value) {
+                    return Swal.fire('Validation Error', 'Code and Value are required!', 'error');
+                }
+
+                try {
+                    const res = await fetch('http://localhost:5000/api/admin/coupons', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(formValues)
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        Swal.fire('Success', 'Coupon added successfully', 'success');
+                        fetchCoupons();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to add coupon', 'error');
+                    }
+                } catch (err) {
+                    console.error("Error adding coupon", err);
+                    Swal.fire('Error', 'Server connection failed', 'error');
+                }
+            }
+        });
+
+        // Initialize table
+        fetchCoupons();
+    </script>
 </body>
 
 </html>

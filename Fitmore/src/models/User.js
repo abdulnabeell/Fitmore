@@ -36,6 +36,9 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
+  phone: { type: String },
 
   email: { type: String, required: true, unique: true },
 
@@ -54,7 +57,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
-  }
+  },
+
+  // ✅ addresses array
+  addresses: [{
+    name: { type: String, required: true },
+    ph: { type: String, required: true },
+    pin: { type: String, required: true },
+    addressLine: { type: String, required: true }
+  }],
+
+  // ✅ wishlist array
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+
+  // ✅ wallet balance
+  walletBalance: { type: Number, default: 0 }
 
 }, { timestamps: true });
 

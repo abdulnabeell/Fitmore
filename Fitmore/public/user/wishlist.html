@@ -86,7 +86,7 @@
             <nav>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="index.html" class="nav-item">HOME</a></li>
-                    <li><a href="signup.html" class="nav-item" id="signupLink">SIGN UP</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
                     <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
                     <li><a href="about.html" class="nav-item">ABOUT</a></li>
                     <li><a href="contact.html" class="nav-item">CONTACT</a></li>
@@ -177,14 +177,81 @@
         </div>
     </section>
 
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent)">
+                            <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
+                            <path d="M8 10v10"></path>
+                            <path d="M16 10v10"></path>
+                        </svg>
+                        FITMORE
+                    </a>
+                    <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6">The premium destination for
+                        serious athletes. Quality supplements, gym gear, and expert advice.</p>
+                    <div class="f-socials">
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a>
+                        <a href="#" class="soc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="f-col">
+                    <h4>Support</h4>
+                    <ul class="f-links">
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="orders.html">Track Order</a></li>
+                        <li><a href="contact.html">Returns & Refunds</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Shop</h4>
+                    <ul class="f-links">
+                        <li><a href="shop.html?category=protein">Protein</a></li>
+                        <li><a href="shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Company</h4>
+                    <ul class="f-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html">Careers</a></li>
+                        <li><a href="index.html">Blog</a></li>
+                        <li><a href="contact.html">Affiliate Program</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="copyright">
-                &copy; 2026 FITMORE. All Rights Reserved.
+                <p>&copy; 2026 Fitmore Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
 
     <!-- Script -->
     <script>
@@ -227,72 +294,85 @@
 
         // --- WISHLIST LOGIC ---
 
-        // Mock Data Seeder (For demo purposes only)
-        // If wishlist is null, we create it with 4 dummy products as requested to "Match Design"
-        let wishlistData = JSON.parse(localStorage.getItem('wishlist'));
-
-        if (!wishlistData || wishlistData.length === 0 || (wishlistData[0] && wishlistData[0].id === 1)) {
-            // Mock Data for demonstration - Matching Shop Page
-            wishlistData = [
-                {
-                    id: 'creatine-1',
-                    image: 'images/creatine-on.jpg',
-                    name: 'Creatine',
-                    category: 'Green',
-                    price: '$125'
-                },
-                {
-                    id: 'fish-oil-1',
-                    image: 'images/fish-oil-gold.jpg',
-                    name: 'Fish Oil',
-                    category: 'Running Shoes',
-                    price: '$125'
-                },
-                {
-                    id: 'bcaa-glutamine',
-                    image: 'images/vitastrong.png',
-                    name: 'BCAA + GLUTAMINE',
-                    category: 'Nutrition',
-                    price: '$25'
-                },
-                {
-                    id: 'elite-protein',
-                    image: 'images/protein-elite.jpg',
-                    name: 'Elite Protein',
-                    category: 'Core Black',
-                    price: '$160'
-                }
-            ];
-            // Save mock data so it's persistent and Overwrite old data
-            localStorage.setItem('wishlist', JSON.stringify(wishlistData));
-        }
-
         const wishlistContainer = document.getElementById('wishlistContainer');
         const emptyState = document.getElementById('emptyState');
 
-        function renderWishlist() {
+        async function fetchAndRenderWishlist() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('http://localhost:5000/api/user/wishlist', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.success && data.wishlist) {
+                    renderWishlist(data.wishlist);
+                }
+            } catch (error) {
+                console.error("Error fetching wishlist:", error);
+
+                wishlistContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+            }
+        }
+
+        async function removeFromWishlist(productId, e) {
+            e.stopPropagation();
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('http://localhost:5000/api/user/wishlist/toggle', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    // Re-fetch to update UI accurately 
+                    fetchAndRenderWishlist();
+                }
+            } catch (err) {
+                console.error('Error removing from wishlist', err);
+            }
+        }
+
+        function renderWishlist(wishlistData) {
             if (!wishlistData || wishlistData.length === 0) {
                 wishlistContainer.style.display = 'none';
                 emptyState.style.display = 'block';
                 return;
             }
 
+            wishlistContainer.style.display = 'grid';
+            emptyState.style.display = 'none';
+
             wishlistContainer.innerHTML = wishlistData.map(item => `
-                <div class="prod-card" onclick="window.location.href='product.html?id=${item.id}'" style="cursor: pointer;">
-                    <div class="prod-img-box">
-                        <img src="${item.image}" alt="${item.name}">
+                <div class="prod-card">
+                    <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
+                        <button class="auth-required" onclick="removeFromWishlist('${item._id}', event)" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8); border: none; cursor: pointer; z-index: 10; border-radius: 50%; padding: 5px; display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                        <img src="${item.image || (item.images && item.images[0]) || 'images/no-image.png'}" alt="${item.name}">
                     </div>
-                    <div class="prod-info">
+                    <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
                         <h4>${item.name}</h4>
-                        <span style="color:var(--text-muted); font-size:0.8rem; display:block; margin-bottom:0.5rem">${item.category}</span>
-                        <span class="prod-price">${item.price}</span>
-                        <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href='product.html?id=${item.id}'">VIEW PRODUCT</button>
+                        <span class="prod-price">₹${item.price}</span>
+                        <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href='product.html?id=${item._id}'">VIEW PRODUCT</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        renderWishlist();
+        fetchAndRenderWishlist();
 
     </script>
 </body>
