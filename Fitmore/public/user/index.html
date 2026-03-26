@@ -1960,7 +1960,7 @@
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
                         </button>
-                        <img src="/user/${product.image || product.images?.[0] || "images/no-image.png'}" />
+                        <img src="/user/${product.image || product.images?.[0] || 'images/no-image.png'}" />
                     </div>
 
                     <div class="prod-info product-link">
@@ -2055,7 +2055,7 @@
                     featDiv.setAttribute('data-aos', 'fade-right');
                     featDiv.innerHTML = `
                         <div class="featured-img product-link" style="cursor:pointer;">
-                            <img src="/user/${feat.image || feat.images?.[0] || "images/no-image.png'}" alt="Stack">
+                            <img src="/user/${feat.image || feat.images?.[0] || 'images/no-image.png'}" alt="Stack">
                         </div>
                         <div class="featured-txt">
                             <h3 style="cursor:pointer;" class="product-link">${feat.name}</h3>
@@ -2083,7 +2083,7 @@
                             smCard.setAttribute('data-aos', 'fade-left');
                             smCard.setAttribute('data-aos-delay', (index * 150).toString());
                             smCard.innerHTML = `
-                                <img src="/user/${sm.image || sm.images?.[0] || "images/no-image.png'}" alt="${sm.name}">
+                                <img src="/user/${sm.image || sm.images?.[0] || 'images/no-image.png'}" alt="${sm.name}">
                                 <h4 style="font-size:0.95rem; margin-bottom:0.5rem;">${sm.name}</h4>
                                 <span class="prod-price">₹${sm.price}</span>
                             `;
