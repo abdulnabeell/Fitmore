@@ -43,4 +43,9 @@ app.use('/api', apiRoutes);
 // Serve Static Frontend Store
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/', (req, res) => {
+  res.send('Fitmore API is running 🚀');
+});
+
+
 module.exports = app;
