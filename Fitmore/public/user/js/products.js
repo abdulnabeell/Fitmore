@@ -41,6 +41,8 @@ async function loadProducts() {
     const container =
       document.getElementById("productContainer");
 
+    if (!container) return;
+
     container.innerHTML = "";
 
     products.forEach(product => {
