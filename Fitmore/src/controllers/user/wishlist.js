@@ -1,6 +1,4 @@
 const User = require('../../models/User');
-
-// Get User Wishlist
 exports.getWishlist = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate('wishlist');
@@ -13,8 +11,6 @@ exports.getWishlist = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error retrieving wishlist' });
     }
 };
-
-// Toggle Wishlist Item
 exports.toggleWishlist = async (req, res) => {
     try {
         const { productId } = req.body;

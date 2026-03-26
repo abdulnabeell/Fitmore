@@ -640,6 +640,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item active" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -666,7 +677,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -675,6 +686,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -698,7 +717,7 @@
             </div>
             Product Media
         </div>
-        <div class="nav-item" onclick="window.location.href='categories.html'">
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -739,9 +758,12 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -766,6 +788,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -805,29 +828,27 @@
                     </div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
         <div class="content-wrapper">
 
             <div class="orders-header">
-                <h2>Order List</h2>
+                <h2>Return Requests</h2>
                 <div class="action-buttons">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-outline" onclick="fetchReturns()">
                         <svg class="icon" style="width: 16px; height: 16px;" viewBox="0 0 24 24">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
                         </svg>
-                        Add Order
-                    </button>
-                    <button class="btn btn-outline">
-                        More Action <span style="font-size: 1.25rem;">⋮</span>
+                        Refresh List
                     </button>
                 </div>
             </div>
 
-            
+
             <!-- Stats -->
             <section class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <article class="stat-card">
@@ -913,7 +934,7 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody id="ordersTableBody">
+                        <tbody id="returnsTableBody">
                             <!-- Rows rendered dynamically -->
                         </tbody>
                     </table>
@@ -936,20 +957,22 @@
         </div>
     </main>
 
-    
+
+
+
+<script src="js/admin-auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetchReturns();
         });
-
         let returnOrders = [];
 
         async function fetchReturns() {
             try {
-                const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+                const token = localStorage.getItem('adminToken');
 
                 if (!token) {
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                     return;
                 }
 
@@ -957,20 +980,31 @@
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
+                if (response.status === 401 || response.status === 403) {
+                    alert('Session expired. Please log in again.');
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('role');
+                    window.location.href = '../user/login.html';
+                    return;
+                }
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch orders');
                 }
 
                 const data = await response.json();
-                
+
                 // Filter only return requested & returned
                 returnOrders = (data.orders || []).filter(o => o.status === 'RETURN_REQUESTED' || o.status === 'RETURNED');
-                
+
                 updateDashboardStats();
                 renderReturns(returnOrders);
             } catch (err) {
-                console.error(err);
-                alert("Could not load return requests");
+                console.error("Fetch Returns Error:", err.stack || err.message || err);
+                const tbody = document.getElementById('returnsTableBody');
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Failed to load data: ${err.message || 'Unknown error'}</td></tr>`;
+                }
             }
         }
 
@@ -995,27 +1029,34 @@
 
             orders.forEach((order, index) => {
                 const requestDate = new Date(order.updatedAt || order.createdAt).toLocaleDateString();
-                
+
                 let productCellHtml = '';
                 if (order.items && order.items.length > 0) {
                     const firstItem = order.items[0];
                     productCellHtml = `
                         <div class="product-cell">
                             <img src="${firstItem.image || 'https://via.placeholder.com/50'}" class="product-img" alt="Product">
-                            <span>${firstItem.name} ${order.items.length > 1 ? `(+${order.items.length - 1} more)` : ''}</span>
+                            <span>${firstItem.name} ${order.items.length > 1 ? ` (+${order.items.length - 1} more)` : ''}</span>
                         </div>
                     `;
                 }
 
                 const isPending = order.status === 'RETURN_REQUESTED';
-                const statusBadge = isPending 
+                const statusBadge = isPending
                     ? '<span class="status-badge" style="background:#fff7ed; color:#c2410c; padding:4px 8px; border-radius:4px;">Pending</span>'
                     : '<span class="status-badge" style="background:#ecfdf5; color:#047857; padding:4px 8px; border-radius:4px;">Returned</span>';
 
-                const actionHtml = isPending 
+                const actionHtml = isPending
                     ? `<button onclick="processReturn('${order._id}', 'approve')" style="background:#10b981; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px;">Approve</button>
                        <button onclick="processReturn('${order._id}', 'reject')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Reject</button>`
                     : `<span style="color:#6b7280; font-size:0.85rem;">Processed</span>`;
+
+                const reasonFormatted = (order.returnReason && typeof order.returnReason === 'string')
+                    ? order.returnReason.replace(/_/g, ' ')
+                    : 'Customer requested return';
+                const notesHtml = (order.returnNotes && typeof order.returnNotes === 'string')
+                    ? `<div style="font-size: 0.8rem; color: #6b7280; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="Notes: ${order.returnNotes}">Notes: ${order.returnNotes}</div>`
+                    : '';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1023,7 +1064,10 @@
                     <td>#ORD-${order._id.substring(0, 6).toUpperCase()}</td>
                     <td>${productCellHtml}</td>
                     <td>${requestDate}</td>
-                    <td>Customer requested return</td>
+                    <td>
+                        <div style="text-transform: capitalize;">${reasonFormatted}</div>
+                        ${notesHtml}
+                    </td>
                     <td>${statusBadge}</td>
                     <td>${actionHtml}</td>
                 `;
@@ -1032,11 +1076,11 @@
         }
 
         async function processReturn(orderId, action) {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+            const token = localStorage.getItem('adminToken');
             const newStatus = action === 'approve' ? 'RETURNED' : 'DELIVERED'; // Rejecting sets it back to Delivered
-            
+
             const confirmMsg = action === 'approve' ? "Approve this return?" : "Reject this return request?";
-            if(!confirm(confirmMsg)) return;
+            if (!confirm(confirmMsg)) return;
 
             try {
                 const response = await fetch(`/api/orders/admin/${orderId}/status`, {
@@ -1057,7 +1101,7 @@
                 if (orderIndex !== -1) {
                     returnOrders[orderIndex].status = newStatus;
                 }
-                
+
                 updateDashboardStats();
                 renderReturns(returnOrders);
                 alert(`Return request ${action}d successfully`);
@@ -1069,4 +1113,6 @@
         }
     </script>
 </body>
+
 </html>
+

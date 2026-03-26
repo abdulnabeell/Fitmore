@@ -352,7 +352,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -361,6 +361,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -483,119 +491,83 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', fetchReviews);
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchReviews();
+        });
 
         async function fetchReviews() {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-            if (!token) {
-                window.location.href = 'login.html';
-                return;
-            }
-
             try {
+                const token = localStorage.getItem('adminToken');
+                if (!token) {
+                    window.location.href = '../user/login.html';
+                    return;
+                }
+
                 const res = await fetch('/api/admin/reviews/all', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                const data = await res.json();
 
-                const tbody = document.getElementById('reviewsTableBody');
-
-                if (res.ok && data.success) {
-                    if (data.reviews.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem;">No reviews found.</td></tr>';
-                        return;
-                    }
-
-                    tbody.innerHTML = data.reviews.map(review => {
-                        const userName = review.user ? (review.user.firstName || review.user.name) : 'Unknown User';
-                        const productName = review.product ? review.product.name : 'Unknown Product';
-
-                        let statusColor = 'var(--text-gray)';
-                        let statusBg = '#f3f4f6';
-                        if (review.status === 'approved') {
-                            statusColor = 'var(--success-green)';
-                            statusBg = 'var(--success-bg)';
-                        } else if (review.status === 'rejected') {
-                            statusColor = 'var(--danger-red)';
-                            statusBg = '#fef2f2';
-                        } else if (review.status === 'pending') {
-                            statusColor = 'var(--warning-yellow)';
-                            statusBg = '#fef3c7';
-                        }
-
-                        return `
-                            <tr>
-                                <td>${userName}</td>
-                                <td>${productName}</td>
-                                <td>
-                                    <div class="rating-cell">
-                                        <svg class="icon star-icon" viewBox="0 0 24 24">
-                                            <polygon
-                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                            </polygon>
-                                        </svg>
-                                        ${review.rating}.0
-                                    </div>
-                                </td>
-                                <td class="comment-text">"${review.comment}"</td>
-                                <td><span class="status-badge" style="background:${statusBg}; color:${statusColor};">${review.status.toUpperCase()}</span></td>
-                                <td>
-                                    <div class="action-row">
-                                        ${review.status !== 'approved' ? `
-                                            <button class="action-btn btn-approve" onclick="updateStatus('${review._id}', 'approved')" title="Approve">
-                                                <svg style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3" viewBox="0 0 24 24">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </button>
-                                        ` : ''}
-                                        ${review.status !== 'rejected' ? `
-                                            <button class="action-btn btn-reject" onclick="updateStatus('${review._id}', 'rejected')" title="Reject">×</button>
-                                        ` : ''}
-                                        <button class="action-btn btn-delete" onclick="deleteReview('${review._id}')" title="Delete">
-                                            <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Failed to load reviews.</td></tr>';
+                if (res.status === 401 || res.status === 403) {
+                    alert('Session expired. Please log in again.');
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('role');
+                    window.location.href = '../user/login.html';
+                    return;
                 }
+
+                const data = await res.json();
+                renderReviews(data.reviews || []);
             } catch (err) {
-                console.error("Error fetching reviews:", err);
-                document.getElementById('reviewsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Network Error</td></tr>';
+                console.error(err);
+                document.getElementById('reviewsTableBody').innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Failed to load reviews</td></tr>`;
             }
         }
 
-        async function updateStatus(id, status) {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-            try {
-                const res = await fetch(`/api/admin/reviews/${id}/status`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ status })
-                });
-                const data = await res.json();
-                if (res.ok && data.success) {
-                    Swal.fire('Success', `Review ${status} successfully`, 'success');
-                    fetchReviews();
-                } else {
-                    Swal.fire('Error', data.message || 'Failed to update review', 'error');
-                }
-            } catch (err) {
-                Swal.fire('Error', 'Network error', 'error');
+        function renderReviews(reviews) {
+            const tbody = document.getElementById('reviewsTableBody');
+            tbody.innerHTML = '';
+
+            if (reviews.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem;">No reviews found</td></tr>`;
+                return;
             }
+
+            reviews.forEach(review => {
+                const tr = document.createElement('tr');
+                
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= review.rating) {
+                        starsHtml += `<svg class="star-icon" viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>`;
+                    } else {
+                        starsHtml += `<svg class="star-icon" viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:#d1d5db;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>`;
+                    }
+                }
+
+                const userName = review.user && review.user.name ? review.user.name : 'Unknown User';
+                const productName = review.product && review.product.name ? review.product.name : 'Unknown Product';
+                
+                tr.innerHTML = `
+                    <td><div style="font-weight: 600;">${userName}</div></td>
+                    <td>${productName}</td>
+                    <td class="rating-cell">${starsHtml} <span style="font-size: 0.8rem; margin-left: 0.25rem;">(${review.rating}.0)</span></td>
+                    <td class="comment-text">${review.comment || ''}</td>
+                    <td><span class="status-badge" style="background-color: #ecfdf5; color: #10b981; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">Published</span></td>
+                    <td class="action-row">
+                        <button class="action-btn" title="Delete Review" onclick="deleteReview('${review._id}')" style="background:none;border:none;cursor:pointer;">
+                            <svg class="icon" style="width:16px;height:16px;color:#ef4444;" viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         async function deleteReview(id) {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+            const token = localStorage.getItem('adminToken');
             const result = await Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -626,5 +598,5 @@
         }
     </script>
 </body>
-
 </html>
+

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Fetch Product Details for Edit
 async function fetchProductDetails(id) {
   try {
-    const response = await fetch(`http://localhost:5000/api/products/${id}`);
+    const response = await fetch(`/api/products/${id}`);
     const product = await response.json();
 
     if (response.ok) {
@@ -50,9 +50,9 @@ async function fetchProductDetails(id) {
 // Fetch Categories
 async function fetchCategories() {
   try {
-    const response = await fetch('http://localhost:5000/api/categories?mode=admin', {
+    const response = await fetch('/api/categories?mode=admin', {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
       }
     });
     const categories = await response.json();
@@ -96,7 +96,7 @@ function handleImageUpload(input) {
 
 // Publish/Update Product
 publishBtn.addEventListener("click", async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('adminToken');
   if (!token) {
     Swal.fire('Error', 'You must be logged in to perform this action', 'error');
     return;
@@ -125,7 +125,7 @@ publishBtn.addEventListener("click", async () => {
     publishBtn.disabled = true;
     publishBtn.innerText = isEditMode ? 'Updating...' : 'Publishing...';
 
-    const url = isEditMode ? `http://localhost:5000/api/products/${productId}` : "http://localhost:5000/api/products";
+    const url = isEditMode ? `/api/products/${productId}` : "/api/products";
     const method = isEditMode ? "PUT" : "POST";
 
     const response = await fetch(url, {

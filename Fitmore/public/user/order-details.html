@@ -544,6 +544,7 @@
 
 
     <!-- Script -->
+     <script src="js/user-auth.js"></script>
     <script>
         // Check Auth immediately
         if (localStorage.getItem('isLoggedIn') !== 'true') {
@@ -611,7 +612,7 @@
         }
 
         async function fetchOrderDetails() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -737,11 +738,11 @@
            ACTIONS LOGIC
         =============================== */
 
-        const tokenForActions = localStorage.getItem('token');
+        const tokenForActions = localStorage.getItem('userToken');
 
         function cancelOrder(orderId) {
             confirmAlert(`Cancel Order #${orderId}?`, async () => {
-                await fetch(`http://localhost:5000/api/orders/${orderId}/cancel`, {
+                await fetch(`/api/orders/${orderId}/cancel`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -759,7 +760,7 @@
 
         function returnOrder(orderId) {
             confirmAlert(`Request Return for Order #${orderId}?`, async () => {
-                await fetch(`http://localhost:5000/api/orders/${orderId}/return`, {
+                await fetch(`/api/orders/${orderId}/return`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -774,7 +775,7 @@
 
         // Fetch User Profile Data for Header
         async function fetchProfileData() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
             try {
                 const response = await fetch('/api/user/profile', {
@@ -797,6 +798,34 @@
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

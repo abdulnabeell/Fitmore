@@ -456,7 +456,7 @@
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
-
+<script src="js/user-auth.js"></script>
     <script>
         // Navbar Logic (Reusable)
         const userIconBtn = document.getElementById('userIconBtn');
@@ -549,6 +549,34 @@
             return false;
         }
 
+    </script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

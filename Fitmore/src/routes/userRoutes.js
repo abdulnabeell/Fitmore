@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authMiddleware');
+const userAuth = require('../middleware/userAuth');
 
-const { addAddress, getAddresses, updateAddress, deleteAddress, updateProfile, getWishlist, toggleWishlist, validateCoupon, getWallet, addWalletFunds } = require('../controllers/user');
+const { addAddress, getAddresses, updateAddress, deleteAddress, updateProfile, getWishlist, toggleWishlist, validateCoupon, getAvailableCoupons, getWallet, addWalletFunds, getActiveOffers } = require('../controllers/user');
 
 const User = require('../models/User');
 
-router.get('/profile', auth, async (req, res) => {
+router.get('/profile', userAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     if (!user) {
@@ -21,19 +21,23 @@ router.get('/profile', auth, async (req, res) => {
   }
 });
 
-router.put('/profile', auth, updateProfile);
+router.put('/profile', userAuth, updateProfile);
 
-router.get('/wishlist', auth, getWishlist);
-router.post('/wishlist/toggle', auth, toggleWishlist);
+router.get('/wishlist', userAuth, getWishlist);
+router.post('/wishlist/toggle', userAuth, toggleWishlist);
 
-router.post('/address', auth, addAddress);
-router.get('/addresses', auth, getAddresses);
-router.put('/address/:id', auth, updateAddress);
-router.delete('/address/:id', auth, deleteAddress);
+router.post('/address', userAuth, addAddress);
+router.get('/addresses', userAuth, getAddresses);
+router.put('/address/:id', userAuth, updateAddress);
+router.delete('/address/:id', userAuth, deleteAddress);
 
-router.post('/coupons/validate', auth, validateCoupon);
+router.post('/coupons/validate', userAuth, validateCoupon);
+router.get('/coupons/available', getAvailableCoupons);
 
-router.get('/wallet', auth, getWallet);
-router.post('/wallet/add', auth, addWalletFunds);
+router.get('/wallet', userAuth, getWallet);
+router.post('/wallet/add', userAuth, addWalletFunds);
+
+// Publicly available routes
+router.get('/offers', getActiveOffers);
 
 module.exports = router;

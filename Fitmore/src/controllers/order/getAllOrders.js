@@ -11,7 +11,7 @@ exports.getAllOrders = async (req, res) => {
             orders
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to fetch orders" });
+        console.error("GET_ALL_ORDERS ERROR:", err);
+        res.status(500).json({ message: "Failed to fetch orders", error: err.message, stack: err.stack });
     }
 };

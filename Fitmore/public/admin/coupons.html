@@ -394,6 +394,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item active" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -411,7 +422,7 @@
             </div>
             Categories
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='transactions.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
@@ -420,7 +431,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -429,6 +440,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -452,7 +471,7 @@
             </div>
             Product Media
         </div>
-        <div class="nav-item" onclick="window.location.href='categories.html'">
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -493,9 +512,12 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -520,6 +542,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -559,7 +582,7 @@
                     </div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
@@ -670,22 +693,22 @@
                 </table>
             </div>
 
-        </div>
-    </main>
-
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/admin-auth.js"></script>
     <script>
-        const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+        const token = localStorage.getItem("adminToken");
+        const role = localStorage.getItem("role");
+
         if (!token) {
-            window.location.href = "login.html";
+            window.location.href = "../user/login.html";
         }
 
         const couponTableBody = document.getElementById('couponTableBody');
 
         async function fetchCoupons() {
             try {
-                const res = await fetch('http://localhost:5000/api/admin/coupons', {
+                const res = await fetch('/api/admin/coupons', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await res.json();
@@ -741,7 +764,7 @@
 
             if (confirm.isConfirmed) {
                 try {
-                    const res = await fetch(`http://localhost:5000/api/admin/coupons/${id}`, {
+                    const res = await fetch(`/api/admin/coupons/${id}`, {
                         method: 'DELETE',
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
@@ -789,7 +812,7 @@
                 }
 
                 try {
-                    const res = await fetch('http://localhost:5000/api/admin/coupons', {
+                    const res = await fetch('/api/admin/coupons', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -818,3 +841,4 @@
 </body>
 
 </html>
+

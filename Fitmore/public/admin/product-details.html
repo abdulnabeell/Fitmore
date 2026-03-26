@@ -439,6 +439,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -465,7 +476,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -475,9 +486,17 @@
             </div>
             Brand
         </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
+        </div>
 
         <div class="menu-category">Product</div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='add-product.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -497,7 +516,7 @@
             </div>
             Product Media
         </div>
-        <div class="nav-item active">
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -509,7 +528,7 @@
             </div>
             Product List
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='reviews.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path
@@ -521,7 +540,7 @@
         </div>
 
         <div class="menu-category">Admin</div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='admin-role.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -538,9 +557,12 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -565,6 +587,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <div class="page-header-block">
@@ -735,6 +758,9 @@
             </div>
         </div>
     </main>
+    <script src="js/admin-auth.js"></script>
 </body>
 
 </html>
+
+

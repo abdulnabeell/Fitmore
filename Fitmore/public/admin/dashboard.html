@@ -529,7 +529,7 @@
             </div>
             Order Management
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='customers.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -541,16 +541,16 @@
             Customers
         </div>
         <div class="nav-item" onclick="window.location.href='returns.html'">
-    <div class="nav-icon">
-        <svg class="icon" viewBox="0 0 24 24">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <polyline points="23 20 23 14 17 14"></polyline>
-            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
-            <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
-        </svg>
-    </div>
-    Return Requests
-</div>
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -568,7 +568,7 @@
             </div>
             Categories
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='transactions.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
@@ -577,7 +577,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -586,6 +586,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -650,7 +658,11 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
@@ -676,6 +688,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -716,7 +729,7 @@
                     </div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
@@ -887,21 +900,19 @@
             </section>
         </div>
     </main>
-
+<script src="js/admin-auth.js"></script>
    <script>
 
 /* ===============================
    ADMIN AUTH CHECK
 =============================== */
-
-const token = localStorage.getItem("token");
+const adminToken = localStorage.getItem("adminToken");
 const role = localStorage.getItem("role");
 
-if (!token || role !== "admin") {
+if (!adminToken || role !== "admin") {
     alert("Admin access only");
-    window.location.href = "/login.html";
+    window.location.href = "../user/login.html";
 }
-
 
 /* ===============================
    SIDEBAR ACTIVE MENU
@@ -940,13 +951,21 @@ async function loadDashboard() {
     try {
 
         const res = await fetch(
-            "http://localhost:5000/api/admin/dashboard",
+            "/api/admin/dashboard/dashboard",
             {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${adminToken}`
                 }
             }
         );
+
+        if (res.status === 401 || res.status === 403) {
+            alert('Session expired. Please log in again.');
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('role');
+            window.location.href = '../user/login.html';
+            return;
+        }
 
         const data = await res.json();
 
@@ -1030,12 +1049,18 @@ setInterval(loadDashboard, 30000);
 =============================== */
 
 document.querySelector(".logout-icon")
-?.addEventListener("click", () => {
+?.addEventListener("click", async () => {
 
-    localStorage.removeItem("token");
+    try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (err) {
+        console.error("Logout error", err);
+    }
+
+    localStorage.removeItem("adminToken");
     localStorage.removeItem("role");
 
-    window.location.href = "/login.html";
+    window.location.href = "../user/login.html";
 
 });
 
@@ -1043,3 +1068,4 @@ document.querySelector(".logout-icon")
 </body>
 
 </html>
+

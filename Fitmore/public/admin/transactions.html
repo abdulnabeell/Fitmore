@@ -636,6 +636,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -662,7 +673,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -671,6 +682,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -694,7 +713,7 @@
             </div>
             Product Media
         </div>
-        <div class="nav-item" onclick="window.location.href='categories.html'">
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -735,9 +754,12 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -762,6 +784,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -801,7 +824,7 @@
                     </div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
@@ -841,11 +864,10 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="stat-value">
-                            $15,045
-                            <span class="trend-badge trend-up">↑ 14.4%</span>
+                        <div class="stat-value" id="stat-revenue" style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">
+                            $0
                         </div>
-                        <div class="stat-desc">Last 7 days</div>
+                        <div class="stat-desc">All time</div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -858,11 +880,10 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="stat-value">
-                            3,150
-                            <span class="trend-badge trend-up">↑ 20%</span>
+                        <div class="stat-value" id="stat-completed" style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">
+                            0
                         </div>
-                        <div class="stat-desc">Last 7 days</div>
+                        <div class="stat-desc">All time</div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -875,11 +896,10 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="stat-value">
-                            75
-                            <span class="trend-badge trend-down">15%</span>
+                        <div class="stat-value" id="stat-cancelled" style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">
+                            0
                         </div>
-                        <div class="stat-desc">Last 7 days</div>
+                        <div class="stat-desc">All time</div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -892,11 +912,10 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="stat-value">
-                            150
-                            <span class="trend-badge trend-up" style="color:var(--success-green);">85%</span>
+                        <div class="stat-value" id="stat-pending" style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">
+                            0
                         </div>
-                        <div class="stat-desc">Last 7 days</div>
+                        <div class="stat-desc">All time</div>
                     </div>
                 </div>
             </div>
@@ -952,97 +971,8 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>John Doe</td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td>CC</td>
-                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>John Doe</td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td>PayPal</td>
-                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>John Doe</td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td>CC</td>
-                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>John Doe</td>
-                                <td>01-01-2025</td>
-                                <td>499</td>
-                                <td>Bank</td>
-                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>Jane Smith</td>
-                                <td>15-01-2025</td>
-                                <td>499</td>
-                                <td>CC</td>
-                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>Emily Davis</td>
-                                <td>01-02-2025</td>
-                                <td>499</td>
-                                <td>PayPal</td>
-                                <td class="status-pending"><span class="status-dot dot-pending"></span>Pending</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>Jane Smith</td>
-                                <td>10-02-2025</td>
-                                <td>499</td>
-                                <td>Bank</td>
-                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>John Doe</td>
-                                <td>14-02-2025</td>
-                                <td>499</td>
-                                <td>CC</td>
-                                <td class="status-complete"><span class="status-dot dot-complete"></span>Complete</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>Emily Davis</td>
-                                <td>20-02-2025</td>
-                                <td>499</td>
-                                <td>PayPal</td>
-                                <td class="status-pending"><span class="status-dot dot-pending"></span>Pending</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>#CUST001</td>
-                                <td>Jane Smith</td>
-                                <td>01-03-2025</td>
-                                <td>499</td>
-                                <td>Bank</td>
-                                <td class="status-canceled"><span class="status-dot dot-canceled"></span>Canceled</td>
-                                <td><a href="#" class="view-details-link">View Details</a></td>
-                            </tr>
+                        <tbody id="transactionsTableBody">
+                            <!-- Dynamically loaded by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -1064,6 +994,7 @@
 
         </div>
     </main>
+    <script src="js/admin-auth.js"></script>
     <script>
         function generatePDF() {
             // ... (keep existing)
@@ -1135,44 +1066,165 @@
             doc.save(`sales_report_${new Date().toISOString().slice(0, 10)}.pdf`);
         }
 
+        let allTransactions = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchTransactions();
+            
+            // Tab filtering logic
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const tabText = btn.innerText.toLowerCase();
+                    let filtered = allTransactions;
+                    if (tabText.includes('completed')) {
+                        filtered = allTransactions.filter(t => t.status === 'DELIVERED');
+                    } else if (tabText.includes('pending')) {
+                        filtered = allTransactions.filter(t => t.status !== 'DELIVERED' && t.status !== 'CANCELLED' && t.status !== 'RETURNED');
+                    } else if (tabText.includes('canceled')) {
+                        filtered = allTransactions.filter(t => t.status === 'CANCELLED' || t.status === 'RETURNED');
+                    }
+                    renderTransactions(filtered);
+                });
+            });
+        });
+
+        async function fetchTransactions() {
+            try {
+                const adminToken = localStorage.getItem('adminToken');
+                const role = localStorage.getItem('role');
+
+                if (!adminToken || role !== 'admin') {
+                    window.location.href = '../user/login.html';
+                    return;
+                }
+
+                const response = await fetch('/api/orders/admin/all', {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    alert('Session expired. Please log in again.');
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('role');
+                    window.location.href = '../user/login.html';
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch transactions');
+                }
+
+                const data = await response.json();
+                allTransactions = data.orders || [];
+
+                updateStats();
+                renderTransactions(allTransactions);
+            } catch (err) {
+                console.error(err);
+                if (typeof toastAlert === 'function') {
+                    toastAlert("Could not load transactions");
+                } else {
+                    alert("Could not load transactions");
+                }
+            }
+        }
+
+        function updateStats() {
+            const revenue = allTransactions.reduce((acc, current) => acc + current.total, 0);
+            const completed = allTransactions.filter(o => o.status === 'DELIVERED').length;
+            const cancelled = allTransactions.filter(o => o.status === 'CANCELLED' || o.status === 'RETURNED').length;
+            const pending = allTransactions.filter(o => o.status !== 'DELIVERED' && o.status !== 'CANCELLED' && o.status !== 'RETURNED').length;
+
+            document.getElementById('stat-revenue').innerHTML = `$${revenue.toLocaleString()}`;
+            document.getElementById('stat-completed').innerHTML = completed;
+            document.getElementById('stat-cancelled').innerHTML = cancelled;
+            document.getElementById('stat-pending').innerHTML = pending;
+            
+            // Also assign simple innerText so generatePDF function doesn't crash:
+            document.getElementById('stat-revenue').innerText = `$${revenue.toLocaleString()}`;
+            document.getElementById('stat-completed').innerText = completed.toString();
+            document.getElementById('stat-cancelled').innerText = cancelled.toString();
+            document.getElementById('stat-pending').innerText = pending.toString();
+            
+            // Update "All order (...)" tab text
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            if (tabBtns.length > 0) {
+                tabBtns[0].innerText = `All order (${allTransactions.length})`;
+            }
+        }
+
+        function renderTransactions(transactions) {
+            const tbody = document.getElementById('transactionsTableBody');
+            tbody.innerHTML = '';
+
+            if (transactions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem;">No transactions found</td></tr>`;
+                return;
+            }
+
+            transactions.forEach(tx => {
+                const tr = document.createElement('tr');
+                const date = new Date(tx.createdAt).toLocaleDateString();
+                
+                let statusClass = 'status-pending';
+                let dotClass = 'dot-pending';
+                let statusText = 'Pending';
+                
+                if (tx.status === 'DELIVERED') {
+                    statusClass = 'status-complete';
+                    dotClass = 'dot-complete';
+                    statusText = 'Complete';
+                } else if (tx.status === 'CANCELLED' || tx.status === 'RETURNED') {
+                    statusClass = 'status-canceled';
+                    dotClass = 'dot-canceled';
+                    statusText = 'Canceled';
+                }
+
+                const customerId = tx.user && tx.user._id ? `#CUST${tx.user._id.substring(0,4).toUpperCase()}` : '#GUEST';
+                const customerName = tx.user && tx.user.name ? tx.user.name : 'Unknown Customer';
+
+                tr.innerHTML = `
+                    <td>${customerId}</td>
+                    <td>${customerName}</td>
+                    <td>${date}</td>
+                    <td>$${tx.total}</td>
+                    <td>${tx.paymentMethod || 'COD'}</td>
+                    <td class="${statusClass}"><span class="status-dot ${dotClass}"></span>${statusText}</td>
+                    <td><a href="orders.html" class="view-details-link">View Details</a></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function filterTable() {
             const startDateInput = document.getElementById('startDate').value;
             const endDateInput = document.getElementById('endDate').value;
 
             if (!startDateInput || !endDateInput) {
-                toastAlert("Please select both Start Date and End Date.");
+                if (typeof toastAlert === 'function') toastAlert("Please select both Start Date and End Date.");
+                else alert("Please select both Start Date and End Date.");
                 return;
             }
 
             const startDate = new Date(startDateInput);
             const endDate = new Date(endDateInput);
-
-            // Set end date time to end of day to include transactions on that day
             endDate.setHours(23, 59, 59, 999);
 
-            const rows = document.querySelectorAll('tbody tr');
-
-            rows.forEach(row => {
-                const dateText = row.cells[2].innerText; // Index 2 is Date column (DD-MM-YYYY)
-                const [day, month, year] = dateText.split('-');
-                const rowDate = new Date(`${year}-${month}-${day}`); // Convert to YYYY-MM-DD for JS Date
-
-                if (rowDate >= startDate && rowDate <= endDate) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+            const filtered = allTransactions.filter(tx => {
+                const txDate = new Date(tx.createdAt);
+                return txDate >= startDate && txDate <= endDate;
             });
+            renderTransactions(filtered);
         }
 
         function resetFilter() {
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
-
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                row.style.display = '';
-            });
+            renderTransactions(allTransactions);
         }
     </script>
     <!-- SweetAlert2 & Custom Alerts -->
@@ -1181,3 +1233,4 @@
 </body>
 
 </html>
+

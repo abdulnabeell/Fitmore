@@ -25,7 +25,7 @@ const {
 
 const { addReview, getApprovedReviews } = require('../controllers/review/reviewController');
 
-const protect = require('../middleware/authMiddleware');
+const userAuth = require('../middleware/userAuth');
 const adminAuth = require('../middleware/adminAuth');
 
 // public
@@ -36,7 +36,7 @@ router.get('/:id', getProductById);
 
 // Reviews (Public/User)
 router.get('/:id/reviews', getApprovedReviews);
-router.post('/:id/reviews', protect, addReview);
+router.post('/:id/reviews', userAuth, addReview);
 
 // admin
 // router.post('/', protect, adminOnly, createProduct);

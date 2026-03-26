@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
-const auth = require("../middleware/authMiddleware");
-const admin = require("../middleware/adminMiddleware");
+const adminAuth = require("../middleware/adminAuth");
 
 const adminController =
   require("../controllers/admin");
@@ -9,16 +8,14 @@ const adminController =
 /* DASHBOARD DATA */
 router.get(
   "/dashboard",
-  auth,
-  admin,
+  adminAuth,
   adminController.getDashboardStats
 );
 
 /* ALL CUSTOMERS */
 router.get(
   "/customers",
-  auth,
-  admin,
+  adminAuth,
   adminController.getAllCustomers
 );
 

@@ -1,14 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { adminLogin, createCoupon, getCoupons, deleteCoupon } = require('../controllers/admin');
-const auth = require('../middleware/authMiddleware');
+const { adminLogin, createCoupon, getCoupons, deleteCoupon, getAdminProfile, createOffer, getOffers, updateOffer, deleteOffer } = require('../controllers/admin');
+const adminAuth = require('../middleware/adminAuth');
 
 router.post('/login', adminLogin);
+router.get('/profile', adminAuth, getAdminProfile);
 
-// Coupon management logic - must use auth for validation of admin token (if auth exists, otherwise check role inside)
-// Let's assume auth middleware verifies the token.
-router.post('/coupons', auth, createCoupon);
-router.get('/coupons', auth, getCoupons);
-router.delete('/coupons/:id', auth, deleteCoupon);
+// Coupon management logic 
+router.post('/coupons', adminAuth, createCoupon);
+router.get('/coupons', adminAuth, getCoupons);
+router.delete('/coupons/:id', adminAuth, deleteCoupon);
+
+// Offer management logic
+router.post('/offers', adminAuth, createOffer);
+router.get('/offers', adminAuth, getOffers);
+router.put('/offers/:id', adminAuth, updateOffer);
+router.delete('/offers/:id', adminAuth, deleteOffer);
 
 module.exports = router;

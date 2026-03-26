@@ -461,15 +461,10 @@
 
 
     <!-- Script -->
+     <script src="js/user-auth.js"></script>
     <script>
         // Check Auth immediately
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
-        } else {
-            // Hide Signup Link
-            const signupLink = document.getElementById('signupLink');
-            if (signupLink) signupLink.style.display = 'none';
-        }
+      
 
         // Navbar Logic
         const mobileToggleBtn = document.getElementById('mobileToggle');
@@ -481,9 +476,15 @@
         }
 
         // Side Logout
-        document.getElementById('sideLogout').addEventListener('click', (e) => {
+        document.getElementById('sideLogout').addEventListener('click', async (e) => {
             e.preventDefault();
-            localStorage.removeItem('isLoggedIn');
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+            } catch (err) {
+                console.error("Logout error", err);
+            }
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('role');
             window.location.href = 'index.html';
         });
 
@@ -506,7 +507,7 @@
 
                 if (!fieldKey) return;
 
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('userToken');
                 if (!token) {
                     alert('Please log in again');
                     return;
@@ -551,7 +552,7 @@
 
         // Fetch User Profile Data
         async function fetchProfileData() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
 
             try {
@@ -603,7 +604,7 @@
                     return;
                 }
 
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('userToken');
 
                 addFundsBtn.innerText = "Adding...";
                 addFundsBtn.disabled = true;
@@ -637,6 +638,34 @@
         }
 
         document.addEventListener('DOMContentLoaded', fetchProfileData);
+    </script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

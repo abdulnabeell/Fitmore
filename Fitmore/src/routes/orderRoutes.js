@@ -1,21 +1,21 @@
 const router = require("express").Router();
 
-const auth = require("../middleware/authMiddleware");
-const admin = require("../middleware/adminMiddleware");
+const userAuth = require("../middleware/userAuth");
+const adminAuth = require("../middleware/adminAuth");
 
 const orderController = require("../controllers/order");
 
 // User routes
-router.post("/", auth, orderController.createOrder);
-router.get("/myorders", auth, orderController.getMyOrders);
-router.get("/:id", auth, orderController.getOrderById);
-router.put("/:id/cancel", auth, orderController.cancelOrder);
-router.put("/:id/return", auth, orderController.returnOrder);
-router.put("/:id", auth, orderController.updateOrderStatus);
+router.post("/", userAuth, orderController.createOrder);
+router.get("/myorders", userAuth, orderController.getMyOrders);
+router.get("/:id", userAuth, orderController.getOrderById);
+router.put("/:id/cancel", userAuth, orderController.cancelOrder);
+router.put("/:id/return", userAuth, orderController.returnOrder);
+router.put("/:id", userAuth, orderController.updateOrderStatus);
 
 // Admin routes
-router.get("/admin/all", auth, admin, orderController.getAllOrders);
-router.put("/admin/:id/status", auth, admin, orderController.adminUpdateOrderStatus);
+router.get("/admin/all", adminAuth, orderController.getAllOrders);
+router.put("/admin/:id/status", adminAuth, orderController.adminUpdateOrderStatus);
 
 module.exports = router;
 // const router = require("express").Router();

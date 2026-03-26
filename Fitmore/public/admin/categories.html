@@ -614,6 +614,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -640,7 +651,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -649,6 +660,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -713,16 +732,37 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
             </div>
         </div>
+
+        <div
+            style="margin-top: 1rem; padding: 0.75rem 1rem; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #374151;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                </svg>
+                Your Shop
+            </div>
+            <svg class="icon" style="width: 16px; height: 16px; color: #9ca3af;" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </div>
+
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -744,7 +784,7 @@
                     <span class="notification-dot"></span>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
@@ -884,9 +924,9 @@
             </form>
         </div>
     </div>
-
+<script src="js/admin-auth.js"></script>
     <script>
-        const API_URL = 'http://localhost:5000/api/categories';
+        const API_URL = '/api/categories';
 
         // State
         let categories = [];
@@ -899,7 +939,7 @@
         async function fetchCategories() {
             try {
                 // Add mode=admin to get all categories including Draft/Hidden
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('adminToken');
                 const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
                 const response = await fetch(`${API_URL}?mode=admin`, {
@@ -1136,7 +1176,7 @@
                 btn.disabled = true;
                 btn.innerText = 'Saving...';
 
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('adminToken');
                 if (!token) {
                     throw new Error('You are not logged in. Please log in first.');
                 }
@@ -1196,7 +1236,7 @@
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const token = localStorage.getItem('token');
+                        const token = localStorage.getItem('adminToken');
                         if (!token) {
                             throw new Error('You are not logged in');
                         }
@@ -1223,3 +1263,4 @@
 </body>
 
 </html>
+

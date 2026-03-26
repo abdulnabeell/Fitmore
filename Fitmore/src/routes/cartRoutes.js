@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const auth = require("../middleware/authMiddleware");
+const userAuth = require("../middleware/userAuth");
 const cartController = require("../controllers/cart");
 
 /* ======================
@@ -8,17 +8,17 @@ const cartController = require("../controllers/cart");
 ====================== */
 
 // Add item
-router.post("/add", auth, cartController.addToCart);
+router.post("/add", userAuth, cartController.addToCart);
 
 // Get user cart
-router.get("/", auth, cartController.getCart);
+router.get("/", userAuth, cartController.getCart);
 
 // Update quantity (+ / -)
-router.put("/update", auth, cartController.updateQty);
+router.put("/update", userAuth, cartController.updateQty);
 
 // Remove item
-router.delete("/remove", auth, cartController.removeItem);
+router.delete("/remove", userAuth, cartController.removeItem);
 
-router.delete("/clear", auth, cartController.clearCart);
+router.delete("/clear", userAuth, cartController.clearCart);
 
 module.exports = router;

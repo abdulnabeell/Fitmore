@@ -254,6 +254,7 @@
 
 
     <!-- Script -->
+     <script src="js/user-auth.js"></script>
     <script>
         // Check Auth using localStorage
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -298,11 +299,11 @@
         const emptyState = document.getElementById('emptyState');
 
         async function fetchAndRenderWishlist() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
 
             try {
-                const res = await fetch('http://localhost:5000/api/user/wishlist', {
+                const res = await fetch('/api/user/wishlist', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await res.json();
@@ -320,11 +321,11 @@
 
         async function removeFromWishlist(productId, e) {
             e.stopPropagation();
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
 
             try {
-                const res = await fetch('http://localhost:5000/api/user/wishlist/toggle', {
+                const res = await fetch('/api/user/wishlist/toggle', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -374,6 +375,34 @@
 
         fetchAndRenderWishlist();
 
+    </script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

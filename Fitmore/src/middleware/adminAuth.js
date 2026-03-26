@@ -1,15 +1,11 @@
-const jwt = require('jsonwebtoken');
+// src/middleware/adminAuth.js
+// Admin‑specific wrapper that sets the expected cookie key and delegates to generic verifier.
+const verifyToken = require('./auth');
 
-module.exports = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'No token' });
+function adminAuth(req, res, next) {
+  // Tell generic verifier which cookie to look for
+  req.tokenKey = 'adminToken';
+  verifyToken(req, res, next);
+}
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-  if (decoded.role !== 'admin') {
-    return res.status(403).json({ message: 'Admin only' });
-  }
-
-  req.admin = decoded;
-  next();
-};
+module.exports = adminAuth;

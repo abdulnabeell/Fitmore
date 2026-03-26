@@ -406,10 +406,10 @@
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
-
+<script src="js/user-auth.js"></script>
     <script>
         // Check Auth immediately
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('userToken');
         if (localStorage.getItem('isLoggedIn') !== 'true' || !token) {
             window.location.href = 'login.html';
         } else {
@@ -431,7 +431,7 @@
         document.getElementById('sideLogout').addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('token');
+            localStorage.removeItem('userToken');
             localStorage.removeItem('role');
             window.location.href = 'index.html';
         });
@@ -443,7 +443,7 @@
 
         // Fetch User Profile Data for Header
         async function fetchProfileData() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) return;
             try {
                 const response = await fetch('/api/user/profile', {
@@ -494,7 +494,7 @@
         // Fetch user addresses on load
         async function fetchAddresses() {
             try {
-                const res = await fetch('http://localhost:5000/api/user/addresses', {
+                const res = await fetch('/api/user/addresses', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
@@ -574,7 +574,7 @@
             }
 
             try {
-                const res = await fetch(`http://localhost:5000/api/user/address/${addressId}`, {
+                const res = await fetch(`/api/user/address/${addressId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -610,8 +610,8 @@
 
             const editId = form.getAttribute('data-edit-id');
             const url = editId
-                ? `http://localhost:5000/api/user/address/${editId}`
-                : 'http://localhost:5000/api/user/address';
+                ? `/api/user/address/${editId}`
+                : '/api/user/address';
             const method = editId ? 'PUT' : 'POST';
 
             try {
@@ -657,6 +657,34 @@
         // Init
         fetchAddresses();
 
+    </script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

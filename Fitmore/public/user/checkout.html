@@ -452,10 +452,9 @@
             <h1 class="page-title">Billing Details</h1>
 
             <div class="checkout-grid">
-                <!-- Left: Shipping Method Picker -->
+                <!-- Left: Shipping Method Picker & Payment -->
                 <div class="checkout-left-column">
-                    <h3 style="color: var(--text-white); margin-bottom: 1.5rem; font-size: 1.3rem;">Shipping Address
-                    </h3>
+                    <h3 style="color: var(--text-white); margin-bottom: 1.5rem; font-size: 1.3rem;">Shipping Address</h3>
                     <form id="shippingAddressForm">
                         <div id="addressSelectionContainer" class="address-selection-container">
                             <!-- Injected by fetch logic -->
@@ -465,30 +464,9 @@
                             style="width: 100%; margin-top: 1.5rem; text-align: center; border-style: dashed;">+ Add New
                             Address</button>
                     </form>
-                </div>
 
-                <!-- Right: Summary -->
-                <div class="order-summary">
-                    <div id="orderItems">
-                        <!-- Rendered via JS -->
-                    </div>
-
-                    <div class="s-rows">
-                        <div class="s-row">
-                            <span>Subtotal:</span>
-                            <span id="subtotalDisplay">$0</span>
-                        </div>
-                        <div class="s-row">
-                            <span>Shipping:</span>
-                            <span>Free</span>
-                        </div>
-                        <div class="s-row">
-                            <span>Total:</span>
-                            <span id="totalDisplay" style="color:var(--accent)">$0</span>
-                        </div>
-                    </div>
-
-                    <div class="payment-methods">
+                    <h3 style="color: var(--text-white); margin-top: 3.5rem; margin-bottom: 1.5rem; font-size: 1.3rem;">Payment Method</h3>
+                    <div class="payment-methods" style="margin-top: 0;">
                         <label class="payment-option">
                             <div class="payment-left">
                                 <input type="radio" name="payment" value="wallet" id="paymentWallet">
@@ -508,21 +486,6 @@
                                 <input type="radio" name="payment" value="razorpay">
                                 <span>Online Payment (Razorpay)</span>
                             </div>
-                            <!-- Mock Icons -->
-                            <div class="bank-icons">
-                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
-                                    <rect width="36" height="24" rx="2" />
-                                </svg>
-                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
-                                    <rect width="36" height="24" rx="2" />
-                                </svg>
-                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
-                                    <rect width="36" height="24" rx="2" />
-                                </svg>
-                                <svg width="30" height="20" viewBox="0 0 36 24" fill="#fff">
-                                    <rect width="36" height="24" rx="2" />
-                                </svg>
-                            </div>
                         </label>
 
                         <label class="payment-option">
@@ -537,29 +500,71 @@
                         Cash on delivery selected.
                     </div>
 
-                    <div class="coupon-row">
-                        <input type="text" id="couponCodeInput" class="coupon-input" placeholder="Coupon Code">
-                        <button class="btn-apply" id="applyCouponBtn">Apply Coupon</button>
-                    </div>
-                    <div id="couponMessage" style="margin-top: 10px; font-size: 0.9rem;"></div>
-                    <div id="discountRowContainer" style="margin-top: 15px;"></div>
-
-                    <div class="form-group" style="margin-top: 1.5rem; margin-bottom: 0;">
+                    <div class="form-group" style="margin-top: 2rem; margin-bottom: 0;">
                         <label class="form-label">Order Notes (Optional)</label>
-                        <textarea id="orderNotes" class="form-control" rows="2"
+                        <textarea id="orderNotes" class="form-control" rows="3"
                             placeholder="Notes about your order, e.g. special notes for delivery."
                             style="resize:none;"></textarea>
                     </div>
+                </div>
 
-                    <div id="addressPreview"
-                        style="margin-top: 1.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; display: none;">
-                        <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-white);">Selected Address
-                        </h4>
-                        <div id="addressPreviewText"
-                            style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;"></div>
+                <!-- Right: Summary -->
+                <div class="order-summary" style="background: var(--bg-card); padding: 2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); position: sticky; top: 100px; height: fit-content; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+                    <h3 style="color: var(--text-white); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Order Summary</h3>
+                    
+                    <div id="orderItems">
+                        <!-- Rendered via JS -->
                     </div>
 
-                    <button class="btn-place" id="placeOrderBtn" style="margin-top: 1.5rem;">Place Order</button>
+                    <!-- Available Coupons List -->
+                    <div id="availableCouponsContainer" style="margin-top: 1.5rem; margin-bottom: 1rem;">
+                        <div onclick="const list = document.getElementById('availableCouponsList'); const icon = document.getElementById('couponToggleIcon'); if(list.style.display === 'none'){ list.style.display = 'flex'; icon.style.transform = 'rotate(180deg)'; } else { list.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: rgba(255,255,255,0.02); padding: 12px 15px; border-radius: 6px; border: 1px dashed rgba(255,255,255,0.2); transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+                            <h4 style="font-size: 0.85rem; margin: 0; color: var(--text-white); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                    <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                </svg>
+                                View Available Coupons
+                            </h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s;" id="couponToggleIcon">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div id="availableCouponsList" style="display: none; flex-direction: column; gap: 0.5rem; margin-top: 1rem; max-height: 250px; overflow-y: auto; padding-right: 5px;">
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Loading coupons...</span>
+                        </div>
+                    </div>
+
+                    <div class="coupon-row" style="margin-top: 0; margin-bottom: 1rem;">
+                        <input type="text" id="couponCodeInput" class="coupon-input" placeholder="Coupon Code">
+                        <button class="btn-apply" id="applyCouponBtn">Apply</button>
+                    </div>
+                    <div id="couponMessage" style="margin-top: 5px; margin-bottom: 10px; font-size: 0.9rem;"></div>
+                    <div id="discountRowContainer" style="margin-top: 10px;"></div>
+
+                    <div class="s-rows" style="margin-top: 1.5rem;">
+                        <div class="s-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotalDisplay">$0</span>
+                        </div>
+                        <div class="s-row">
+                            <span>Shipping:</span>
+                            <span>Free</span>
+                        </div>
+                        <div class="s-row" style="border-bottom: none; padding-bottom: 0;">
+                            <span style="font-weight: 600; font-size: 1.1rem;">Total:</span>
+                            <span id="totalDisplay" style="color:var(--accent); font-weight: 700; font-size: 1.2rem;">$0</span>
+                        </div>
+                    </div>
+
+                    <div id="addressPreview"
+                        style="margin-top: 1.5rem; padding: 1rem; border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; display: none;">
+                        <h4 style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-white); text-transform: uppercase;">Deliver To:</h4>
+                        <div id="addressPreviewText"
+                            style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;"></div>
+                    </div>
+
+                    <button class="btn-place" id="placeOrderBtn" style="margin-top: 2rem; font-size: 1.05rem; padding: 18px; text-transform: uppercase; letter-spacing: 1px;">Place Order</button>
                 </div>
             </div>
         </div>
@@ -676,14 +681,14 @@
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
-
+<script src="js/user-auth.js"></script>
     <script>
 
         /* ===========================
            AUTH CHECK
         =========================== */
 
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("userToken");
 
         if (!token) {
             window.location.href = "signup.html";
@@ -730,7 +735,7 @@
             try {
 
                 const res = await fetch(
-                    "http://localhost:5000/api/cart",
+                    "/api/cart",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -850,7 +855,7 @@
                 couponMessage.innerText = 'Validating...';
                 couponMessage.style.color = 'var(--text-muted)';
 
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('userToken');
                 if (!token) {
                     window.location.href = 'login.html';
                     return;
@@ -860,7 +865,7 @@
                 cart.forEach(item => { currentTotal += item.price * item.qty; });
 
                 try {
-                    const res = await fetch('http://localhost:5000/api/user/coupons/validate', {
+                    const res = await fetch('/api/user/coupons/validate', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -905,6 +910,40 @@
             renderSummary();
         };
 
+        /* ===========================
+           FETCH AVAILABLE COUPONS
+        =========================== */
+        async function loadAvailableCoupons() {
+            try {
+                const res = await fetch('/api/user/coupons/available');
+                const data = await res.json();
+                
+                const container = document.getElementById('availableCouponsList');
+                if (!container) return;
+                
+                if (data.success && data.coupons && data.coupons.length > 0) {
+                    container.innerHTML = data.coupons.map(c => `
+                        <div style="border: 1px dashed rgba(255,255,255,0.2); padding: 12px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.2); transition: border-color 0.3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'">
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="font-weight: 700; color: var(--text-white); font-family: var(--font-display); letter-spacing: 1px; font-size: 1.1rem;">${c.code}</span>
+                                <span style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                                    ${c.type === 'percentage' ? c.value + '% off' : '₹' + c.value + ' off'} 
+                                    ${c.minPurchase ? 'on orders above ₹' + c.minPurchase : ''}
+                                </span>
+                            </div>
+                            <button type="button" onclick="document.getElementById('couponCodeInput').value='${c.code}';" style="background: rgba(229, 9, 20, 0.1); color: var(--accent); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='var(--accent)'; this.style.color='white';" onmouseout="this.style.background='rgba(229, 9, 20, 0.1)'; this.style.color='var(--accent)';">Tap to Use</button>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = '<p style="font-size: 0.85rem; color: var(--text-muted);">No discount codes available at the moment.</p>';
+                }
+            } catch (err) {
+                console.error("Error loading coupons:", err);
+            }
+        }
+        
+        loadAvailableCoupons();
+
 
         /* ===========================
            WALLET INIT
@@ -914,7 +953,7 @@
 
         async function loadWallet() {
             try {
-                const res = await fetch("http://localhost:5000/api/user/wallet", {
+                const res = await fetch("/api/user/wallet", {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();
@@ -939,7 +978,7 @@
 
         async function loadAddresses() {
             try {
-                const res = await fetch("http://localhost:5000/api/user/addresses", {
+                const res = await fetch("/api/user/addresses", {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();
@@ -1052,7 +1091,7 @@
             };
 
             try {
-                const res = await fetch('http://localhost:5000/api/user/address', {
+                const res = await fetch('/api/user/address', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1196,7 +1235,7 @@
 
                     if (payment === "razorpay") {
                         // 1. Create native Razorpay order
-                        const rpayRes = await fetch("http://localhost:5000/api/payment/create-order", {
+                        const rpayRes = await fetch("/api/payment/create-order", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -1221,7 +1260,7 @@
                             handler: async function (response) {
                                 try {
                                     // 3. Verify Payment
-                                    const verifyRes = await fetch("http://localhost:5000/api/payment/verify-signature", {
+                                    const verifyRes = await fetch("/api/payment/verify-signature", {
                                         method: "POST",
                                         headers: {
                                             "Content-Type": "application/json",
@@ -1265,7 +1304,7 @@
                         // The server must provide this key. For now, assuming standard flow.
 
                         // Fetching public key from server
-                        const keyRes = await fetch("http://localhost:5000/api/payment/config");
+                        const keyRes = await fetch("/api/payment/config");
                         const keyData = await keyRes.json();
                         options.key = keyData.key || "YOUR_RAZORPAY_KEY_ID_HERE";
 
@@ -1285,7 +1324,7 @@
                     /* ===== FINALIZE MONGODB ORDER ===== */
                     async function finalizeOrder() {
                         const response = await fetch(
-                            "http://localhost:5000/api/orders",
+                            "/api/orders",
                             {
                                 method: "POST",
                                 headers: {
@@ -1313,7 +1352,7 @@
                         }
 
                         await fetch(
-                            "http://localhost:5000/api/cart/clear",
+                            "/api/cart/clear",
                             {
                                 method: "DELETE",
                                 headers: {
@@ -1350,6 +1389,34 @@
         loadAddresses();
         loadWallet();
 
+    </script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

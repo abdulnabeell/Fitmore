@@ -9,7 +9,7 @@ exports.cancelOrder = async (req, res) => {
         }
 
         // Verify it belongs to the user
-        if (order.user.toString() !== req.user.toString()) {
+        if (order.user.toString() !== req.user.id) {
             return res.status(401).json({ success: false, message: "Not authorized" });
         }
 

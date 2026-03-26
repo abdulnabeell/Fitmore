@@ -9,7 +9,7 @@ exports.returnOrder = async (req, res) => {
         }
 
         // Verify it belongs to user
-        if (order.user.toString() !== req.user.toString()) {
+        if (order.user.toString() !== req.user.id) {
             return res.status(401).json({ success: false, message: "Not authorized" });
         }
 
@@ -22,6 +22,12 @@ exports.returnOrder = async (req, res) => {
         }
 
         order.status = "RETURN_REQUESTED";
+        if (req.body.returnReason) {
+            order.returnReason = req.body.returnReason;
+        }
+        if (req.body.returnNotes) {
+            order.returnNotes = req.body.returnNotes;
+        }
         await order.save();
 
         res.json({ success: true, message: "Return requested successfully", order });

@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch Products
 async function fetchProducts() {
     try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/products', {
+        const token = localStorage.getItem('adminToken');
+        const response = await fetch('/api/products', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -124,8 +124,8 @@ async function deleteProduct(id) {
 
     if (result.isConfirmed) {
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+            const token = localStorage.getItem('adminToken');
+            const response = await fetch(`/api/products/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

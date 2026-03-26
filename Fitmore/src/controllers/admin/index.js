@@ -2,6 +2,8 @@ const { adminLogin } = require('./adminLogin');
 const { getDashboardStats } = require('./getDashboardStats');
 const { getAllCustomers } = require('./getAllCustomers');
 const { createCoupon, getCoupons, deleteCoupon } = require('./couponController');
+const { getAdminProfile } = require('./adminProfile');
+const { createOffer, getOffers, updateOffer, deleteOffer } = require('./offerController');
 
 module.exports = {
     adminLogin,
@@ -9,5 +11,10 @@ module.exports = {
     getAllCustomers,
     createCoupon,
     getCoupons,
-    deleteCoupon
+    deleteCoupon,
+    getAdminProfile,
+    createOffer,
+    getOffers,
+    updateOffer,
+    deleteOffer
 };

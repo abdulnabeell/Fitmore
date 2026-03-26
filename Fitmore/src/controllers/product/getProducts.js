@@ -2,16 +2,29 @@ const Product = require('../../models/productModel');
 
 exports.getProducts = async (req, res) => {
     try {
-        const { search, category, sort } = req.query;
+        const { search, category, sort, minPrice, maxPrice } = req.query;
 
         let query = {};
 
         if (search) {
-            query.name = { $regex: search, $options: 'i' };
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+                { category: { $regex: search, $options: 'i' } }
+            ];
+            // If the schema is ever updated to include 'brand', it will be seamlessly searched here.
+            // Some entries might have a brand field dynamically added.
+            query.$or.push({ brand: { $regex: search, $options: 'i' } });
         }
 
         if (category) {
             query.category = { $regex: new RegExp(`^${category}$`, 'i') };
+        }
+
+        if (minPrice || maxPrice) {
+            query.price = {};
+            if (minPrice) query.price.$gte = Number(minPrice);
+            if (maxPrice) query.price.$lte = Number(maxPrice);
         }
 
         let productsQuery = Product.find(query);

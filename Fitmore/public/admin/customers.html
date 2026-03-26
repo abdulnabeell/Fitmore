@@ -743,6 +743,17 @@
             </div>
             Customers
         </div>
+        <div class="nav-item" onclick="window.location.href='returns.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
+                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"></path>
+                </svg>
+            </div>
+            Return Requests
+        </div>
         <div class="nav-item" onclick="window.location.href='coupons.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
@@ -769,7 +780,7 @@
             </div>
             Transaction
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="window.location.href='brands.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon
@@ -778,6 +789,14 @@
                 </svg>
             </div>
             Brand
+        </div>
+        <div class="nav-item" onclick="window.location.href='offers.html'">
+            <div class="nav-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            Offers
         </div>
 
         <div class="menu-category">Product</div>
@@ -801,7 +820,7 @@
             </div>
             Product Media
         </div>
-        <div class="nav-item" onclick="window.location.href='categories.html'">
+        <div class="nav-item" onclick="window.location.href='product-list.html'">
             <div class="nav-icon">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -842,9 +861,12 @@
                 <h4>Dealport</h4>
                 <p>Mark@thedesigner...</p>
             </div>
-            <div class="logout-icon">
-                <svg class="icon" style="width: 18px; height: 18px; margin-left: auto; color:#9ca3af;"
-                    viewBox="0 0 24 24">
+            <div class="logout-icon" onclick="
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('role');
+                window.location.href='../user/login.html';
+            ">
+                <svg class="icon" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -869,6 +891,7 @@
         </div>
 
     </aside>
+
 
     <main class="main-content">
         <!-- Navbar -->
@@ -908,7 +931,7 @@
                     </div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                    alt="Avatar" class="avatar-top">
+                    alt="Avatar" class="avatar-top" style="cursor: pointer;" onclick="window.location.href='admin-role.html'">
             </div>
         </header>
 
@@ -1066,245 +1089,244 @@
                         </tr>
                     </thead>
                     <tbody id="customersTableBody">
-                        <!-- Dynamic content injected here via JS -->
                     </tbody>
                 </table>
             </div>
 
-            <div class="pagination">
-                <button class="page-btn">← Previous</button>
-                <div class="page-numbers">
-                    <div class="page-num active">1</div>
-                    <div class="page-num">2</div>
-                    <div class="page-num">3</div>
-                    <div class="page-num">4</div>
-                    <div class="page-num">5</div>
-                    <div class="page-num dots">...</div>
-                    <div class="page-num">24</div>
-                </div>
-                <button class="page-btn">Next →</button>
-            </div>
+            <!-- Slide-in Customer Details Panel -->
+            <div class="details-panel" id="customerDetailsPanel">
+                                <div class="panel-header">
+                                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80"
+                                        alt="Avatar" class="panel-avatar" id="detailsAvatar">
+                                    <div class="panel-user-info">
+                                        <h3 id="detailsName">John Doe</h3>
+                                        <p id="detailsEmail">john.doe@example.com</p>
+                                        <a href="#"
+                                            style="font-size: 0.8rem; color: #4e73df; text-decoration: none; margin-top: 4px; display: inline-block;">View
+                                            public profile</a>
+                                    </div>
+                                    <div class="close-btn" id="closePanelBtn">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                </div>
 
-        </div>
-    </main>
+                                <div class="panel-content">
+                                    <!-- Info -->
+                                    <div class="info-section">
+                                        <div class="section-title">Customer Info</div>
+                                        <div class="info-row">
+                                            <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"
+                                                    style="width:16px;height:16px;">
+                                                    <path
+                                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.12 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.81.57A2 2 0 0 1 22 16.92z">
+                                                    </path>
+                                                </svg></div>
+                                            <span id="detailsPhone">+1234567890</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"
+                                                    style="width:16px;height:16px;">
+                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                    <circle cx="12" cy="10" r="3"></circle>
+                                                </svg></div>
+                                            <span>123 Main St, NY</span>
+                                        </div>
+                                    </div>
 
-    <!-- Slide-in Customer Details Panel -->
-    <div class="details-panel" id="customerDetailsPanel">
-        <div class="panel-header">
-            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80"
-                alt="Avatar" class="panel-avatar" id="detailsAvatar">
-            <div class="panel-user-info">
-                <h3 id="detailsName">John Doe</h3>
-                <p id="detailsEmail">john.doe@example.com</p>
-                <a href="#"
-                    style="font-size: 0.8rem; color: #4e73df; text-decoration: none; margin-top: 4px; display: inline-block;">View
-                    public profile</a>
-            </div>
-            <div class="close-btn" id="closePanelBtn">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </div>
-        </div>
+                                    <!-- Social Media -->
+                                    <div class="info-section">
+                                        <div class="section-title">Social Media</div>
+                                        <div class="social-icons">
+                                            <div class="social-btn bg-fb"><svg
+                                                    style="width:16px;height:16px;fill:currentColor;"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                                    </path>
+                                                </svg></div>
+                                            <div class="social-btn bg-tw"><svg
+                                                    style="width:16px;height:16px;fill:currentColor;"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                                    </path>
+                                                </svg></div>
+                                            <div class="social-btn bg-li"><svg
+                                                    style="width:16px;height:16px;fill:currentColor;"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                                    </path>
+                                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                                    <circle cx="4" cy="4" r="2"></circle>
+                                                </svg></div>
+                                            <div class="social-btn bg-in"><svg
+                                                    style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2"
+                                                    viewBox="0 0 24 24">
+                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                                </svg></div>
+                                        </div>
+                                    </div>
 
-        <div class="panel-content">
-            <!-- Info -->
-            <div class="info-section">
-                <div class="section-title">Customer Info</div>
-                <div class="info-row">
-                    <div class="info-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.12 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.81.57A2 2 0 0 1 22 16.92z">
-                            </path>
-                        </svg></div>
-                    <span id="detailsPhone">+1234567890</span>
-                </div>
-                <div class="info-row">
-                    <div class="info-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg></div>
-                    <span>123 Main St, NY</span>
-                </div>
-            </div>
+                                    <!-- Activity -->
+                                    <div class="info-section">
+                                        <div class="section-title">Activity</div>
+                                        <div class="activity-row">
+                                            <span class="activity-label">Registration:</span>
+                                            <span class="activity-val">15.01.2025</span>
+                                        </div>
+                                        <div class="activity-row">
+                                            <span class="activity-label">Last purchase:</span>
+                                            <span class="activity-val">10.01.2025</span>
+                                        </div>
+                                    </div>
 
-            <!-- Social Media -->
-            <div class="info-section">
-                <div class="section-title">Social Media</div>
-                <div class="social-icons">
-                    <div class="social-btn bg-fb"><svg style="width:16px;height:16px;fill:currentColor;"
-                            viewBox="0 0 24 24">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg></div>
-                    <div class="social-btn bg-tw"><svg style="width:16px;height:16px;fill:currentColor;"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg></div>
-                    <div class="social-btn bg-li"><svg style="width:16px;height:16px;fill:currentColor;"
-                            viewBox="0 0 24 24">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                            </path>
-                            <rect x="2" y="9" width="4" height="12"></rect>
-                            <circle cx="4" cy="4" r="2"></circle>
-                        </svg></div>
-                    <div class="social-btn bg-in"><svg
-                            style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2"
-                            viewBox="0 0 24 24">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg></div>
-                </div>
-            </div>
+                                    <!-- Order Overview -->
+                                    <div class="info-section">
+                                        <div class="section-title">Order overview</div>
+                                        <div class="order-overview-grid">
+                                            <div class="mini-stat-card">
+                                                <div class="mini-stat-val text-blue">150</div>
+                                                <div class="mini-stat-label">Total order</div>
+                                            </div>
+                                            <div class="mini-stat-card">
+                                                <div class="mini-stat-val text-green">140</div>
+                                                <div class="mini-stat-label">Completed</div>
+                                            </div>
+                                            <div class="mini-stat-card">
+                                                <div class="mini-stat-val text-red">10</div>
+                                                <div class="mini-stat-label">Canceled</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- Activity -->
-            <div class="info-section">
-                <div class="section-title">Activity</div>
-                <div class="activity-row">
-                    <span class="activity-label">Registration:</span>
-                    <span class="activity-val">15.01.2025</span>
-                </div>
-                <div class="activity-row">
-                    <span class="activity-label">Last purchase:</span>
-                    <span class="activity-val">10.01.2025</span>
-                </div>
-            </div>
+                            <!-- JavaScript -->
+                             <script src="js/admin-auth.js"></script>
+                            <script>
+                                const panel = document.getElementById('customerDetailsPanel');
+                                const closeBtn = document.getElementById('closePanelBtn');
+                                const tableRows = document.querySelectorAll('#customersTableBody tr');
 
-            <!-- Order Overview -->
-            <div class="info-section">
-                <div class="section-title">Order overview</div>
-                <div class="order-overview-grid">
-                    <div class="mini-stat-card">
-                        <div class="mini-stat-val text-blue">150</div>
-                        <div class="mini-stat-label">Total order</div>
-                    </div>
-                    <div class="mini-stat-card">
-                        <div class="mini-stat-val text-green">140</div>
-                        <div class="mini-stat-label">Completed</div>
-                    </div>
-                    <div class="mini-stat-card">
-                        <div class="mini-stat-val text-red">10</div>
-                        <div class="mini-stat-label">Canceled</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                // Panel Elements to Update
+                                const detailsName = document.getElementById('detailsName');
+                                const detailsEmail = document.getElementById('detailsEmail');
+                                const detailsPhone = document.getElementById('detailsPhone');
+                                const detailsAvatar = document.getElementById('detailsAvatar');
 
-    <!-- JavaScript -->
-    <script>
-        const panel = document.getElementById('customerDetailsPanel');
-        const closeBtn = document.getElementById('closePanelBtn');
-        const tableRows = document.querySelectorAll('#customersTableBody tr');
+                                function openPanel(row) {
+                                    // Highlight row
+                                    tableRows.forEach(r => r.classList.remove('selected'));
+                                    row.classList.add('selected');
 
-        // Panel Elements to Update
-        const detailsName = document.getElementById('detailsName');
-        const detailsEmail = document.getElementById('detailsEmail');
-        const detailsPhone = document.getElementById('detailsPhone');
-        const detailsAvatar = document.getElementById('detailsAvatar');
+                                    // Populate data (using data-attributes for demo, falling back to cell text)
+                                    const name = row.dataset.name || row.cells[1].textContent;
+                                    const email = row.dataset.email || name.toLowerCase().replace(/\s/g, '.') + '@example.com';
+                                    const phone = row.dataset.phone || row.cells[2].textContent;
 
-        function openPanel(row) {
-            // Highlight row
-            tableRows.forEach(r => r.classList.remove('selected'));
-            row.classList.add('selected');
+                                    detailsName.textContent = name;
+                                    detailsEmail.textContent = email;
+                                    detailsPhone.textContent = phone;
 
-            // Populate data (using data-attributes for demo, falling back to cell text)
-            const name = row.dataset.name || row.cells[1].textContent;
-            const email = row.dataset.email || name.toLowerCase().replace(/\s/g, '.') + '@example.com';
-            const phone = row.dataset.phone || row.cells[2].textContent;
+                                    // Randomize avatar slightly for effect (in real app user would have specific avatar URL)
+                                    // Using UI Avatars for consistent letters
+                                    detailsAvatar.src = `https://ui-avatars.com/api/?name=${name}&background=random&color=fff&size=200`;
 
-            detailsName.textContent = name;
-            detailsEmail.textContent = email;
-            detailsPhone.textContent = phone;
+                                    // Open Panel
+                                    panel.classList.add('active');
+                                }
 
-            // Randomize avatar slightly for effect (in real app user would have specific avatar URL)
-            // Using UI Avatars for consistent letters
-            detailsAvatar.src = `https://ui-avatars.com/api/?name=${name}&background=random&color=fff&size=200`;
+                                function closePanel() {
+                                    panel.classList.remove('active');
+                                    tableRows.forEach(r => r.classList.remove('selected'));
+                                }
 
-            // Open Panel
-            panel.classList.add('active');
-        }
+                                // Event Listeners
+                                tableRows.forEach(row => {
+                                    row.addEventListener('click', (e) => {
+                                        // Prevent opening if clicking action buttons
+                                        if (e.target.closest('.action-icons')) return;
+                                        openPanel(row);
+                                    });
+                                });
 
-        function closePanel() {
-            panel.classList.remove('active');
-            tableRows.forEach(r => r.classList.remove('selected'));
-        }
+                                closeBtn.addEventListener('click', closePanel);
 
-        // Event Listeners
-        tableRows.forEach(row => {
-            row.addEventListener('click', (e) => {
-                // Prevent opening if clicking action buttons
-                if (e.target.closest('.action-icons')) return;
-                openPanel(row);
-            });
-        });
+                                // Optional: Close when clicking outside (on main content) - simple implementation
+                                document.querySelector('.main-content').addEventListener('click', (e) => {
+                                    // If click is outside panel and we are active, close? 
+                                    // Logic: Check if click target is NOT in panel AND NOT in a row
+                                    if (panel.classList.contains('active') && !e.target.closest('tr')) {
+                                        closePanel();
+                                    }
+                                });
 
-        closeBtn.addEventListener('click', closePanel);
+                                // Backend Integration Code
 
-        // Optional: Close when clicking outside (on main content) - simple implementation
-        document.querySelector('.main-content').addEventListener('click', (e) => {
-            // If click is outside panel and we are active, close? 
-            // Logic: Check if click target is NOT in panel AND NOT in a row
-            if (panel.classList.contains('active') && !e.target.closest('tr')) {
-                closePanel();
-            }
-        });
+                                // Paging defaults
+                                let currentPage = 1;
+                                let totalPages = 1;
 
-        // Backend Integration Code
+                                async function fetchCustomers(page = 1) {
+                                    const token = localStorage.getItem('adminToken');
+                                    if (!token) return;
 
-        // Paging defaults
-        let currentPage = 1;
-        let totalPages = 1;
+                                    try {
+                                        const response = await fetch(`/api/admin/dashboard/customers?page=${page}&limit=10`, {
+                                            headers: { 'Authorization': `Bearer ${token}` }
+                                        });
 
-        async function fetchCustomers(page = 1) {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-            if (!token) return;
+                                        if (response.status === 401 || response.status === 403) {
+                                            alert('Session expired. Please log in again.');
+                                            localStorage.removeItem('adminToken');
+                                            localStorage.removeItem('role');
+                                            window.location.href = '../user/login.html';
+                                            return;
+                                        }
 
-            try {
-                const response = await fetch(`/api/admin/customers?page=${page}&limit=10`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                                        if (!response.ok) throw new Error("Failed to fetch customers");
 
-                if (!response.ok) throw new Error("Failed to fetch customers");
+                                        const data = await response.json();
+                                        if (data.success) {
+                                            renderCustomers(data.customers);
+                                            currentPage = data.pagination.page;
+                                            totalPages = data.pagination.pages;
+                                            renderPagination();
+                                        }
+                                    } catch (err) {
+                                        console.error("Error fetching customers:", err);
+                                    }
+                                }
 
-                const data = await response.json();
-                if (data.success) {
-                    renderCustomers(data.customers);
-                    currentPage = data.pagination.page;
-                    totalPages = data.pagination.pages;
-                    renderPagination();
-                }
-            } catch (err) {
-                console.error("Error fetching customers:", err);
-            }
-        }
+                                function renderCustomers(customers) {
+                                    const tbody = document.getElementById('customersTableBody');
+                                    tbody.innerHTML = '';
 
-        function renderCustomers(customers) {
-            const tbody = document.getElementById('customersTableBody');
-            tbody.innerHTML = '';
+                                    if (customers.length === 0) {
+                                        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No customers found.</td></tr>';
+                                        return;
+                                    }
 
-            if (customers.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No customers found.</td></tr>';
-                return;
-            }
+                                    customers.forEach((customer, index) => {
+                                        const isActive = customer.status !== 'Inactive'; // Simple mock logic based on field or defaults
+                                        const statusClass = isActive ? 'status-active' : 'status-inactive';
+                                        const dotClass = isActive ? 'dot-active' : 'dot-inactive';
 
-            customers.forEach((customer, index) => {
-                const isActive = customer.status !== 'Inactive'; // Simple mock logic based on field or defaults
-                const statusClass = isActive ? 'status-active' : 'status-inactive';
-                const dotClass = isActive ? 'dot-active' : 'dot-inactive';
+                                        // Format ID
+                                        const custId = `#CUST${String(index + 1).padStart(3, '0')}`;
 
-                // Format ID
-                const custId = `#CUST${String(index + 1).padStart(3, '0')}`;
+                                        const tr = document.createElement('tr');
+                                        tr.dataset.name = customer.name;
+                                        tr.dataset.email = customer.email;
+                                        tr.dataset.phone = customer.phone;
 
-                const tr = document.createElement('tr');
-                tr.dataset.name = customer.name;
-                tr.dataset.email = customer.email;
-                tr.dataset.phone = customer.phone;
-
-                tr.innerHTML = `
+                                        tr.innerHTML = `
                     <td>${custId}</td>
                     <td>${customer.name}</td>
                     <td>${customer.phone}</td>
@@ -1326,79 +1348,88 @@
                     </td>
                 `;
 
-                // Add click listener for row (excluding action buttons)
-                tr.addEventListener('click', (e) => {
-                    if (e.target.closest('.action-icons')) return;
-                    openPanel(tr);
-                });
+                                        // Add click listener for row (excluding action buttons)
+                                        tr.addEventListener('click', (e) => {
+                                            if (e.target.closest('.action-icons')) return;
+                                            openPanel(tr);
+                                        });
 
-                tbody.appendChild(tr);
-            });
-        }
+                                        tbody.appendChild(tr);
+                                    });
+                                }
 
-        function renderPagination() {
-            const numbersContainer = document.querySelector('.page-numbers');
-            numbersContainer.innerHTML = ''; // Clear default
+                                function renderPagination() {
+                                    const numbersContainer = document.querySelector('.page-numbers');
+                                    numbersContainer.innerHTML = ''; // Clear default
 
-            for (let i = 1; i <= totalPages; i++) {
-                const numDiv = document.createElement('div');
-                numDiv.className = `page-num ${i === currentPage ? 'active' : ''}`;
-                numDiv.textContent = i;
-                numDiv.addEventListener('click', () => fetchCustomers(i));
-                numbersContainer.appendChild(numDiv);
-            }
-        }
+                                    for (let i = 1; i <= totalPages; i++) {
+                                        const numDiv = document.createElement('div');
+                                        numDiv.className = `page-num ${i === currentPage ? 'active' : ''}`;
+                                        numDiv.textContent = i;
+                                        numDiv.addEventListener('click', () => fetchCustomers(i));
+                                        numbersContainer.appendChild(numDiv);
+                                    }
+                                }
 
-        // Hook up Previous / Next buttons
-        document.querySelectorAll('.page-btn').forEach((btn, idx) => {
-            btn.addEventListener('click', () => {
-                if (idx === 0 && currentPage > 1) { // Prev
-                    fetchCustomers(currentPage - 1);
-                } else if (idx === 1 && currentPage < totalPages) { // Next
-                    fetchCustomers(currentPage + 1);
-                }
-            });
-        });
+                                // Hook up Previous / Next buttons
+                                document.querySelectorAll('.page-btn').forEach((btn, idx) => {
+                                    btn.addEventListener('click', () => {
+                                        if (idx === 0 && currentPage > 1) { // Prev
+                                            fetchCustomers(currentPage - 1);
+                                        } else if (idx === 1 && currentPage < totalPages) { // Next
+                                            fetchCustomers(currentPage + 1);
+                                        }
+                                    });
+                                });
 
-        async function fetchDashboardStats() {
-            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-            if (!token) {
-                window.location.href = 'admin-login.html';
-                return;
-            }
+                                async function fetchDashboardStats() {
+                                    const token = localStorage.getItem('adminToken');
+                                    if (!token) {
+                                        window.location.href = '../user/login.html';
+                                        return;
+                                    }
 
-            try {
-                const response = await fetch('/api/admin/dashboard', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                                    try {
+                                        const response = await fetch('/api/admin/dashboard/dashboard', {
+                                            headers: { 'Authorization': `Bearer ${token}` }
+                                        });
 
-                if (!response.ok) throw new Error("Failed to fetch dashboard stats");
+                                        if (response.status === 401 || response.status === 403) {
+                                            alert('Session expired. Please log in again.');
+                                            localStorage.removeItem('adminToken');
+                                            localStorage.removeItem('role');
+                                            window.location.href = '../user/login.html';
+                                            return;
+                                        }
 
-                const data = await response.json();
+                                        if (!response.ok) throw new Error("Failed to fetch dashboard stats");
 
-                if (data.success) {
-                    // Update Stats Cards
-                    document.getElementById('stat-total-customers').innerHTML =
-                        `${data.activeCustomers} <span class="stat-growth">All Users</span>`;
+                                        const data = await response.json();
 
-                    document.getElementById('stat-new-customers').innerHTML =
-                        `${data.newCustomers} <span class="stat-growth">Recent</span>`;
+                                        if (data.success) {
+                                            // Update Stats Cards
+                                            document.getElementById('stat-total-customers').innerHTML =
+                                                `${data.activeCustomers} <span class="stat-growth">All Users</span>`;
 
-                    // Update Chart Metrics
-                    document.getElementById('chart-active-customers').textContent = data.activeCustomers;
-                    document.getElementById('chart-repeat-customers').textContent = data.repeatCustomers;
-                }
-            } catch (err) {
-                console.error("Error fetching admin stats:", err);
-            }
-        }
+                                            document.getElementById('stat-new-customers').innerHTML =
+                                                `${data.newCustomers} <span class="stat-growth">Recent</span>`;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchDashboardStats();
-            fetchCustomers(1);
-        });
-    </script>
+                                            // Update Chart Metrics
+                                            document.getElementById('chart-active-customers').textContent = data.activeCustomers;
+                                            document.getElementById('chart-repeat-customers').textContent = data.repeatCustomers;
+                                        }
+                                    } catch (err) {
+                                        console.error("Error fetching admin stats:", err);
+                                    }
+                                }
+
+                                // Initialize
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    fetchDashboardStats();
+                                    fetchCustomers(1);
+                                });
+                            </script>
 </body>
 
 </html>
+

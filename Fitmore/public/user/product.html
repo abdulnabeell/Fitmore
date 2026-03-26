@@ -632,6 +632,7 @@
                             </svg>
                         </button>
                     </div>
+                    <div id="qtyWarning" style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem; margin-bottom: 0.5rem; display: none; font-weight: 500; font-family: var(--font-main);"></div>
 
                     <!-- Info Box -->
                     <div class="info-box">
@@ -668,9 +669,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2 style="font-family: var(--font-display); font-size: 2rem; text-transform: uppercase;">Customer
                         Reviews</h2>
-                    <button class="btn-add auth-required" id="writeReviewBtn"
-                        style="width: auto; padding: 0.8rem 1.5rem;" onclick="toggleReviewForm()">Write a
-                        Review</button>
+                    <button class="auth-required" id="writeReviewBtn" style="background: var(--accent); color: white; border: none; font-weight: 600; border-radius: 4px; padding: 10px 24px; cursor: pointer; text-transform: uppercase; font-size: 0.9rem;" onclick="toggleReviewForm()">Write a Review</button>
                 </div>
 
                 <!-- Review Form (Hidden initially) -->
@@ -706,37 +705,6 @@
                 <!-- Reviews List Container -->
                 <div id="reviewsListContainer">
                     <p style="color: var(--text-muted);">Loading reviews...</p>
-                </div>
-            </div>
-
-            <!-- Flash Sales -->
-            <div class="flash-section">
-                <span class="flash-tag">Today's</span>
-                <div class="flash-header">
-                    <h2 style="font-size:2rem; font-family:var(--font-display); text-transform:uppercase;">Flash Sales
-                    </h2>
-                    <div class="countdown">
-                        <div class="cd-item">
-                            <div class="cd-num">03</div>
-                            <div class="cd-label">Days</div>
-                        </div>
-                        <div class="cd-item">
-                            <div class="cd-num">23</div>
-                            <div class="cd-label">Hours</div>
-                        </div>
-                        <div class="cd-item">
-                            <div class="cd-num">19</div>
-                            <div class="cd-label">Minutes</div>
-                        </div>
-                        <div class="cd-item">
-                            <div class="cd-num">56</div>
-                            <div class="cd-label">Seconds</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flash-slider" id="flashSlider">
-                    <!-- Items rendered via JS -->
                 </div>
             </div>
         </div>
@@ -1033,12 +1001,14 @@
 
 
     // </script>
+    <script src="js/user-auth.js"></script>
     <script>
 
         /* ===========================
            GET PRODUCT ID FROM URL
         =========================== */
         const params = new URLSearchParams(window.location.search);
+        let currentProductStock = 0;
         const productId = params.get("id");
 
         if (!productId) {
@@ -1092,8 +1062,32 @@
                 product.description || "No description available";
 
             // Stock
-            document.getElementById("stockStatus").innerText =
-                product.stock ? "In Stock" : "Out of Stock";
+            currentProductStock = product.stock || 0;
+            const stockEl = document.getElementById("stockStatus");
+            const addToCartBtn = document.getElementById("addToCartBtn");
+            const qtyInputEl = document.getElementById("qtyInput");
+            
+            if (currentProductStock > 0) {
+                stockEl.innerText = currentProductStock + " in Stock";
+                stockEl.style.color = "#00C851"; 
+                if(addToCartBtn) {
+                    addToCartBtn.disabled = false;
+                    addToCartBtn.innerText = "Buy Now";
+                    addToCartBtn.style.opacity = "1";
+                    addToCartBtn.style.cursor = "pointer";
+                }
+                if(qtyInputEl) qtyInputEl.value = 1;
+            } else {
+                stockEl.innerText = "Out of Stock";
+                stockEl.style.color = "var(--accent)"; 
+                if(addToCartBtn) {
+                    addToCartBtn.disabled = true;
+                    addToCartBtn.innerText = "Out of Stock";
+                    addToCartBtn.style.opacity = "0.5";
+                    addToCartBtn.style.cursor = "not-allowed";
+                }
+                if(qtyInputEl) qtyInputEl.value = 0;
+            }
 
             /* =====================
                 IMAGE GALLERY
@@ -1227,12 +1221,12 @@
             ===================== */
 
             const checkWishlistState = async () => {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('userToken');
                 const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
                 if (!isLoggedIn || !token) return;
 
                 try {
-                    const res = await fetch('http://localhost:5000/api/user/wishlist', {
+                    const res = await fetch('/api/user/wishlist', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     const data = await res.json();
@@ -1271,7 +1265,7 @@
         }
 
         async function submitReview() {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('userToken');
             if (!token) {
                 errorAlert('Please log in to submit a review.');
                 window.location.href = 'login.html';
@@ -1367,10 +1361,45 @@
         const qtyInput = document.getElementById("qtyInput");
 
         window.changeQty = function (change) {
-            let val = parseInt(qtyInput.value) + change;
+            if (currentProductStock <= 0) return;
+            
+            let currentVal = parseInt(qtyInput.value) || 1;
+            let val = currentVal + change;
+            
             if (val < 1) val = 1;
+            
+            if (val > currentProductStock) {
+                val = currentProductStock;
+                const warnDiv = document.getElementById("qtyWarning");
+                if (warnDiv) {
+                    warnDiv.innerText = "Maximum limit of " + currentProductStock + " items reached.";
+                    warnDiv.style.display = "block";
+                    setTimeout(() => warnDiv.style.display = "none", 3000);
+                }
+            }
+            
             qtyInput.value = val;
         };
+        
+        if (qtyInput) {
+            qtyInput.addEventListener('change', (e) => {
+                let val = parseInt(e.target.value) || 1;
+                if (currentProductStock <= 0) {
+                    val = 0;
+                } else if (val < 1) {
+                    val = 1;
+                } else if (val > currentProductStock) {
+                    val = currentProductStock;
+                    const warnDiv = document.getElementById("qtyWarning");
+                    if (warnDiv) {
+                        warnDiv.innerText = "Maximum limit of " + currentProductStock + " items reached.";
+                        warnDiv.style.display = "block";
+                        setTimeout(() => warnDiv.style.display = "none", 3000);
+                    }
+                }
+                e.target.value = val;
+            });
+        }
 
 
         /* ===========================
@@ -1380,7 +1409,7 @@
             .getElementById("addToCartBtn")
             .addEventListener("click", async () => {
 
-                const token = localStorage.getItem("token");
+                const token = localStorage.getItem("userToken");
 
                 if (!token) {
                     window.location.href = "signup.html";
@@ -1390,7 +1419,7 @@
                 try {
 
                     const res = await fetch(
-                        "http://localhost:5000/api/cart/add",
+                        "/api/cart/add",
                         {
                             method: "POST",
                             headers: {
@@ -1430,8 +1459,8 @@
                 }
 
                 try {
-                    const token = localStorage.getItem('token');
-                    const res = await fetch('http://localhost:5000/api/user/wishlist/toggle', {
+                    const token = localStorage.getItem('userToken');
+                    const res = await fetch('/api/user/wishlist/toggle', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1514,6 +1543,34 @@
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script>
+
+    <script>
+        /* =====================================
+           GLOBAL AUTH LOGIC (Hide Nav Items)
+        =====================================*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("userToken");
+            const signupLink = document.getElementById("signupLink");
+            
+            if (token) {
+                if (signupLink) signupLink.style.display = "none";
+                
+                // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    el.style.display = 'inline-block'; // Or whatever their natural display is
+                });
+            } else {
+                if (signupLink) signupLink.style.display = "block";
+                
+                // Hide protected icons if not logged in
+                document.querySelectorAll('.auth-required').forEach(el => {
+                    if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
