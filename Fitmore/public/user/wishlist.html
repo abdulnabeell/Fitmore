@@ -11,7 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/user/style.css">
     <style>
         .wishlist-section {
             padding: 120px 0 6rem;
@@ -73,7 +73,7 @@
     <!-- Header -->
     <header class="header" id="header">
         <div class="container navbar">
-            <a href="index.html" class="logo">
+            <a href="/user/index.html" class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
                     <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
@@ -85,17 +85,17 @@
 
             <nav>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html" class="nav-item">HOME</a></li>
-                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
-                    <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
-                    <li><a href="about.html" class="nav-item">ABOUT</a></li>
-                    <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+                    <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+                    <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html" class="nav-item">SIGN UP</a></li>
+                    <li><a href="/user/shop.html" class="nav-item" id="shopLink">SHOP</a></li>
+                    <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+                    <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
                 </ul>
             </nav>
 
             <div class="nav-icons">
                 <!-- Wishlist Icon (Auth Required) -->
-                <a href="wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
+                <a href="/user/wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
                     style="display:none; color: var(--accent);">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -115,7 +115,7 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="account-dropdown" id="accountDropdown">
-                        <a href="account.html" class="dropdown-item">
+                        <a href="/user/account.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -123,7 +123,7 @@
                             </svg>
                             Manage Account
                         </a>
-                        <a href="orders.html" class="dropdown-item">
+                        <a href="/user/orders.html" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
@@ -147,7 +147,7 @@
                         </button>
                     </div>
                 </div>
-                <a href="cart.html" class="icon-btn desktop-only">
+                <a href="/user/cart.html" class="icon-btn desktop-only">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -172,7 +172,7 @@
             <div id="emptyState" class="empty-state" style="display: none;">
                 <h3>Your wishlist is empty</h3>
                 <p>You haven't added any products to your wishlist yet.</p>
-                <a href="index.html" class="btn">Continue Shopping</a>
+                <a href="/user/index.html" class="btn">Continue Shopping</a>
             </div>
         </div>
     </section>
@@ -183,7 +183,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                    <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             style="color: var(--accent)">
@@ -218,30 +218,30 @@
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="contact.html">Help Center</a></li>
-                        <li><a href="orders.html">Track Order</a></li>
-                        <li><a href="contact.html">Returns & Refunds</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="/user/contact.html">Help Center</a></li>
+                        <li><a href="/user/orders.html">Track Order</a></li>
+                        <li><a href="/user/contact.html">Returns & Refunds</a></li>
+                        <li><a href="/user/contact.html">Contact Us</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="shop.html?category=protein">Protein</a></li>
-                        <li><a href="shop.html?category=creatine">Creatine</a></li>
-                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
-                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                        <li><a href="/user/shop.html?category=protein">Protein</a></li>
+                        <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Company</h4>
                     <ul class="f-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="about.html">Careers</a></li>
-                        <li><a href="index.html">Blog</a></li>
-                        <li><a href="contact.html">Affiliate Program</a></li>
+                        <li><a href="/user/about.html">About Us</a></li>
+                        <li><a href="/user/about.html">Careers</a></li>
+                        <li><a href="/user/index.html">Blog</a></li>
+                        <li><a href="/user/contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
@@ -254,13 +254,13 @@
 
 
     <!-- Script -->
-     <script src="js/user-auth.js"></script>
+     <script src="/user/js/user-auth.js"></script>
     <script>
         // Check Auth using localStorage
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
         if (!isLoggedIn) {
-            window.location.href = 'signup.html';
+            window.location.href="/user/signup.html";
         }
 
         // --- Navbar Logic (Common) ---
@@ -290,7 +290,7 @@
 
         dropdownLogout.addEventListener('click', () => {
             localStorage.removeItem('isLoggedIn');
-            window.location.href = 'index.html';
+            window.location.href="/user/index.html";
         });
 
         // --- WISHLIST LOGIC ---
@@ -356,18 +356,18 @@
 
             wishlistContainer.innerHTML = wishlistData.map(item => `
                 <div class="prod-card">
-                    <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
+                    <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
                         <button class="auth-required" onclick="removeFromWishlist('${item._id}', event)" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8); border: none; cursor: pointer; z-index: 10; border-radius: 50%; padding: 5px; display: flex; align-items: center; justify-content: center; color: var(--accent);">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
                         </button>
-                        <img src="${item.image || (item.images && item.images[0]) || 'images/no-image.png'}" alt="${item.name}">
+                        <img src="/user/${item.image || (item.images && item.images[0]) || "images/no-image.png'}" alt="${item.name}">
                     </div>
-                    <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
+                    <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
                         <h4>${item.name}</h4>
                         <span class="prod-price">₹${item.price}</span>
-                        <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href='product.html?id=${item._id}'">VIEW PRODUCT</button>
+                        <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href="/user/product.html?id=${item._id}"">VIEW PRODUCT</button>
                     </div>
                 </div>
             `).join('');

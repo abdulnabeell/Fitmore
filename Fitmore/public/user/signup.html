@@ -442,7 +442,7 @@
     <!-- Header -->
     <header class="header" id="header">
         <div class="container navbar">
-            <a href="index.html" class="logo">
+            <a href="/user/index.html" class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
                     <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
@@ -454,9 +454,9 @@
 
             <nav>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html" class="nav-item">Home</a></li>
-                    <li><a href="contact.html" class="nav-item">Contact</a></li>
-                    <li><a href="about.html" class="nav-item">About</a></li>
+                    <li><a href="/user/index.html" class="nav-item">Home</a></li>
+                    <li><a href="/user/contact.html" class="nav-item">Contact</a></li>
+                    <li><a href="/user/about.html" class="nav-item">About</a></li>
                     <li><a href="#" class="nav-item active">Sign Up</a></li>
                 </ul>
             </nav>
@@ -534,7 +534,7 @@
                 </form>
 
                 <div class="login-link">
-                    Already have account? <a href="login.html">Log in</a>
+                    Already have account? <a href="/user/login.html">Log in</a>
                 </div>
             </div>
         </div>
@@ -546,7 +546,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="index.html" class="logo" style="margin-bottom:1rem">
+                    <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             style="color: var(--accent)">
@@ -581,30 +581,30 @@
                 <div class="f-col">
                     <h4>Support</h4>
                     <ul class="f-links">
-                        <li><a href="contact.html">Help Center</a></li>
-                        <li><a href="orders.html">Track Order</a></li>
-                        <li><a href="contact.html">Returns & Refunds</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="/user/contact.html">Help Center</a></li>
+                        <li><a href="/user/orders.html">Track Order</a></li>
+                        <li><a href="/user/contact.html">Returns & Refunds</a></li>
+                        <li><a href="/user/contact.html">Contact Us</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Shop</h4>
                     <ul class="f-links">
-                        <li><a href="shop.html?category=protein">Protein</a></li>
-                        <li><a href="shop.html?category=creatine">Creatine</a></li>
-                        <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
-                        <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
+                        <li><a href="/user/shop.html?category=protein">Protein</a></li>
+                        <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+                        <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+                        <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
                     </ul>
                 </div>
 
                 <div class="f-col">
                     <h4>Company</h4>
                     <ul class="f-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="about.html">Careers</a></li>
-                        <li><a href="index.html">Blog</a></li>
-                        <li><a href="contact.html">Affiliate Program</a></li>
+                        <li><a href="/user/about.html">About Us</a></li>
+                        <li><a href="/user/about.html">Careers</a></li>
+                        <li><a href="/user/index.html">Blog</a></li>
+                        <li><a href="/user/contact.html">Affiliate Program</a></li>
                     </ul>
                 </div>
             </div>
@@ -619,7 +619,7 @@
     <!-- Scripts -->
     <!-- SweetAlert2 & Custom Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/alert.js"></script>
+    <script src="/user/../js/alert.js"></script>
 
     <script>
         const signupForm = document.getElementById('signupForm');
@@ -687,13 +687,12 @@
                 successAlert('Signup successful! Please login.');
 
                 setTimeout(() => {
-                    // window.location.href = `otp-verification.html?userId=${data.userId}`;
+                    // window.location.href=`/user/otp-verification.html?userId=${data.userId}`;
                     // window.location.href =
                     //   `otp-verification.html?mode=signup&userId=${data.userId}`;
                     // window.location.href =
                     //   `otp-verification.html?userId=${data.userId}&mode=signup`;
-                    window.location.href =
-                        `otp-verification.html?userId=${data.userId}&mode=signup`;
+                    window.location.href=`/user/otp-verification.html?userId=${data.userId}&mode=signup`;
                 }, 1500);
 
 

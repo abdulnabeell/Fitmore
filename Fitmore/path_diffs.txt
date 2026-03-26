@@ -1,0 +1,1099 @@
+File: public\user\payment-options.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">HOME</a></li>
++ <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+- <li><a href="contact.html" class="nav-item">CONTACT</a></li>
++ <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
+- <li><a href="about.html" class="nav-item">ABOUT</a></li>
++ <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+- <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
++ <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html" class="nav-item">SIGN UP</a></li>
+- <a href="index.html">Home</a> / <span style="color:var(--text-white)">Payment Options</span>
++ <a href="/user/index.html">Home</a> / <span style="color:var(--text-white)">Payment Options</span>
+- <li><a href="account.html">My Profile</a></li>
++ <li><a href="/user/account.html">My Profile</a></li>
+- <li><a href="address-book.html">Address Book</a></li>
++ <li><a href="/user/address-book.html">Address Book</a></li>
+- <li><a href="payment-options.html" class="active">Payment Options</a></li>
++ <li><a href="/user/payment-options.html" class="active">Payment Options</a></li>
+- <li><a href="orders.html">My Orders</a></li>
++ <li><a href="/user/orders.html">My Orders</a></li>
+- <li><a href="returns.html">My Returns</a></li>
++ <li><a href="/user/returns.html">My Returns</a></li>
+- <li><a href="cancellations.html">My Cancellations</a></li>
++ <li><a href="/user/cancellations.html">My Cancellations</a></li>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="../js/alert.js"></script>
++ <script src="/user/../js/alert.js"></script>
+- <script src="js/user-auth.js"></script>
++ <script src="/user/js/user-auth.js"></script>
+- window.location.href = 'login.html';
++ window.location.href="/user/login.html";
+- window.location.href = 'index.html';
++ window.location.href="/user/index.html";
+
+File: public\user\product.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">HOME</a></li>
++ <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+- <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html"
++ <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html"
+- <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
++ <li><a href="/user/shop.html" class="nav-item" id="shopLink">SHOP</a></li>
+- <li><a href="about.html" class="nav-item">ABOUT</a></li>
++ <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+- <li><a href="contact.html" class="nav-item">CONTACT</a></li>
++ <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
+- <a href="wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
++ <a href="/user/wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
+- <a href="account.html" class="dropdown-item">
++ <a href="/user/account.html" class="dropdown-item">
+- <a href="orders.html" class="dropdown-item">
++ <a href="/user/orders.html" class="dropdown-item">
+- <a href="cart.html" class="icon-btn" style="color:white">
++ <a href="/user/cart.html" class="icon-btn" style="color:white">
+- <a href="index.html">Home</a> / <a href="#">Category</a> / <span style="color:var(--text-white)"
++ <a href="/user/index.html">Home</a> / <a href="#">Category</a> / <span style="color:var(--text-white)"
+- <img id="mainImage" src="" alt="Main Product">
++ <img id="mainImage" src="/user/" alt="Main Product">
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- //         thumb.innerHTML = `<img src="${img}" alt="thumb">`;
++ //         thumb.innerHTML = `<img src="/user/${img}" alt="thumb">`;
+- //             <img src="${p.images[0]}" style="width:100%; height:150px; object-fit:contain; background:white; border-radius:4px; padding:10px; margin-bottom:1rem;">
++ //             <img src="/user/${p.images[0]}" style="width:100%; height:150px; object-fit:contain; background:white; border-radius:4px; padding:10px; margin-bottom:1rem;">
+- //         card.onclick = () => window.location.href = `product.html?id=${p.id}`;
++ //         card.onclick = () => window.location.href=`/user/product.html?id=${p.id}`;
+- //             window.location.href = 'signup.html';
++ //             window.location.href="/user/signup.html";
+- //                 window.location.href = 'signup.html';
++ //                 window.location.href="/user/signup.html";
+- <script src="js/user-auth.js"></script>
++ <script src="/user/js/user-auth.js"></script>
+- window.location.href = "shop.html";
++ window.location.href="/user/shop.html";
+- window.location.href = "shop.html";
++ window.location.href="/user/shop.html";
+- thumb.innerHTML = `<img src="${img}" />`;
++ thumb.innerHTML = `<img src="/user/${img}" />`;
+- window.location.href = 'login.html';
++ window.location.href="/user/login.html";
+- window.location.href = "signup.html";
++ window.location.href="/user/signup.html";
+- window.location.href = "cart.html";
++ window.location.href="/user/cart.html";
+- window.location.href = 'login.html';
++ window.location.href="/user/login.html";
+- window.location.href = 'index.html';
++ window.location.href="/user/index.html";
+- <script src="../js/alert.js"></script>
++ <script src="/user/../js/alert.js"></script>
+
+File: public\user\returns.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">HOME</a></li>
++ <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+- <li><a href="contact.html" class="nav-item">CONTACT</a></li>
++ <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
+- <li><a href="about.html" class="nav-item">ABOUT</a></li>
++ <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+- <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
++ <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html" class="nav-item">SIGN UP</a></li>
+- <a href="index.html">Home</a> / <span style="color:var(--text-white)">My Returns</span>
++ <a href="/user/index.html">Home</a> / <span style="color:var(--text-white)">My Returns</span>
+- <li><a href="account.html">My Profile</a></li>
++ <li><a href="/user/account.html">My Profile</a></li>
+- <li><a href="address-book.html">Address Book</a></li>
++ <li><a href="/user/address-book.html">Address Book</a></li>
+- <li><a href="payment-options.html">Payment Options</a></li>
++ <li><a href="/user/payment-options.html">Payment Options</a></li>
+- <li><a href="orders.html">My Orders</a></li>
++ <li><a href="/user/orders.html">My Orders</a></li>
+- <li><a href="returns.html" class="active">My Returns</a></li>
++ <li><a href="/user/returns.html" class="active">My Returns</a></li>
+- <li><a href="cancellations.html">My Cancellations</a></li>
++ <li><a href="/user/cancellations.html">My Cancellations</a></li>
+- <a href="shop.html" class="btn-shop">Continue Shopping</a>
++ <a href="/user/shop.html" class="btn-shop">Continue Shopping</a>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="js/user-auth.js"></script>
++ <script src="/user/js/user-auth.js"></script>
+- window.location.href = 'login.html';
++ window.location.href="/user/login.html";
+- window.location.href = 'index.html';
++ window.location.href="/user/index.html";
+
+File: public\user\shop.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">HOME</a></li>
++ <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+- <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
++ <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html" class="nav-item">SIGN UP</a></li>
+- <li><a href="shop.html" class="nav-item active" id="shopLink">SHOP</a></li>
++ <li><a href="/user/shop.html" class="nav-item active" id="shopLink">SHOP</a></li>
+- <li><a href="about.html" class="nav-item">ABOUT</a></li>
++ <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+- <li><a href="contact.html" class="nav-item">CONTACT</a></li>
++ <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
+- <a href="wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
++ <a href="/user/wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
+- <a href="account.html" class="dropdown-item">
++ <a href="/user/account.html" class="dropdown-item">
+- <a href="orders.html" class="dropdown-item">
++ <a href="/user/orders.html" class="dropdown-item">
+- <a href="cart.html" class="icon-btn auth-required desktop-only">
++ <a href="/user/cart.html" class="icon-btn auth-required desktop-only">
+- <li><a href="shop.html?minPrice=0&maxPrice=1500">₹0 - ₹1500</a></li>
++ <li><a href="/user/shop.html?minPrice=0&maxPrice=1500">₹0 - ₹1500</a></li>
+- <li><a href="shop.html?minPrice=1500&maxPrice=3000">₹1500 - ₹3000</a></li>
++ <li><a href="/user/shop.html?minPrice=1500&maxPrice=3000">₹1500 - ₹3000</a></li>
+- <li><a href="shop.html?minPrice=3000&maxPrice=5000">₹3000 - ₹5000</a></li>
++ <li><a href="/user/shop.html?minPrice=3000&maxPrice=5000">₹3000 - ₹5000</a></li>
+- <li><a href="shop.html?minPrice=5000">₹5000+</a></li>
++ <li><a href="/user/shop.html?minPrice=5000">₹5000+</a></li>
+- <li><a href="shop.html">All Products</a></li>
++ <li><a href="/user/shop.html">All Products</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="js/user-auth.js"></script>
++ <script src="/user/js/user-auth.js"></script>
+- window.location.href = "index.html";
++ window.location.href="/user/index.html";
+- window.location.href =
++ window.location.href=`/user/product.html?id=${product._id}`;
+- `product.html?id=${product._id}`;
++ });
+- });
++ });
+- });
++ 
+- 
++ /* ===== ADD TO CART ===== */
+- /* ===== ADD TO CART ===== */
++ const addBtn = card.querySelector(".add-btn");
+- const addBtn = card.querySelector(".add-btn");
++ addBtn.addEventListener("click", async (e) => {
+- addBtn.addEventListener("click", async (e) => {
++ e.stopPropagation();
+- e.stopPropagation();
++ 
+- 
++ const token = localStorage.getItem("userToken");
+- const token = localStorage.getItem("userToken");
++ if (!token) {
+- if (!token) {
++ alert("Please log in to add items to the cart.");
+- alert("Please log in to add items to the cart.");
++ window.location.href="/user/login.html";
+- window.location.href = "login.html";
++ return;
+- return;
++ }
+- }
++ 
+- 
++ const originalText = addBtn.innerText;
+- const originalText = addBtn.innerText;
++ addBtn.innerText = "ADDING...";
+- addBtn.innerText = "ADDING...";
++ addBtn.disabled = true;
+- addBtn.disabled = true;
++ 
+- 
++ try {
+- try {
++ const res = await fetch("/api/cart/add", {
+- const res = await fetch("/api/cart/add", {
++ method: "POST",
+- method: "POST",
++ headers: {
+- headers: {
++ "Content-Type": "application/json",
+- "Content-Type": "application/json",
++ "Authorization": `Bearer ${token}`
+- "Authorization": `Bearer ${token}`
++ },
+- },
++ body: JSON.stringify({
+- body: JSON.stringify({
++ productId: product._id,
+- productId: product._id,
++ qty: 1
+- qty: 1
++ })
+- })
++ });
+- });
++ 
+- 
++ const data = await res.json();
+- const data = await res.json();
++ if (res.ok) {
+- if (res.ok) {
++ Swal.fire({
+- Swal.fire({
++ toast: true,
+- toast: true,
++ position: 'top-end',
+- position: 'top-end',
++ icon: 'success',
+- icon: 'success',
++ title: `${product.name} added to cart!`,
+- title: `${product.name} added to cart!`,
++ showConfirmButton: false,
+- showConfirmButton: false,
++ timer: 2000,
+- timer: 2000,
++ timerProgressBar: true
+- timerProgressBar: true
++ });
+- });
++ addBtn.innerText = "ADDED!";
+- addBtn.innerText = "ADDED!";
++ setTimeout(() => {
+- setTimeout(() => {
++ addBtn.innerText = "ADD TO CART";
+- addBtn.innerText = "ADD TO CART";
++ addBtn.disabled = false;
+- addBtn.disabled = false;
++ }, 2000);
+- }, 2000);
++ } else {
+- } else {
++ Swal.fire({
+- Swal.fire({
++ icon: 'error',
+- icon: 'error',
++ title: 'Oops...',
+- title: 'Oops...',
++ text: data.message || data.error || "Failed to add to cart"
+- text: data.message || data.error || "Failed to add to cart"
++ });
+- });
++ addBtn.innerText = originalText;
+- addBtn.innerText = originalText;
++ addBtn.disabled = false;
+- addBtn.disabled = false;
++ }
+- }
++ } catch (err) {
+- } catch (err) {
++ console.error("Cart error:", err);
+- console.error("Cart error:", err);
++ addBtn.innerText = originalText;
+- addBtn.innerText = originalText;
++ addBtn.disabled = false;
+- addBtn.disabled = false;
++ }
+- }
++ });
+- });
++ 
+- 
++ /* ===== WISHLIST TOGGLE ===== */
+- /* ===== WISHLIST TOGGLE ===== */
++ const wishBtn = card.querySelector(".wishlist-toggle");
+- const wishBtn = card.querySelector(".wishlist-toggle");
++ wishBtn.addEventListener("click", async (e) => {
+- wishBtn.addEventListener("click", async (e) => {
++ e.stopPropagation();
+- e.stopPropagation();
++ 
+- 
++ const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+- const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
++ if (!loggedIn) {
+- if (!loggedIn) {
++ alert('Please log in to add to wishlist');
+- alert('Please log in to add to wishlist');
++ window.location.href="/user/login.html";
+- window.location.href = 'login.html';
++ return;
+- return;
++ }
+- }
++ 
+- 
++ try {
+- try {
++ const token = localStorage.getItem('userToken');
+- const token = localStorage.getItem('userToken');
++ const res = await fetch('/api/user/wishlist/toggle', {
+- const res = await fetch('/api/user/wishlist/toggle', {
++ method: 'POST',
+- method: 'POST',
++ headers: {
+- headers: {
++ 'Content-Type': 'application/json',
+- 'Content-Type': 'application/json',
++ 'Authorization': `Bearer ${token}`
+- 'Authorization': `Bearer ${token}`
++ },
+- },
++ body: JSON.stringify({ productId: product._id })
+- body: JSON.stringify({ productId: product._id })
++ });
+- });
++ const data = await res.json();
+- const data = await res.json();
++ if (data.success) {
+- if (data.success) {
++ const svg = wishBtn.querySelector('svg');
+- const svg = wishBtn.querySelector('svg');
++ if (data.added) {
+- if (data.added) {
++ wishBtn.style.color = 'var(--accent)';
+- wishBtn.style.color = 'var(--accent)';
++ svg.setAttribute('fill', 'var(--accent)');
+- svg.setAttribute('fill', 'var(--accent)');
++ } else {
+- } else {
++ wishBtn.style.color = '#333';
+- wishBtn.style.color = '#333';
++ svg.setAttribute('fill', 'none');
+- svg.setAttribute('fill', 'none');
++ }
+- }
++ }
+- }
++ } catch (err) {
+- } catch (err) {
++ console.error('Error toggling wishlist', err);
+- console.error('Error toggling wishlist', err);
++ }
+- }
++ });
+- });
++ 
+- 
++ container.appendChild(card);
+- container.appendChild(card);
++ });
+- });
++ 
+- 
++ } catch (err) {
+- } catch (err) {
++ 
+- 
++ console.error("Product load error:", err);
+- console.error("Product load error:", err);
++ 
+- 
++ container.innerHTML =
+- container.innerHTML =
++ `<p style="grid-column:1/-1;text-align:center">
+- `<p style="grid-column:1/-1;text-align:center">
++ Failed to load products
+- Failed to load products
++ </p>`;
+- </p>`;
++ }
+- }
++ }
+- }
++ 
+- 
++ /* =====================================
+- /* =====================================
++ INIT PAGE
+- INIT PAGE
++ =====================================*/
+- =====================================*/
++ document.addEventListener("DOMContentLoaded", () => {
+- document.addEventListener("DOMContentLoaded", () => {
++ 
+- 
++ updateNavbarAuth();
+- updateNavbarAuth();
++ loadShopProducts();
+- loadShopProducts();
++ 
+- 
++ });
+- });
++ 
+- 
++ </script>
+- </script>
++ 
+- 
++ <!-- SweetAlert2 -->
+- <!-- SweetAlert2 -->
++ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
++ 
+- 
++ <script>
+- <script>
++ /* =====================================
+- /* =====================================
++ GLOBAL SEARCH LOGIC V2 (Live Suggestions)
+- GLOBAL SEARCH LOGIC V2 (Live Suggestions)
++ =====================================*/
+- =====================================*/
++ function toggleGlobalSearch(e) {
+- function toggleGlobalSearch(e) {
++ e.preventDefault();
+- e.preventDefault();
++ const input = document.getElementById('globalSearchInput');
+- const input = document.getElementById('globalSearchInput');
++ const dropdown = document.getElementById('searchSuggestions');
+- const dropdown = document.getElementById('searchSuggestions');
++ if (input.style.opacity === '0' || input.style.width === '0px') {
+- if (input.style.opacity === '0' || input.style.width === '0px') {
++ input.style.width = '280px';
+- input.style.width = '280px';
++ input.style.opacity = '1';
+- input.style.opacity = '1';
++ input.style.pointerEvents = 'auto';
+- input.style.pointerEvents = 'auto';
++ input.focus();
+- input.focus();
++ } else {
+- } else {
++ if(input.value.trim() !== '') {
+- if(input.value.trim() !== '') {
++ window.location.href="/user/shop.html?search=" + encodeURIComponent(input.value.trim());
+- window.location.href = 'shop.html?search=' + encodeURIComponent(input.value.trim());
++ } else {
+- } else {
++ input.style.width = '0px';
+- input.style.width = '0px';
++ input.style.opacity = '0';
+- input.style.opacity = '0';
++ input.style.pointerEvents = 'none';
+- input.style.pointerEvents = 'none';
++ if (dropdown) dropdown.style.display = 'none';
+- if (dropdown) dropdown.style.display = 'none';
++ input.blur();
+- input.blur();
++ }
+- }
++ }
+- }
++ }
+- }
++ 
+- 
++ function handleGlobalSearch(e) {
+- function handleGlobalSearch(e) {
++ if (e.key === 'Enter') {
+- if (e.key === 'Enter') {
++ e.preventDefault();
+- e.preventDefault();
++ const input = document.getElementById('globalSearchInput');
+- const input = document.getElementById('globalSearchInput');
++ if(input.value.trim() !== '') {
+- if(input.value.trim() !== '') {
++ window.location.href="/user/shop.html?search=" + encodeURIComponent(input.value.trim());
+- window.location.href = 'shop.html?search=' + encodeURIComponent(input.value.trim());
++ }
+- }
++ }
+- }
++ }
+- }
++ 
+- 
++ let searchTimeout = null;
+- let searchTimeout = null;
++ async function handleSearchInput(e) {
+- async function handleSearchInput(e) {
++ const query = e.target.value.trim();
+- const query = e.target.value.trim();
++ const dropdown = document.getElementById('searchSuggestions');
+- const dropdown = document.getElementById('searchSuggestions');
++ const content = document.getElementById('suggestionsContent');
+- const content = document.getElementById('suggestionsContent');
++ 
+- 
++ if (query.length < 2) {
+- if (query.length < 2) {
++ dropdown.style.display = 'none';
+- dropdown.style.display = 'none';
++ return;
+- return;
++ }
+- }
++ 
+- 
++ clearTimeout(searchTimeout);
+- clearTimeout(searchTimeout);
++ searchTimeout = setTimeout(async () => {
+- searchTimeout = setTimeout(async () => {
++ dropdown.style.display = 'block';
+- dropdown.style.display = 'block';
++ content.innerHTML = '<div style="padding: 15px; text-align: center; color: #888; font-size: 0.9rem;">Searching <span style="color:#FFF">"'+query+'"</span>...</div>';
+- content.innerHTML = '<div style="padding: 15px; text-align: center; color: #888; font-size: 0.9rem;">Searching <span style="color:#FFF">"'+query+'"</span>...</div>';
++ 
+- 
++ try {
+- try {
++ const res = await fetch('/api/products?search=' + encodeURIComponent(query) + '&limit=5');
+- const res = await fetch('/api/products?search=' + encodeURIComponent(query) + '&limit=5');
++ const products = await res.json();
+- const products = await res.json();
++ 
+- 
++ if (!products || products.length === 0) {
+- if (!products || products.length === 0) {
++ content.innerHTML = '<div style="padding: 15px; text-align: center; color: #888; font-size: 0.9rem;">No matches found.</div>';
+- content.innerHTML = '<div style="padding: 15px; text-align: center; color: #888; font-size: 0.9rem;">No matches found.</div>';
++ return;
+- return;
++ }
+- }
++ 
+- 
++ // Extract unique categories (acting as brands/categories suggestion)
+- // Extract unique categories (acting as brands/categories suggestion)
++ const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+- const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
++ 
+- 
++ let html = '';
+- let html = '';
++ 
+- 
++ // Categories / Brands Section
+- // Categories / Brands Section
++ if (uniqueCategories.length > 0) {
+- if (uniqueCategories.length > 0) {
++ html += '<div style="padding: 8px 15px; font-size: 0.75rem; text-transform: uppercase; color: #E50914; font-weight: bold; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 1px;">Categories / Brands</div>';
+- html += '<div style="padding: 8px 15px; font-size: 0.75rem; text-transform: uppercase; color: #E50914; font-weight: bold; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 1px;">Categories / Brands</div>';
++ uniqueCategories.forEach(cat => {
+- uniqueCategories.forEach(cat => {
++ html += `<a href="/user/shop.html?category=${encodeURIComponent(cat)}" style="display: block; padding: 12px 15px; color: #fff; text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+- html += `<a href="shop.html?category=${encodeURIComponent(cat)}" style="display: block; padding: 12px 15px; color: #fff; text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
++ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px; vertical-align: middle; color: #888;">
+- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px; vertical-align: middle; color: #888;">
++ <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+- <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
++ </svg>
+- </svg>
++ ${cat}
+- ${cat}
++ </a>`;
+- </a>`;
++ });
+- });
++ }
+- }
++ 
+- 
++ // Products Section
+- // Products Section
++ html += '<div style="padding: 8px 15px; font-size: 0.75rem; text-transform: uppercase; color: #E50914; font-weight: bold; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 1px;">Products</div>';
+- html += '<div style="padding: 8px 15px; font-size: 0.75rem; text-transform: uppercase; color: #E50914; font-weight: bold; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 1px;">Products</div>';
++ products.forEach(p => {
+- products.forEach(p => {
++ const imgsrc = p.image || (p.images && p.images[0]) || 'images/no-image.png';
+- const imgsrc = p.image || (p.images && p.images[0]) || 'images/no-image.png';
++ html += `<a href="/user/product.html?id=${p._id}" style="display: flex; align-items: center; padding: 12px 15px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+- html += `<a href="product.html?id=${p._id}" style="display: flex; align-items: center; padding: 12px 15px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
++ <img src="/user/${imgsrc}" style="width: 45px; height: 45px; object-fit: contain; background: #fff; border-radius: 6px; margin-right: 15px;">
+- <img src="${imgsrc}" style="width: 45px; height: 45px; object-fit: contain; background: #fff; border-radius: 6px; margin-right: 15px;">
++ <div style="flex: 1; min-width: 0;">
+- <div style="flex: 1; min-width: 0;">
++ <div style="font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
+- <div style="font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
++ <div style="font-size: 0.85rem; color: #E50914; font-weight: 600; margin-top: 4px;">₹${p.price}</div>
+- <div style="font-size: 0.85rem; color: #E50914; font-weight: 600; margin-top: 4px;">₹${p.price}</div>
++ </div>
+- </div>
++ </a>`;
+- </a>`;
++ });
+- });
++ 
+- 
++ content.innerHTML = html;
+- content.innerHTML = html;
++ } catch (err) {
+- } catch (err) {
++ content.innerHTML = '<div style="padding: 15px; text-align: center; color: #E50914; font-size: 0.9rem;">Error fetching results.</div>';
+- content.innerHTML = '<div style="padding: 15px; text-align: center; color: #E50914; font-size: 0.9rem;">Error fetching results.</div>';
++ }
+- }
++ }, 300);
+- }, 300);
++ }
+- }
++ 
+- 
++ // Hide dropdown when clicking outside
+- // Hide dropdown when clicking outside
++ document.addEventListener('click', function(e) {
+- document.addEventListener('click', function(e) {
++ const container = e.target.closest('.search-container');
+- const container = e.target.closest('.search-container');
++ const dropdown = document.getElementById('searchSuggestions');
+- const dropdown = document.getElementById('searchSuggestions');
++ if (dropdown && !container) {
+- if (dropdown && !container) {
++ dropdown.style.display = 'none';
+- dropdown.style.display = 'none';
++ }
+- }
++ });
+- });
++ </script>
+- </script>
++ \n
+- \n
++ <script>
+- <script>
++ /* =====================================
+- /* =====================================
++ GLOBAL AUTH LOGIC (Hide Nav Items)
+- GLOBAL AUTH LOGIC (Hide Nav Items)
++ =====================================*/
+- =====================================*/
++ document.addEventListener("DOMContentLoaded", () => {
+- document.addEventListener("DOMContentLoaded", () => {
++ const token = localStorage.getItem("userToken");
+- const token = localStorage.getItem("userToken");
++ const signupLink = document.getElementById("signupLink");
+- const signupLink = document.getElementById("signupLink");
++ 
+- 
++ if (token) {
+- if (token) {
++ if (signupLink) signupLink.style.display = "none";
+- if (signupLink) signupLink.style.display = "none";
++ 
+- 
++ // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+- // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
++ document.querySelectorAll('.auth-required').forEach(el => {
+- document.querySelectorAll('.auth-required').forEach(el => {
++ el.style.display = 'inline-block'; // Or whatever their natural display is
+- el.style.display = 'inline-block'; // Or whatever their natural display is
++ });
+- });
++ } else {
+- } else {
++ if (signupLink) signupLink.style.display = "block";
+- if (signupLink) signupLink.style.display = "block";
++ 
+- 
++ // Hide protected icons if not logged in
+- // Hide protected icons if not logged in
++ document.querySelectorAll('.auth-required').forEach(el => {
+- document.querySelectorAll('.auth-required').forEach(el => {
++ if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+- if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
++ el.style.display = 'none';
+- el.style.display = 'none';
++ }
+- }
++ });
+- });
++ }
+- }
++ });
+- });
++ </script>
+- </script>
++ </body>
+- </body>
++ 
+- 
++ </html>
+- </html>
++ 
+
+File: public\user\signup.html
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">Home</a></li>
++ <li><a href="/user/index.html" class="nav-item">Home</a></li>
+- <li><a href="contact.html" class="nav-item">Contact</a></li>
++ <li><a href="/user/contact.html" class="nav-item">Contact</a></li>
+- <li><a href="about.html" class="nav-item">About</a></li>
++ <li><a href="/user/about.html" class="nav-item">About</a></li>
+- Already have account? <a href="login.html">Log in</a>
++ Already have account? <a href="/user/login.html">Log in</a>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="../js/alert.js"></script>
++ <script src="/user/../js/alert.js"></script>
+- // window.location.href = `otp-verification.html?userId=${data.userId}`;
++ // window.location.href=`/user/otp-verification.html?userId=${data.userId}`;
+- window.location.href =
++ window.location.href=`/user/otp-verification.html?userId=${data.userId}&mode=signup`;
+- `otp-verification.html?userId=${data.userId}&mode=signup`;
++ }, 1500);
+- }, 1500);
++ 
+- 
++ } catch (err) {
+- } catch (err) {
++ errorAlert(err.message);
+- errorAlert(err.message);
++ submitBtn.disabled = false;
+- submitBtn.disabled = false;
++ submitBtn.innerText = 'Create Account';
+- submitBtn.innerText = 'Create Account';
++ }
+- }
++ });
+- });
++ 
+- 
++ // Mobile Menu
+- // Mobile Menu
++ const mobileToggleBtn = document.getElementById('mobileToggle');
+- const mobileToggleBtn = document.getElementById('mobileToggle');
++ const mobileNavLinks = document.getElementById('navLinks');
+- const mobileNavLinks = document.getElementById('navLinks');
++ 
+- 
++ mobileToggleBtn.addEventListener('click', () => {
+- mobileToggleBtn.addEventListener('click', () => {
++ mobileNavLinks.classList.toggle('active');
+- mobileNavLinks.classList.toggle('active');
++ 
+- 
++ // Hamburger animation
+- // Hamburger animation
++ const bars = mobileToggleBtn.querySelectorAll('.bar');
+- const bars = mobileToggleBtn.querySelectorAll('.bar');
++ if (mobileNavLinks.classList.contains('active')) {
+- if (mobileNavLinks.classList.contains('active')) {
++ bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+- bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
++ bars[1].style.opacity = '0';
+- bars[1].style.opacity = '0';
++ bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+- bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
++ } else {
+- } else {
++ bars[0].style.transform = 'none';
+- bars[0].style.transform = 'none';
++ bars[1].style.opacity = '1';
+- bars[1].style.opacity = '1';
++ bars[2].style.transform = 'none';
+- bars[2].style.transform = 'none';
++ }
+- }
++ });
+- });
++ </script>
+- </script>
++ 
+- 
++ <script>
+- <script>
++ /* =====================================
+- /* =====================================
++ GLOBAL AUTH LOGIC (Hide Nav Items)
+- GLOBAL AUTH LOGIC (Hide Nav Items)
++ =====================================*/
+- =====================================*/
++ document.addEventListener("DOMContentLoaded", () => {
+- document.addEventListener("DOMContentLoaded", () => {
++ const token = localStorage.getItem("userToken");
+- const token = localStorage.getItem("userToken");
++ const signupLink = document.getElementById("signupLink");
+- const signupLink = document.getElementById("signupLink");
++ 
+- 
++ if (token) {
+- if (token) {
++ if (signupLink) signupLink.style.display = "none";
+- if (signupLink) signupLink.style.display = "none";
++ 
+- 
++ // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
+- // Show protected icons (like profile or wishlist) if they have a 'auth-required' class that defaults to hidden
++ document.querySelectorAll('.auth-required').forEach(el => {
+- document.querySelectorAll('.auth-required').forEach(el => {
++ el.style.display = 'inline-block'; // Or whatever their natural display is
+- el.style.display = 'inline-block'; // Or whatever their natural display is
++ });
+- });
++ } else {
+- } else {
++ if (signupLink) signupLink.style.display = "block";
+- if (signupLink) signupLink.style.display = "block";
++ 
+- 
++ // Hide protected icons if not logged in
+- // Hide protected icons if not logged in
++ document.querySelectorAll('.auth-required').forEach(el => {
+- document.querySelectorAll('.auth-required').forEach(el => {
++ if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
+- if (el.id !== 'userIconBtn') { // Prevent hiding main user icon if it handles login redirect
++ el.style.display = 'none';
+- el.style.display = 'none';
++ }
+- }
++ });
+- });
++ }
+- }
++ });
+- });
++ </script>
+- </script>
++ </body>
+- </body>
++ 
+- 
++ </html>
+- </html>
++ 
+
+File: public\user\verify-code.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">Home</a></li>
++ <li><a href="/user/index.html" class="nav-item">Home</a></li>
+- <li><a href="shop.html" class="nav-item">Shop</a></li>
++ <li><a href="/user/shop.html" class="nav-item">Shop</a></li>
+- <li><a href="contact.html" class="nav-item">Contact</a></li>
++ <li><a href="/user/contact.html" class="nav-item">Contact</a></li>
+- <li><a href="signup.html" class="nav-item">Sign Up</a></li>
++ <li><a href="/user/signup.html" class="nav-item">Sign Up</a></li>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="../js/alert.js"></script>
++ <script src="/user/../js/alert.js"></script>
+- window.location.href = 'change-password.html';
++ window.location.href="/user/change-password.html";
+
+File: public\user\wishlist.html
+- <link rel="stylesheet" href="style.css">
++ <link rel="stylesheet" href="/user/style.css">
+- <a href="index.html" class="logo">
++ <a href="/user/index.html" class="logo">
+- <li><a href="index.html" class="nav-item">HOME</a></li>
++ <li><a href="/user/index.html" class="nav-item">HOME</a></li>
+- <li id="signupLink" class="nav-item" style="list-style: none;"><a href="signup.html" class="nav-item">SIGN UP</a></li>
++ <li id="signupLink" class="nav-item" style="list-style: none;"><a href="/user/signup.html" class="nav-item">SIGN UP</a></li>
+- <li><a href="shop.html" class="nav-item" id="shopLink">SHOP</a></li>
++ <li><a href="/user/shop.html" class="nav-item" id="shopLink">SHOP</a></li>
+- <li><a href="about.html" class="nav-item">ABOUT</a></li>
++ <li><a href="/user/about.html" class="nav-item">ABOUT</a></li>
+- <li><a href="contact.html" class="nav-item">CONTACT</a></li>
++ <li><a href="/user/contact.html" class="nav-item">CONTACT</a></li>
+- <a href="wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
++ <a href="/user/wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
+- <a href="account.html" class="dropdown-item">
++ <a href="/user/account.html" class="dropdown-item">
+- <a href="orders.html" class="dropdown-item">
++ <a href="/user/orders.html" class="dropdown-item">
+- <a href="cart.html" class="icon-btn desktop-only">
++ <a href="/user/cart.html" class="icon-btn desktop-only">
+- <a href="index.html" class="btn">Continue Shopping</a>
++ <a href="/user/index.html" class="btn">Continue Shopping</a>
+- <a href="index.html" class="logo" style="margin-bottom:1rem">
++ <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+- <li><a href="contact.html">Help Center</a></li>
++ <li><a href="/user/contact.html">Help Center</a></li>
+- <li><a href="orders.html">Track Order</a></li>
++ <li><a href="/user/orders.html">Track Order</a></li>
+- <li><a href="contact.html">Returns & Refunds</a></li>
++ <li><a href="/user/contact.html">Returns & Refunds</a></li>
+- <li><a href="contact.html">Contact Us</a></li>
++ <li><a href="/user/contact.html">Contact Us</a></li>
+- <li><a href="shop.html?category=protein">Protein</a></li>
++ <li><a href="/user/shop.html?category=protein">Protein</a></li>
+- <li><a href="shop.html?category=creatine">Creatine</a></li>
++ <li><a href="/user/shop.html?category=creatine">Creatine</a></li>
+- <li><a href="shop.html?category=pre-workout">Pre-Workout</a></li>
++ <li><a href="/user/shop.html?category=pre-workout">Pre-Workout</a></li>
+- <li><a href="shop.html?category=vitamins-health">Vitamins & Health</a></li>
++ <li><a href="/user/shop.html?category=vitamins-health">Vitamins & Health</a></li>
+- <li><a href="about.html">About Us</a></li>
++ <li><a href="/user/about.html">About Us</a></li>
+- <li><a href="about.html">Careers</a></li>
++ <li><a href="/user/about.html">Careers</a></li>
+- <li><a href="index.html">Blog</a></li>
++ <li><a href="/user/index.html">Blog</a></li>
+- <li><a href="contact.html">Affiliate Program</a></li>
++ <li><a href="/user/contact.html">Affiliate Program</a></li>
+- <script src="js/user-auth.js"></script>
++ <script src="/user/js/user-auth.js"></script>
+- window.location.href = 'signup.html';
++ window.location.href="/user/signup.html";
+- window.location.href = 'index.html';
++ window.location.href="/user/index.html";
+- <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
++ <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
+- <img src="${item.image || (item.images && item.images[0]) || 'images/no-image.png'}" alt="${item.name}">
++ <img src="/user/${item.image || (item.images && item.images[0]) || "images/no-image.png'}" alt="${item.name}">
+- <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href='product.html?id=${item._id}'">
++ <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
+- <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href='product.html?id=${item._id}'">VIEW PRODUCT</button>
++ <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href="/user/product.html?id=${item._id}"">VIEW PRODUCT</button>
