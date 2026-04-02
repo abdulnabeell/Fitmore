@@ -47,15 +47,10 @@ app.use('/api', apiRoutes);
 // ✅ Home route MUST be before express.static
 // ✅ Home route FIRST
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/user/index.html'));
+  res.sendFile(path.join(__dirname, '../public/user/index.html'));
 });
 
 // ✅ Static files
-app.use(express.static(path.join(__dirname, './public')));
-
-// ✅ THEN define route
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public/user/index.html'));
-// });
+app.use(express.static(path.join(__dirname, '../public')));
 
 module.exports = app;
