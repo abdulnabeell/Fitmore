@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { adminLogin, createCoupon, getCoupons, deleteCoupon, getAdminProfile, createOffer, getOffers, updateOffer, deleteOffer } = require('../controllers/admin');
+const { adminLogin, createCoupon, getCoupons, deleteCoupon, getAdminProfile, createOffer, getOffers, updateOffer, deleteOffer, getContacts } = require('../controllers/admin');
 const adminAuth = require('../middleware/adminAuth');
 
 router.post('/login', adminLogin);
@@ -10,6 +10,9 @@ router.get('/profile', adminAuth, getAdminProfile);
 router.post('/coupons', adminAuth, createCoupon);
 router.get('/coupons', adminAuth, getCoupons);
 router.delete('/coupons/:id', adminAuth, deleteCoupon);
+
+// Customer Messages
+router.get('/contacts', adminAuth, getContacts);
 
 // Offer management logic
 router.post('/offers', adminAuth, createOffer);

@@ -426,7 +426,7 @@
     <!-- Header -->
     <header class="header" id="header">
         <div class="container navbar">
-            <a href="/user/index.html" class="logo">
+          <li><a href="/" class="nav-item">Home</a></li>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
                     <path d="M6 10H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3"></path>
@@ -530,7 +530,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="f-col">
-                    <a href="/user/index.html" class="logo" style="margin-bottom:1rem">
+                    <a href="/" class="logo" style="margin-bottom:1rem">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             style="color: var(--accent)">
@@ -659,7 +659,7 @@
                     localStorage.setItem('isLoggedIn', 'true');
                     successAlert('Logged in successfully!');
                     setTimeout(() => {
-                        window.location.href="/user/index.html"; 
+                        window.location.href="/"; 
                     }, 1500);
                 } else {
                     errorAlert(data.message || 'Login failed. Please try again.');

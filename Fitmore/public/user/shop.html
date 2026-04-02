@@ -178,8 +178,7 @@
             </nav>
 
             <div class="nav-icons">
-                
-                
+
                 <div class="search-container" style="position: relative; display: flex; align-items: center;">
                     <button class="icon-btn desktop-only" id="globalSearchBtn" onclick="toggleGlobalSearch(event)">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -195,7 +194,6 @@
                         <div id="suggestionsContent" style="max-height: 400px; overflow-y: auto;"></div>
                     </div>
                 </div>
-
 
                 <!-- Wishlist Icon -->
                 <a href="/user/wishlist.html" class="icon-btn auth-required" id="wishlistBtn"
@@ -327,7 +325,6 @@
         </aside>
     </div>
 
-    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -432,7 +429,6 @@
             }
         }
 
-
         /* =====================================
            DROPDOWN MENU
         =====================================*/
@@ -457,18 +453,14 @@
             }
         });
 
-
         /* =====================================
            LOGOUT
         =====================================*/
-        dropdownLogout?.addEventListener("click", () => {
-
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("userToken");
-
+        dropdownLogout?.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userToken');
             window.location.href="/user/index.html";
         });
-
 
         /* =====================================
            MOBILE MENU
@@ -497,7 +489,6 @@
                 bars[2].style.transform = "none";
             }
         });
-
 
         /* =====================================
            LOAD PRODUCTS FROM DATABASE
@@ -620,26 +611,38 @@
                             
                             const data = await res.json();
                             if (res.ok) {
-                                Swal.fire({
-                                    toast: true,
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: `${product.name} added to cart!`,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    timerProgressBar: true
+                                const modalTitle = document.getElementById('cartModalTitle');
+                                const modalMessage = document.getElementById('cartModalMessage');
+                                if(modalTitle) modalTitle.textContent = "Added to Cart!";
+                                if(modalTitle) modalTitle.style.color = "var(--text-white)";
+                                if(modalMessage) modalMessage.textContent = `${product.name} has been added to your cart.`;
+                                
+                                const cartModal = document.getElementById('cartSuccessModal');
+                                if (cartModal) cartModal.classList.add('active');
+                                
+                                const cartCounts = document.querySelectorAll('.cart-count');
+                                cartCounts.forEach(el => {
+                                  let count = parseInt(el.textContent) || 0;
+                                  el.textContent = count + 1;
                                 });
+                                
                                 addBtn.innerText = "ADDED!";
                                 setTimeout(() => {
                                     addBtn.innerText = "ADD TO CART";
                                     addBtn.disabled = false;
                                 }, 2000);
                             } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: data.message || data.error || "Failed to add to cart"
-                                });
+                                const modalTitle = document.getElementById('cartModalTitle');
+                                const modalMessage = document.getElementById('cartModalMessage');
+                                if(modalTitle) modalTitle.textContent = "Error";
+                                if(modalTitle) modalTitle.style.color = "var(--accent)";
+                                if(modalMessage) modalMessage.textContent = data.message || data.error || "Failed to add to cart";
+                                
+                                const cartModal = document.getElementById('cartSuccessModal');
+                                if (cartModal) cartModal.classList.add('active');
+                                
+                                addBtn.innerText = originalText;
+                                addBtn.disabled = false;
                                 addBtn.innerText = originalText;
                                 addBtn.disabled = false;
                             }
@@ -701,7 +704,6 @@
             </p>`;
             }
         }
-
 
         /* =====================================
            INIT PAGE
@@ -802,7 +804,7 @@
                     products.forEach(p => {
                         const imgsrc = p.image || (p.images && p.images[0]) || 'images/no-image.png';
                         html += `<a href="/user/product.html?id=${p._id}" style="display: flex; align-items: center; padding: 12px 15px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-                            <img src="/user/${imgsrc}" style="width: 45px; height: 45px; object-fit: contain; background: #fff; border-radius: 6px; margin-right: 15px;">
+                            <img src="${imgsrc}" style="width: 45px; height: 45px; object-fit: contain; background: #fff; border-radius: 6px; margin-right: 15px;">
                             <div style="flex: 1; min-width: 0;">
                                 <div style="font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
                                 <div style="font-size: 0.85rem; color: #E50914; font-weight: 600; margin-top: 4px;">₹${p.price}</div>
@@ -854,6 +856,8 @@
             }
         });
     </script>
+
+<script src="/user/js/cart-modal.js"></script>
 </body>
 
 </html>

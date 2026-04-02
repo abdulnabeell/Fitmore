@@ -288,8 +288,9 @@
             }
         });
 
-        dropdownLogout.addEventListener('click', () => {
+        dropdownLogout?.addEventListener('click', () => {
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userToken');
             window.location.href="/user/index.html";
         });
 
@@ -356,15 +357,15 @@
 
             wishlistContainer.innerHTML = wishlistData.map(item => `
                 <div class="prod-card">
-                    <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
+                    <div class="prod-img-box product-link" style="position: relative; cursor: pointer;" onclick="window.location.href='/user/product.html?id=${item._id}'">
                         <button class="auth-required" onclick="removeFromWishlist('${item._id}', event)" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8); border: none; cursor: pointer; z-index: 10; border-radius: 50%; padding: 5px; display: flex; align-items: center; justify-content: center; color: var(--accent);">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
                         </button>
-                        <img src="/user/${item.image || (item.images && item.images[0]) || 'images/no-image.png'}" alt="${item.name}">
+                        <img src="${item.image || (item.images && item.images[0]) || 'images/no-image.png'}" alt="${item.name}">
                     </div>
-                    <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href="/user/product.html?id=${item._id}"">
+                    <div class="prod-info product-link" style="cursor: pointer;" onclick="window.location.href='/user/product.html?id=${item._id}'">
                         <h4>${item.name}</h4>
                         <span class="prod-price">₹${item.price}</span>
                         <button class="add-btn auth-required" onclick="event.stopPropagation(); window.location.href="/user/product.html?id=${item._id}"">VIEW PRODUCT</button>

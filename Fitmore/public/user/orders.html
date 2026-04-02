@@ -400,6 +400,27 @@
                 </div>
             </div>
 
+            
+
+
+        </div> <!-- End container -->
+    </section> 
+            <!-- Cancel Modal -->
+            <div class="modal-overlay" id="cancelModal">
+                <div class="modal">
+                    <h3 class="modal-title">Cancel Items</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Select the items you wish to cancel.</p>
+                    <div class="modal-body" id="cancelModalBody" style="max-height: 300px; overflow-y: auto; margin-bottom: 1rem;">
+                        <!-- Checkboxes go here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-action" style="background:#eee; color:#333;"
+                            onclick="closeCancelModal()">Go Back</button>
+                        <button class="btn-action btn-cancel" onclick="submitCancel()">Confirm Cancellation</button>
+                    </div>
+                </div>
+            </div>
+
         </div> <!-- End container -->
     </section> <!-- End account-section -->
 
@@ -544,6 +565,7 @@
 
                 const orders = await res.json();
 
+                window.userOrders = orders;
                 const container =
                     document.getElementById("ordersContainer");
 
@@ -564,7 +586,7 @@
 
                     let actionButtonHTML = '';
                     if (order.status === "PLACED" || order.status === "CONFIRMED") {
-                        actionButtonHTML = `<button class="btn-action btn-cancel" onclick="cancelOrder('${order._id}')">Cancel Order</button>`;
+                        actionButtonHTML = `<button class="btn-action btn-cancel" onclick="openCancelModal('${order._id}')">Cancel Order</button>`;
                     } else if (order.status === "SHIPPED" || order.status === "OUT_FOR_DELIVERY") {
                         actionButtonHTML = `<button class="btn-action" style="background:#FFA500;color:black" onclick="trackOrder('${order._id}')">Track Order</button>`;
                     } else if (order.status === "DELIVERED") {
@@ -576,18 +598,18 @@
                     }
 
                     const itemsHTML = order.items.map(item => `
-                <div class="order-items">
+                <div class="order-items" ${item.cancelled ? 'style="opacity: 0.5;"' : ''}>
                     <div class="item-thumb">
-                        <img src="/user/${item.image}">
+                        <img src="${item.image}">
                     </div>
                     <div class="item-details">
-                        <span class="item-name">${item.name}</span>
+                        <span class="item-name" ${item.cancelled ? 'style="text-decoration: line-through;"' : ''}>${item.name}</span>
                         <span class="item-meta">
-                            Qty: ${item.qty}
+                            Qty: ${item.qty} ${item.cancelled ? '<b style="color:#E50914; margin-left:10px;">(CANCELLED)</b>' : ''}
                         </span>
                     </div>
-                    <div style="font-weight:600;">
-                        $${item.price}
+                    <div style="font-weight:600; ${item.cancelled ? 'text-decoration: line-through;' : ''}">
+                        ${item.price.toFixed(2)}
                     </div>
                 </div>
             `).join("");
@@ -673,33 +695,97 @@
            CANCEL ORDER
         =============================== */
 
-        function cancelOrder(orderId) {
+        let currentCancelOrderId = null;
+        const cancelModal = document.getElementById("cancelModal");
+
+        function openCancelModal(orderId) {
+            if (!orderId || orderId === 'null' || orderId === 'undefined') {
+                errorAlert("Invalid order ID retrieved from the page.");
+                return;
+            }
+            currentCancelOrderId = orderId;
+            const order = window.userOrders.find(o => o._id === orderId);
+            const container = document.getElementById("cancelModalBody");
+            
+            if (!order || !order.items) {
+                errorAlert("Order details not found!");
+                return;
+            }
+
+            const uncancelledItems = order.items.filter(item => !item.cancelled);
+
+            if (uncancelledItems.length === 0) {
+                errorAlert("No active items left to cancel!");
+                return;
+            }
+            
+            container.innerHTML = uncancelledItems.map(item => `
+                <div style="display: flex; align-items: center; margin-bottom: 10px; border: 1px solid #eee; padding: 8px; border-radius: 4px;">
+                    <input type="checkbox" id="cancelItem_${item._id}" value="${item._id}" class="cancel-item-cb" style="margin-right: 15px; width: 18px; height: 18px;">
+                    <img src="${item.image || 'images/fallback.png'}" style="width: 40px; height: 40px; object-fit: contain; margin-right: 10px; border-radius:4px; background:#f9f9f9;">
+                    <div style="flex: 1; min-width: 0;">
+                        <label for="cancelItem_${item._id}" style="font-size: 0.9rem; font-weight: 500; cursor: pointer; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:#333">${item.name}</label>
+                        <div style="font-size: 0.8rem; color: #777;">Qty: ${item.qty} | $${item.price.toFixed(2)}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            cancelModal.classList.add("active");
+        }
+
+        function closeCancelModal() {
+            cancelModal.classList.remove("active");
+            currentCancelOrderId = null;
+        }
+
+        async function submitCancel() {
+            if (!currentCancelOrderId) return;
+            
+            const idToCancel = currentCancelOrderId; // Capture synchronously!
+            
+            const checkboxes = document.querySelectorAll('.cancel-item-cb');
+            const checkedItemIds = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+
+            if (checkedItemIds.length === 0) {
+                errorAlert("Please select at least one item to cancel.");
+                return;
+            }
+
+            const order = window.userOrders.find(o => o._id === idToCancel);
+            const uncancelledItemsCount = order.items.filter(item => !item.cancelled).length;
+            const isFullCancel = checkedItemIds.length === uncancelledItemsCount;
+
             confirmAlert(
-                `Cancel Order #${orderId}?`,
+                isFullCancel ? `Cancel Entire Order #${idToCancel.slice(-6)}?` : `Cancel ${checkedItemIds.length} item(s) from order?`,
                 async () => {
                     try {
+                        const payload = isFullCancel ? {} : { itemIds: checkedItemIds };
+
                         const response = await fetch(
-                            `/api/orders/${orderId}/cancel`,
+                            `/api/orders/${idToCancel}/cancel`,
                             {
                                 method: "PUT",
                                 headers: {
                                     "Content-Type": "application/json",
                                     Authorization: `Bearer ${token}`
-                                }
+                                },
+                                body: JSON.stringify(payload)
                             }
                         );
 
                         const data = await response.json();
 
                         if (!response.ok) {
-                            throw new Error(data.message || "Failed to cancel order");
+                            throw new Error(data.error || data.message || "Failed to cancel");
                         }
 
-                        successAlert("Order Cancelled");
+                        successAlert(isFullCancel ? "Order Cancelled" : "Items Cancelled");
+                        closeCancelModal();
                         loadOrders();
                     } catch (err) {
                         console.error(err);
                         errorAlert(err.message || "Something went wrong");
+                        closeCancelModal();
                     }
                 }
             );

@@ -490,10 +490,11 @@
         });
 
         if (dropdownLogout) {
-            dropdownLogout.addEventListener('click', () => {
-                localStorage.removeItem('isLoggedIn');
-                window.location.href="/user/index.html";
-            });
+            dropdownLogout?.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userToken');
+            window.location.href="/user/index.html";
+        });
         }
 
         if (mobileToggleBtn) {

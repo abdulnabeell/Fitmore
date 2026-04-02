@@ -17,7 +17,11 @@ const orderSchema = new mongoose.Schema(
         name: String,
         price: Number,
         image: String,
-        qty: Number
+        qty: Number,
+        cancelled: {
+          type: Boolean,
+          default: false
+        }
       }
     ],
 
